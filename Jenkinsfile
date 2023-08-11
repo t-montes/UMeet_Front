@@ -36,7 +36,8 @@ pipeline {
              script {
                 docker.image('citools-isis2603:latest').inside('-u root') {
                    sh '''
-                      npm i -s
+                      chown -R root:root .
+                      npm install
                       npm run build
                    '''
                 }
