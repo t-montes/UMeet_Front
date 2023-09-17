@@ -10,6 +10,10 @@
       padding: 10px 18% 10px 18%; /* top right bottom left */
       margin: 0px 7px 0px 7px; /* top right bottom left */
   }
+
+  .timetable-calendar tr th:nth-child(1) { 
+    width: 10%; 
+  }
 }
 
 /* Styles for Tablet */
@@ -22,6 +26,10 @@
     padding: 7.5px 17% 7.5px 17%; /* top right bottom left */
     margin: 0px 5px 0px 5px; /* top right bottom left */
   }
+
+  .timetable-calendar tr th:nth-child(1) { 
+    width: 11.5%; 
+  }
 }
 
 /* Styles for Cellphone (mobile) */
@@ -33,6 +41,10 @@
   .timetable-navbar > button {
     padding: 7px 15% 7px 15%; /* top right bottom left */
     margin: 0px 2.5px 0px 2.5px; /* top right bottom left */
+  }
+
+  .timetable-calendar tr th:nth-child(1) { 
+    width: 14%; 
   }
 }
 
@@ -57,6 +69,17 @@
   padding: 5px 0px 5px 0px; /* top right bottom left */
 }
 
+.timetable-month {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5em;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  padding: 10px 0px 5px 0px; /* top right bottom left */
+}
+
 .timetable-calendar {
   margin-left: auto;
   margin-right: auto;
@@ -64,10 +87,6 @@
   table-layout: fixed;
   text-align: center;
   border-collapse: collapse;
-}
-
-.timetable-calendar tr th:nth-child(1) { 
-  width: 11%; 
 }
 
 .timetable-firstcol {
