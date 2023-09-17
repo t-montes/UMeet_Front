@@ -46,16 +46,16 @@
 
 .toolbar_navigation-items a:hover,
 .toolbar_navigation-items a:active {
-  color: rgb(223, 75, 30);
+  color: rgb(113, 41, 19);
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 768px) {
   .toolbar_navigation-items {
     display: none;
   }
 }
 
-@media screen and (min-width: 759px) {
+@media screen and (min-width: 767px) {
   .toggle-btn {
     display: none;
   }

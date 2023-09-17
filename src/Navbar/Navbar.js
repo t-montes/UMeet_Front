@@ -19,22 +19,17 @@ class Navbar extends React.Component {
       };
     
       render() {
-        // let sideDrawer;
         let backdrop;
     
         if (this.state.sideDrawerOpen) {
-          // sideDrawer = <SideDrawer />;
           backdrop = <Backdrop click={this.backDropClickHandler} />;
         }
+
         return (
           <div style={{ height: "100%" }}>
             <Toolbar drawerToggleClickHandler={this.drawerToggleClickHandler} />
             <Sidedrawer show={this.state.sideDrawerOpen} />
             {backdrop}
-    
-            <main style={{ marginTop: "64px" }}>
-              <p>This is the content</p>
-            </main>
           </div>
         );
       }
