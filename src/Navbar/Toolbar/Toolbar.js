@@ -2,7 +2,6 @@ import "./Toolbar.css";
 import React from "react";
 import SideMenu from "../Sidemenu/Sidemenu";
 import logo from "../../assets/large-logo.png";
-import language_icon from "../../assets/language-icon.webp";
 
 const Toolbar = props => (
   <header className="toolbar">
