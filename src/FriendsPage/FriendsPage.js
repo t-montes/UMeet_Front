@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Carousel from "react-elastic-carousel";
+import Carousel from "@itseasy21/react-elastic-carousel";
 import "./FriendsPage.css";
 import flechaDer from '../assets/flechaDerecha.png';
 import flechaIzq from '../assets/felchaIzquierda.png';
