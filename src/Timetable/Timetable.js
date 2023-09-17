@@ -17,6 +17,7 @@ function Timetable({ calendar, restrictions }) {
 
   const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
   const [lastLaborDay, setLastLaborDay] = useState(7); // Monday to Saturday
+  // TODO: Fix error: Sunday is always the first day, should be at the end
   const [enableGrid, setEnableGrid] = useState(true);
   const [currentWeek, setCurrentWeek] = useState([]);
   let currentDate = new Date();
@@ -78,6 +79,13 @@ function Timetable({ calendar, restrictions }) {
   /* -------------------------- COMPONENT -------------------------- */
   return (
     <div className="timetable-main">
+      <div className="timetable-month">
+        {currentWeek.length > 0 ? 
+          (currentWeek[0].getMonth() === currentWeek[lastLaborDay-1].getMonth() ? 
+            months[currentWeek[0].getMonth()] : 
+            months[currentWeek[0].getMonth()]+" - "+months[currentWeek[lastLaborDay-1].getMonth()]) : ""
+        }
+      </div>
       <table className="timetable-calendar">
         <thead>
           <tr>

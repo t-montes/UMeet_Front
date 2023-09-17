@@ -28,10 +28,6 @@
   font-size: 1.5rem;
 }
 
-.spacer {
-  flex: 1;
-}
-
 .toolbar_navigation-items ul {
   list-style-type: none;
   margin: 0;
@@ -46,6 +42,7 @@
 .toolbar_navigation-items a {
   color: var(--black);
   text-decoration: none;
+  font-size: 1.25rem;
 }
 
 .toolbar_navigation-items a:hover,
@@ -53,13 +50,17 @@
   color: var(--blue);
 }
 
-@media screen and (max-width: 768px) {
-  .toolbar_navigation-items {
+@media screen and (max-width: 992px) {
+  .toolbar_navigation-disable {
     display: none;
   }
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 991px) {
+  .spacer {
+    flex: 1;
+  }
+
   .toggle-btn {
     display: none;
   }
