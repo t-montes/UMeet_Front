@@ -12,6 +12,7 @@ function App() {
     <div className="App">
       <AppContext.Provider value={{}}>
         <Navbar/>
+        {/* meter aca los componentes */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Timetable/>}/>
