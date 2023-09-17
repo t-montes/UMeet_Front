@@ -43,7 +43,7 @@ function Timetable({ calendar, restrictions }) {
   const backToToday = () => {
     let theWeek = [];
     while (theWeek.length < lastLaborDay) {
-      theWeek.push(addDays(currentDate,theWeek.length+1-currentDate.getDay()));
+      theWeek.push(addDays(currentDate,theWeek.length-currentDate.getDay()));
     }
     setCurrentWeek(theWeek);
   }
