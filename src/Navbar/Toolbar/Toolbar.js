@@ -13,11 +13,11 @@ const Toolbar = props => (
       </div>
       <div className="toolbar_logo">
         <a href="/">
-            <img src={logo} alt="Umeet Logo" />
+            <img src={logo} alt="Umeet Logo"/>
         </a>
       </div>
       {/*<div className="spacer" />*/}
-      <div className="toolbar_navigation-items toolbar_navigation-disable">
+      <div className="toolbar_navigation-items toolbar_navigation-center">
         <ul>
           <li>
             <a href="/">Mi Horario</a>
@@ -34,12 +34,15 @@ const Toolbar = props => (
       <div className="toolbar_navigation-items">
         <ul>
           <li>
-            <a href="/#">Español</a>
+            <a href="/"><i class="fa fa-bell"></i></a>
           </li>
           <li>
+            <a href="/"><i class="fa fa-globe"></i>&nbsp;ES</a>
+          </li>
+          <li className="toolbar-user-button">
             <a href="/friends">t.tamaio</a>
           </li>
-          <li>
+          <li className="toolbar-settings-button">
             <a href="/friends"><i class="fa fa-gear"></i></a>
           </li>
         </ul>

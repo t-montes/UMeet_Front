@@ -3,7 +3,9 @@
   left: 0;
   width: 100%;
   /*background-color: rgb(70, 111, 161);*/
-  height: 80px;
+  height: 100px;
+  border-bottom: 2px solid var(--gray);
+  margin-bottom: 1rem;
 }
 
 .toolbar_navigator {
@@ -14,18 +16,13 @@
 }
 
 .toolbar_logo {
-  margin-left: 20%;
+  margin-left: 1rem;
+  width: 230px;
 }
 
 .toolbar_logo img {
-  max-width: 45%;
-  height: auto;
-}
-
-.toolbar_logo a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.5rem;
+  max-width: 100%;
+  max-height: auto;
 }
 
 .toolbar_navigation-items ul {
@@ -35,14 +32,31 @@
   display: flex;
 }
 
+.toolbar_navigation-center ul {
+  justify-content: center;
+}
+
+.toolbar_navigation-center li {
+  padding: 0 5% !important;
+}
+
 .toolbar_navigation-items li {
-  padding: 0 0.5rem;
+  white-space: nowrap;
+  padding: 0 1.5rem;
 }
 
 .toolbar_navigation-items a {
   color: var(--black);
   text-decoration: none;
   font-size: 1.25rem;
+  /* center vertically */
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.toolbar_navigation-center {
+  width: 100%;
 }
 
 .toolbar_navigation-items a:hover,
@@ -50,22 +64,60 @@
   color: var(--blue);
 }
 
+.toolbar-user-button {
+  border: 1px solid var(--gray);
+  border-radius: 10px;
+  padding: 0.08rem 1rem !important;
+}
+
+.toolbar-user-button a {
+  color: var(--blue);
+}
+
+.toolbar-settings-button a {
+  font-size: 2rem;
+}
+
+.toolbar-user-button a:hover,
+.toolbar-user-button a:active {
+  color: var(--black);
+}
+
 @media screen and (max-width: 992px) {
-  .toolbar_navigation-disable {
+  .toolbar_navigation-center {
     display: none;
+  }
+
+  .toolbar_navigation-items ul {
+    justify-content: center;
+  }
+  
+  .toolbar_logo {
+    margin-left: 15%;
+    width: 150px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .toolbar_logo {
+    display: none;
+  }
+
+  .toolbar_navigation-items li {
+    padding: 0 0.75rem;
+  }
+
+  .toolbar {
+    height: 70px;
   }
 }
 
 @media screen and (min-width: 991px) {
-  .spacer {
-    flex: 1;
-  }
-
   .toggle-btn {
     display: none;
   }
+}
 
-  .toolbar_logo {
-    margin-left: 1rem;
-  }
+.spacer {
+  flex: 1;
 }
