@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+
+:root {
+  /* Define color variables here */
+  --yellow: #FFF75A; 
+  --black: #00272B; 
+  --cyan: #DBE9EE; 
+  --blue: #4A6FA5;
+  --gray: #E0DBDB;
+}
+
+body {
+  color: var(--black);
+  font-family: 'Jost', sans-serif;
+}
+
 .bordercell {
   border: 0.5px solid black;
 }

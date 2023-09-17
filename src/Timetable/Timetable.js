@@ -1,18 +1,23 @@
 import './Timetable.css'
 import React, { useState, useEffect } from 'react';
 
-const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const days = ['D','L','M','I','J','V','S'];
 const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const hourDivisions = 12; // 5 minutes intervals
 
 const addDays = (from, days=1) => new Date(from.getTime() + (days*1000*60*60*24));
 const range = (start, end) => Array.from(Array(end - start + 1).keys()).map(x => x + start);
 
-function Timetable() {
+/**
+ * @param {Event[]} calendar: array of events to render in the timetable
+ * @param {Calendar[]} restrictions: array of calendars to check for available spaces between calendar and the rest
+ */
+function Timetable({ calendar, restrictions }) {
   /* -------------------------- VARIABLES -------------------------- */
 
   const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
   const [lastLaborDay, setLastLaborDay] = useState(7); // Monday to Saturday
+  const [enableGrid, setEnableGrid] = useState(true);
   const [currentWeek, setCurrentWeek] = useState([]);
   let currentDate = new Date();
   currentDate.setHours(0,0,0,0);
@@ -24,9 +29,14 @@ function Timetable() {
     return (d >= addDays(currentDate,0)) && (d < addDays(currentDate,1))
   }
 
-  const classOfCell = (time) => {
-    let cls = 'lrbordercell';
-    cls += inCurrent(time) ? ' timetable-todaycol' : '';
+  const classOfTh = (d) => {
+    let cls = 'timetable-header';//'lrbordercell';
+    cls += inCurrent(d) ? ' timetable-todaycol' : '';
+    return cls;
+  }
+
+  const classOfCell = (m) => {
+    let cls = (m === 0 && enableGrid) ? 'timetable-grid' : '';
     return cls;
   }
 
@@ -54,23 +64,39 @@ function Timetable() {
     setCurrentWeek(theWeek);
   }
 
+  const renderEvents = () => {
+    /* TODO: render all the calendar events, based on the current week */
+    /* TODO: render all the AVAILABLE spaces between calendar an the rest of calendars in restrictions */
+  }
+
   // Execute on load; [] means execute only at reaload
   useEffect(() => {
     backToToday();
+    renderEvents();
   }, []);
 
   /* -------------------------- COMPONENT -------------------------- */
   return (
-    <div className="App">
+    <div className="timetable-main">
       <table className="timetable-calendar">
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <div className="timetable-navbar">
+                <button onClick={backToToday}>Hoy</button>
+              </div>
+              <div className="timetable-navbar">
+                <button onClick={backWeek}>&lt;</button>
+                <button onClick={nextWeek}>&gt;</button>
+              </div> 
+            </th>
             {currentWeek.map((d) => (
-              <th key={d} className="bordercell">
+              <th key={d} className={classOfTh(d)}>
                 {days[d.getDay()]} 
-                <br />
-                {`${d.getDate()}-${months[d.getMonth()].toLowerCase().substring(0, 3)}`}
+                <br/>
+                <div>
+                  {d.getDate()/*+"-"+months[d.getMonth()].toLowerCase().substring(0, 3)*/}
+                </div>
               </th>
             ))}
           </tr>
@@ -79,19 +105,22 @@ function Timetable() {
           {
             range(laborHours[0],laborHours[1]).map((h) => (
               range(0,hourDivisions-1).map((m) => (
-                <tr key={`${h},${m}`}>
-                  {m === 0 ? <td className="bordercell" rowSpan={hourDivisions}>{h%12 ? h%12 : 12}<br/>{h >= 12 ? "p.m." : "a.m."}</td> : null}
-                  {
-                    currentWeek.map((d) => {
-                      const time = d;
-                      time.setHours(h,m*60/hourDivisions,0,0);
-                      return (
-                        <td key={time} className={classOfCell(time)}>
-                          
-                        </td>
-                    )})
-                  }
-                </tr>
+                <React.Fragment key={`${h},${m}`}>
+                  <tr>
+                    {m === 0 ? <td className="bordercell timetable-firstcol" rowSpan={hourDivisions}>{h%12 ? h%12 : 12}<br/>{h >= 12 ? "pm" : "am"}</td> : null}
+                    {
+                      currentWeek.map((d) => {
+                        const time = d;
+                        time.setHours(h,m*60/hourDivisions,0,0);
+                        return (
+                          <td key={time} className={classOfCell(m)}>
+                            
+                          </td>
+                      )})
+                    }
+                  </tr>
+                  {/*<div height="0.1px"></div>*/}
+                </React.Fragment>
               ))
             ))
           }
@@ -106,9 +135,6 @@ function Timetable() {
             </tr>*/}
         </tbody>
       </table>
-      <button onClick={backToToday}>Hoy</button>
-      <button onClick={backWeek}>Anterior</button>
-      <button onClick={nextWeek}>Siguiente</button>
     </div>
   );
 }
