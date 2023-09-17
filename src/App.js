@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/FriendsPage';
+import SearchBar from './SearchBar/SearchBar';
 
 import './App.css';
 
@@ -14,6 +15,7 @@ function App() {
       <AppContext.Provider value={{}}>
         <Navbar/>
         {/* meter aca los componentes */}
+        <SearchBar/>
         <FriendsPage/>
         <BrowserRouter>
           <Routes>
