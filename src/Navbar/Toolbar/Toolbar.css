@@ -1,10 +1,9 @@
 .toolbar {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgb(70, 111, 161);
-  height: 56px;
+  /*background-color: rgb(70, 111, 161);*/
+  height: 80px;
 }
 
 .toolbar_navigator {
@@ -15,7 +14,12 @@
 }
 
 .toolbar_logo {
-  margin-left: 1rem;
+  margin-left: 20%;
+}
+
+.toolbar_logo img {
+  max-width: 45%;
+  height: auto;
 }
 
 .toolbar_logo a {
@@ -40,13 +44,13 @@
 }
 
 .toolbar_navigation-items a {
-  color: white;
+  color: var(--black);
   text-decoration: none;
 }
 
 .toolbar_navigation-items a:hover,
 .toolbar_navigation-items a:active {
-  color: rgb(113, 41, 19);
+  color: var(--blue);
 }
 
 @media screen and (max-width: 768px) {
@@ -61,6 +65,6 @@
   }
 
   .toolbar_logo {
-    margin-left: 0;
+    margin-left: 1rem;
   }
 }

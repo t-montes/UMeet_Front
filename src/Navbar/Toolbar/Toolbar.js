@@ -1,6 +1,7 @@
 import "./Toolbar.css";
 import React from "react";
 import SideMenu from "../Sidemenu/Sidemenu";
+import logo from "../../assets/large-logo.png";
 
 const Toolbar = props => (
   <header className="toolbar">
@@ -10,7 +11,9 @@ const Toolbar = props => (
         <SideMenu click={props.drawerToggleClickHandler} />
       </div>
       <div className="toolbar_logo">
-        <a href="/">The Logo</a>
+        <a href="/">
+            <img src={logo} alt="Umeet Logo" />
+        </a>
       </div>
       <div className="spacer" />
       <div className="toolbar_navigation-items">
