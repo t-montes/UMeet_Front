@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
 
 :root {
-  /* Define color variables here */
+  /* Color variables */
   --yellow: #FFF75A; 
   --black: #00272B; 
   --cyan: #DBE9EE; 
   --blue: #4A6FA5;
   --gray: #E0DBDB;
+
+  /* Device size variables */
+  --mobile: 768px;
+  --tablet: 1024px;
 }
 
 body {
