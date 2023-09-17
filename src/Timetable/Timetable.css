@@ -1,0 +1,101 @@
+
+/* Styles for PC */
+@media (min-width: 1024px) {
+  .timetable-main {
+      background-color: #f7f6f6;
+      border-radius: 8%;
+  }
+    
+  .timetable-navbar > button {
+      padding: 10px 18% 10px 18%; /* top right bottom left */
+      margin: 0px 7px 0px 7px; /* top right bottom left */
+  }
+}
+
+/* Styles for Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .timetable-main {
+      background-color: #f7f6f6;
+  }
+
+  .timetable-navbar > button {
+    padding: 7.5px 17% 7.5px 17%; /* top right bottom left */
+    margin: 0px 5px 0px 5px; /* top right bottom left */
+  }
+}
+
+/* Styles for Cellphone (mobile) */
+@media (max-width: 767px) {
+  .timetable-main {
+      background-color: #f7f6f6;
+  }
+
+  .timetable-navbar > button {
+    padding: 7px 15% 7px 15%; /* top right bottom left */
+    margin: 0px 2.5px 0px 2.5px; /* top right bottom left */
+  }
+}
+
+.timetable-navbar > button {
+    background-color: #f3f0c5;
+    border: none;
+    border-radius: 25%;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    font-family: 'Jost', sans-serif;
+}
+
+.timetable-navbar {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25em;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  padding: 5px 0px 5px 0px; /* top right bottom left */
+}
+
+.timetable-calendar {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  table-layout: fixed;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.timetable-calendar tr th:nth-child(1) { 
+  width: 11%; 
+}
+
+.timetable-firstcol {
+  background-color: #fcf67d;
+}
+
+.timetable-todaycol {
+  font-weight: bold !important;
+}
+
+.timetable-todaycol > div {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timetable-header {
+  font-size: 1.25em;
+  padding: 25px 0px 25px 0px; /* top right bottom left */
+  border-radius: 50%;
+  font-weight: normal;
+}
+
+.timetable-header > div {
+  margin-top: 5px;
+  font-size: 1.35em;
+}
+
+.timetable-grid {
+  border-top: 0.25px solid var(--gray);
+}
