@@ -8,6 +8,8 @@ import FriendsPage from './FriendsPage/FriendsPage';
 import SearchBar from './SearchBar/SearchBar';
 
 import './App.css';
+import GroupsPage from './GroupsPage/GroupsPage';
+import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         {/* meter aca los componentes */}
         <SearchBar/>
         <FriendsPage/>
+        <GroupsPage/>
+        <GroupCreateMenu/>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Timetable/>}/>
