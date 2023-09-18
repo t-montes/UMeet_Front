@@ -1,5 +1,6 @@
 import './Timetable.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import AppContext from "../AppContext";
 
 const days = ['D','L','M','I','J','V','S'];
 const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -13,12 +14,11 @@ const range = (start, end) => Array.from(Array(end - start + 1).keys()).map(x =>
  * @param {Calendar[]} restrictions: array of calendars to check for available spaces between calendar and the rest
  */
 function Timetable({ calendar, restrictions }) {
+  const ctx = useContext(AppContext);
+  const { laborHours, lastLaborDay, enableGrid } = ctx;
   /* -------------------------- VARIABLES -------------------------- */
-
-  const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
-  const [lastLaborDay, setLastLaborDay] = useState(7); // Monday to Saturday
+  
   // TODO: Fix error: Sunday is always the first day, should be at the end
-  const [enableGrid, setEnableGrid] = useState(true);
   const [currentWeek, setCurrentWeek] = useState([]);
   let currentDate = new Date();
   currentDate.setHours(0,0,0,0);
@@ -74,7 +74,8 @@ function Timetable({ calendar, restrictions }) {
   useEffect(() => {
     backToToday();
     renderEvents();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ctx]); // Note: backToToday dependency is not needed, but it's here to avoid warnings
 
   /* -------------------------- COMPONENT -------------------------- */
   return (
