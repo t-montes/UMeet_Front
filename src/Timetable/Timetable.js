@@ -136,7 +136,7 @@ function Timetable({ calendar, restrictions }) {
             ))
           }
           {/*<tr *ngFor="let h of range(6,20)">
-              <td class="bordercell">{{h%12 ? h%12 : 12}} {{h >= 12 ? "p.m." : "a.m."}}</td>
+              <td className="bordercell">{{h%12 ? h%12 : 12}} {{h >= 12 ? "p.m." : "a.m."}}</td>
               <td *ngFor="let d of weekNotInBetween(h)" [ngClass]="classOfCell(d,h)"
               [attr.rowspan]="citaInTime(d,h) ? numHours(citaInTime(d,h)) : 1">
                   <a (click)="onSelected(citaInTime(d,h))">
