@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import AppContext from "./AppContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Fab, Action } from 'react-tiny-fab';
@@ -8,6 +8,9 @@ import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/FriendsPage';
 
 import './App.css';
+import GroupsPage from './GroupsPage/GroupsPage';
+import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
+import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
 
 function App() {
   return (
@@ -15,9 +18,11 @@ function App() {
       <AppContext.Provider value={{}}>
         <Navbar/>
 
-        {/* meter aca los componentes */}
         <FriendsPage/>
         <Timetable/>
+        <GroupsPage/>
+        <GroupCreateMenu/>
+        <EventCreateMenu/>  
 
         <BrowserRouter>
           <Routes>
@@ -44,7 +49,7 @@ function App() {
         <Action
             text="Agregar Amigo"
           >
-            <i class="fa fa-hand-peace-o"></i>
+            <i class="fa fa-user-plus"></i>
         </Action>
       </Fab>
 
