@@ -1,3 +1,7 @@
+.timetable-main i {
+  font-size: 1.5em;
+  color: var(--gray);
+}
 
 /* Styles for PC */
 @media screen and (min-width: 1024px) {

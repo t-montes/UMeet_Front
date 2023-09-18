@@ -4,6 +4,7 @@ import Carousel from "@itseasy21/react-elastic-carousel";
 import "./FriendsPage.css";
 import flechaDer from '../assets/flechaDerecha.png';
 import flechaIzq from '../assets/felchaIzquierda.png';
+import SearchBar from '../SearchBar/SearchBar';
 
 import { friends } from "./friends";
 
@@ -22,6 +23,7 @@ function FriendsPage() {
 
   return (
     <>
+      <SearchBar/>
       <div className="FriendsPage">
         <Carousel
           breakPoints={breakPoints}
