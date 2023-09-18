@@ -63,7 +63,6 @@ function App() {
             <i class="fa fa-hand-peace-o"></i>
         </Action>
       </Fab>
-
     </div>
   );
 }
