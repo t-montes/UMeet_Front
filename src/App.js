@@ -10,6 +10,7 @@ import SearchBar from './SearchBar/SearchBar';
 import './App.css';
 import GroupsPage from './GroupsPage/GroupsPage';
 import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
+import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <FriendsPage/>
         <GroupsPage/>
         <GroupCreateMenu/>
+        <EventCreateMenu/>  
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Timetable/>}/>
