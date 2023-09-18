@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AppContext from "./AppContext";
-import { BrowserRouter, Routes } from "react-router-dom";
+//import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Fab, Action } from 'react-tiny-fab';
 
 import Navbar from './Navbar/Navbar';
@@ -35,32 +35,32 @@ function App() {
         <GroupCreateMenu/>
         <EventCreateMenu/>  
 
-        <BrowserRouter>
+        {/*<BrowserRouter>
           <Routes>
-            {/*<Route path="/" element={<Timetable/>}/>*/}
+            <Route path="/" element={<Timetable/>}/>
           </Routes>
-        </BrowserRouter>
+        </BrowserRouter>*/}
       </AppContext.Provider>
 
       <Fab
         alwaysShowTitle={true /* false, makes items only show title on hover */}
-        icon={<i class="fa fa-plus"></i>}
+        icon={<i className="fa fa-plus"></i>}
         styles={{ backgroundColor: '#2c3e50' }}
       >
         <Action
           text="Agregar Evento"
         >
-          <i class="fa fa-calendar"></i>
+          <i className="fa fa-calendar"></i>
         </Action>
         <Action
             text="Crear Grupo"
           >
-            <i class="fa fa-group"></i>
+            <i className="fa fa-group"></i>
         </Action>
         <Action
             text="Agregar Amigo"
           >
-            <i class="fa fa-hand-peace-o"></i>
+            <i className="fa fa-hand-peace-o"></i>
         </Action>
       </Fab>
     </div>

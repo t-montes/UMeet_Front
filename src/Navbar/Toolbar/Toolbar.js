@@ -33,16 +33,16 @@ const Toolbar = props => (
       <div className="toolbar_navigation-items">
         <ul>
           <li>
-            <a href="/"><i class="fa fa-bell"></i></a>
+            <a href="/"><i className="fa fa-bell"></i></a>
           </li>
           <li>
-            <a href="/"><i class="fa fa-globe"></i>&nbsp;ES</a>
+            <a href="/"><i className="fa fa-globe"></i>&nbsp;ES</a>
           </li>
           <li className="toolbar-user-button">
             <a href="/friends">t.tamaio</a>
           </li>
           <li className="toolbar-settings-button">
-            <a href="/friends"><i class="fa fa-gear"></i></a>
+            <a href="/friends"><i className="fa fa-gear"></i></a>
           </li>
         </ul>
       </div>
