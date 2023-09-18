@@ -8,7 +8,7 @@
     margin: 0 auto;
 }
 
-.input {
+.searchbar-input {
     width: 100%;
     height: 40px;
     line-height: 28px;
@@ -22,11 +22,11 @@
     transition: .3s ease;
 }
 
-.input::placeholder {
+.searchbar-input::placeholder {
     color: #9e9ea7;
 }
 
-.input:focus, input:hover {
+.searchbar-input:focus, input:hover {
     outline: none;
     border-color: #061b3a;
     background-color: #fff;

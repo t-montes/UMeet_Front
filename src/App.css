@@ -34,3 +34,13 @@ body {
 .downbordercell {
   border-bottom: 0.5px solid black;
 }
+
+/* Fab: Floating Action Button */
+
+.rtf--ab {
+  background-color: var(--black);
+}
+
+.rtf--mb {
+  background-color: #0b749a;
+}

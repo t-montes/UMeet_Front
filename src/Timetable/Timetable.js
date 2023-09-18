@@ -82,8 +82,10 @@ function Timetable({ calendar, restrictions }) {
       <div className="timetable-month">
         {currentWeek.length > 0 ? 
           (currentWeek[0].getMonth() === currentWeek[lastLaborDay-1].getMonth() ? 
-            months[currentWeek[0].getMonth()] : 
-            months[currentWeek[0].getMonth()]+" - "+months[currentWeek[lastLaborDay-1].getMonth()]) : ""
+            months[currentWeek[0].getMonth()] 
+            : months[currentWeek[0].getMonth()]+" - "+months[currentWeek[lastLaborDay-1].getMonth()]) +
+              " "+currentWeek[lastLaborDay-1].getFullYear()
+          : ""
         }
       </div>
       <table className="timetable-calendar">
