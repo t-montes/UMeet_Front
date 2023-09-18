@@ -1,6 +1,5 @@
 .BannerLinking-background {
     /* blur the background */
-
     filter: blur(5px);
     -webkit-filter: blur(5px);
 
@@ -12,8 +11,9 @@
 
     z-index: 0;
     
-    transform: translateY(calc(-290px - 150px - 200px + 36px))
+    transform: translateY(calc(-290px - 150px - 200px + 36px));
     /* 290px are needed to get to the button; all the button margin-top (VAR2) must be added [36px is the ALWAYS offset] */
+    position: absolute;
 }
 
 .BannerLinking-welcome {
