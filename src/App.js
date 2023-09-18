@@ -49,7 +49,7 @@ function App() {
         <Action
             text="Agregar Amigo"
           >
-            <i class="fa fa-user-plus"></i>
+            <i class="fa fa-hand-peace-o"></i>
         </Action>
       </Fab>
 
