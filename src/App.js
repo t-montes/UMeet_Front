@@ -11,6 +11,7 @@ import './App.css';
 import GroupsPage from './GroupsPage/GroupsPage';
 import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
 import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
+import BannerLinking from './BannerLinking/BannerLinking';
 
 function App() {
   
@@ -29,17 +30,19 @@ function App() {
       <AppContext.Provider value={ctx}>
         <Navbar/>
 
-        <FriendsPage/>
         <Timetable/>
+        <FriendsPage/>
         <GroupsPage/>
         <GroupCreateMenu/>
         <EventCreateMenu/>  
+        <BannerLinking/>
 
         {/*<BrowserRouter>
           <Routes>
             <Route path="/" element={<Timetable/>}/>
           </Routes>
         </BrowserRouter>*/}
+
       </AppContext.Provider>
 
       <Fab

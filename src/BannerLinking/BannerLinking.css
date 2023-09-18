@@ -1,0 +1,76 @@
+.BannerLinking-background {
+    /* blur the background */
+
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+
+    /* disable text selection */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    z-index: 0;
+    
+    transform: translateY(calc(-290px - 150px - 200px + 36px))
+    /* 290px are needed to get to the button; all the button margin-top (VAR2) must be added [36px is the ALWAYS offset] */
+}
+
+.BannerLinking-welcome {
+    margin-top: 150px;
+    margin-bottom: 200px;
+
+    display: flex;
+    justify-content: center;
+    height: 120px;
+    width: 75%;
+    background-color: var(--gray);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 0;
+    border-radius: 20px;
+
+    position: relative;
+    z-index: 1;
+}
+
+.BannerLinking-welcome h1 {
+    font-size: 2rem;
+    font-weight: bold;
+
+    /* center vertically */
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.BannerLinking-linking {
+    display: flex;
+    justify-content: center;
+    height: 150px;
+    width: 50%;
+    background-color: var(--yellow);
+    margin: 20px auto 0 auto;
+    padding: 20px 0;
+    border-radius: 20px;
+    
+    position: relative;
+    z-index: 1;
+}
+
+.BannerLinking-linking h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+
+    /* center vertically */
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+
+@media screen and (max-width: 768px) {
+    .BannerLinking {
+        width: 100%;
+    }
+}
