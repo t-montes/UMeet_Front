@@ -26,7 +26,7 @@ class Navbar extends React.Component {
     }
 
     return (
-      <div style={{ height: "100%" }}>
+      <div style={{ height: "100%" }} className="Navbar">
         <Toolbar drawerToggleClickHandler={this.drawerToggleClickHandler} />
         <Sidedrawer show={this.state.sideDrawerOpen} />
         {backdrop}

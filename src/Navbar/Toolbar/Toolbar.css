@@ -2,7 +2,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  /*background-color: rgb(70, 111, 161);*/
+  background-color: white;
   height: 100px;
   border-bottom: 2px solid var(--gray);
   margin-bottom: 1rem;
@@ -45,7 +45,8 @@
   padding: 0 1.5rem;
 }
 
-.toolbar_navigation-items a {
+.toolbar_navigation-items a,
+.toolbar_navigation-items button {
   color: var(--black);
   text-decoration: none;
   font-size: 1.25rem;
@@ -53,6 +54,10 @@
   display: flex;
   align-items: center;
   height: 100%;
+  
+  /* remove default button styles */
+  background:none;
+  border:none;
 }
 
 .toolbar_navigation-center {
@@ -60,7 +65,9 @@
 }
 
 .toolbar_navigation-items a:hover,
-.toolbar_navigation-items a:active {
+.toolbar_navigation-items a:active,
+.toolbar_navigation-items button:hover,
+.toolbar_navigation-items button:active {
   color: var(--blue);
 }
 
@@ -83,7 +90,7 @@
   color: var(--black);
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 991px) {
   .toolbar_navigation-center {
     display: none;
   }
@@ -112,7 +119,7 @@
   }
 }
 
-@media screen and (min-width: 991px) {
+@media screen and (min-width: 992px) {
   .toggle-btn {
     display: none;
   }

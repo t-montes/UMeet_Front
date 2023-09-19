@@ -2,8 +2,6 @@ import './Timetable.css'
 import React, { useState, useEffect, useContext } from 'react';
 import AppContext from "../AppContext";
 
-const days = ['D','L','M','I','J','V','S'];
-const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const hourDivisions = 12; // 5 minutes intervals
 
 const addDays = (from, days=1) => new Date(from.getTime() + (days*1000*60*60*24));
@@ -14,11 +12,15 @@ const range = (start, end) => Array.from(Array(end - start + 1).keys()).map(x =>
  * @param {Calendar[]} restrictions: array of calendars to check for available spaces between calendar and the rest
  */
 function Timetable({ calendar, restrictions }) {
-  const ctx = useContext(AppContext);
-  const { laborHours, lastLaborDay, enableGrid } = ctx;
-  /* -------------------------- VARIABLES -------------------------- */
   
-  // TODO: Fix error: Sunday is always the first day, should be at the end
+  const ctx = useContext(AppContext);
+  const { laborHours, lastLaborDay, enableGrid, langSet } = ctx;
+
+  const days = langSet.days;
+  const months = langSet.months;
+
+  /* -------------------------- VARIABLES -------------------------- */
+
   const [currentWeek, setCurrentWeek] = useState([]);
   let currentDate = new Date();
   currentDate.setHours(0,0,0,0);
@@ -31,7 +33,7 @@ function Timetable({ calendar, restrictions }) {
   }
 
   const classOfTh = (d) => {
-    let cls = 'timetable-header';//'lrbordercell';
+    let cls = 'timetable-header';
     cls += inCurrent(d) ? ' timetable-todaycol' : '';
     return cls;
   }
@@ -43,9 +45,13 @@ function Timetable({ calendar, restrictions }) {
 
   const backToToday = () => {
     let theWeek = [];
-    while (theWeek.length < lastLaborDay) {
+    while (theWeek.length < 7) {
       theWeek.push(addDays(currentDate,theWeek.length-currentDate.getDay()));
     }
+
+    theWeek = theWeek.slice(1).concat(theWeek.slice(0,1));
+    theWeek = theWeek.slice(0,lastLaborDay);
+    
     setCurrentWeek(theWeek);
   }
 
@@ -75,7 +81,7 @@ function Timetable({ calendar, restrictions }) {
     backToToday();
     renderEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ctx]); // Note: backToToday dependency is not needed, but it's here to avoid warnings
+  }, []);
 
   /* -------------------------- COMPONENT -------------------------- */
   return (
@@ -94,19 +100,19 @@ function Timetable({ calendar, restrictions }) {
           <tr>
             <th>
               <div className="timetable-navbar">
-                <button onClick={backToToday}>Hoy</button>
+                <button onClick={backToToday}>{langSet["Today"]}</button>
               </div>
               <div className="timetable-navbar">
                 <button onClick={backWeek}>&lt;</button>
                 <button onClick={nextWeek}>&gt;</button>
-              </div> 
+              </div>
             </th>
             {currentWeek.map((d) => (
               <th key={d} className={classOfTh(d)}>
                 {days[d.getDay()]} 
                 <br/>
                 <div>
-                  {d.getDate()/*+"-"+months[d.getMonth()].toLowerCase().substring(0, 3)*/}
+                  {d.getDate()}
                 </div>
               </th>
             ))}
@@ -130,7 +136,6 @@ function Timetable({ calendar, restrictions }) {
                       )})
                     }
                   </tr>
-                  {/*<div height="0.1px"></div>*/}
                 </React.Fragment>
               ))
             ))

@@ -1,6 +1,7 @@
 .timetable-main i {
   font-size: 1.5em;
   color: var(--gray);
+  height: 90vh;
 }
 
 /* Styles for PC */

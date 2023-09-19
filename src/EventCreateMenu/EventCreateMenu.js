@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Box,
   TextField,
@@ -14,6 +14,7 @@ import { Alarm } from '@mui/icons-material';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { styled } from '@mui/system';
+import AppContext from "../AppContext";
 
 const CustomCalendar = styled(Calendar)`
   border: 1px solid #ccc;
@@ -28,24 +29,30 @@ const CustomCalendar = styled(Calendar)`
     border-radius: 5px;
   }
 `;
+
 export default function CreateEventComponent() {
+
+  const ctx = useContext(AppContext);
+  const { langSet, lang } = ctx;
+
   const [date, setDate] = useState(new Date());
 
+  // TODO: Make responsive!
   return (
-    <Paper elevation={3} style={{ width: '1058px', height: '550px', padding: '24px', backgroundColor: '#DBE9EE',  border: '1px solid black',   margin: '0 auto'}}>
-        Crear Evento
+    <Paper elevation={3} style={{ width: '1058px', height: '580px', padding: '24px', backgroundColor: '#DBE9EE',  border: '1px solid black',   margin: '0 auto'}}>
+        <h2>{langSet["CreateEvent"]}</h2>
 
       <Box display="flex" justifyContent="space-between" height="100%">
         {/* Primera columna */}
         <Box display="flex" flexDirection="column" flex="1" pr={2}>
-        <TextField label="Nombre del evento" fullWidth margin="normal" />
-        <TextField label="Ubicación" fullWidth margin="normal" />
-        <TextField label="Enlace" fullWidth margin="normal" />
+        <TextField label={langSet["EventName"]} fullWidth margin="normal" />
+        <TextField label={langSet["Location"]} fullWidth margin="normal" />
+        <TextField label={langSet["Link"]} fullWidth margin="normal" />
 
         <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
           <FormControlLabel
             control={<Switch color="primary" />}
-            label="Evento Privado"
+            label={langSet["PrivateEvent"]}
           />
         </Box>
 
@@ -55,12 +62,12 @@ export default function CreateEventComponent() {
           </IconButton>
           <Select
             variant="outlined"
-            value="30 minutos antes"
+            value={"30 "+langSet["MinutesBefore"]}
             style={{ marginLeft: '8px' }}
           >
-            <MenuItem value="30 minutos antes">30 minutos antes</MenuItem>
-            <MenuItem value="5 minutos antes">5 minutos antes</MenuItem>
-            <MenuItem value="10 minutos antes">10 minutos antes</MenuItem>
+            <MenuItem value={"5 "+langSet["MinutesBefore"]}>5 {langSet["MinutesBefore"]}</MenuItem>
+            <MenuItem value={"10 "+langSet["MinutesBefore"]}>10 {langSet["MinutesBefore"]}</MenuItem>
+            <MenuItem value={"30 "+langSet["MinutesBefore"]}>30 {langSet["MinutesBefore"]}</MenuItem>
           </Select>
         </Box>
       </Box>
@@ -71,12 +78,12 @@ export default function CreateEventComponent() {
           <CustomCalendar 
           onChange={setDate}
           value={date}
-          locale="es-ES"
+          locale={lang}
         />
 
           <Box display="flex" mt={2} justifyContent="space-between">
             <TextField 
-              label="Hora Inicial" 
+              label={langSet["StartTime"]} 
               type="time"
               InputLabelProps={{ shrink: true }}
               sx={{ flex: '1', marginRight: '8px' }}
@@ -92,7 +99,7 @@ export default function CreateEventComponent() {
           </Box>
           <Box display="flex" mt={2} justifyContent="space-between">
             <TextField 
-              label="Hora Final" 
+              label={langSet["EndTime"]}
               type="time"
               InputLabelProps={{ shrink: true }}
               sx={{ flex: '1', marginRight: '8px' }}
@@ -112,7 +119,7 @@ export default function CreateEventComponent() {
             color="primary" 
             style={{ marginTop: '16px', width: '100%', backgroundColor: '#C1FF72', color: 'black' }}
           >
-            Crear
+            {langSet["Create"]}
           </Button>
         </Box>
       </Box>

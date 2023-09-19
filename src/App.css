@@ -44,3 +44,7 @@ body {
 .rtf--mb {
   background-color: #0b749a;
 }
+
+.Content {
+  margin-top: -15px;
+}
