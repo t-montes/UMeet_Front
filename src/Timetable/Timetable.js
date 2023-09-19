@@ -2,8 +2,6 @@ import './Timetable.css'
 import React, { useState, useEffect, useContext } from 'react';
 import AppContext from "../AppContext";
 
-const days = ['D','L','M','I','J','V','S'];
-const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const hourDivisions = 12; // 5 minutes intervals
 
 const addDays = (from, days=1) => new Date(from.getTime() + (days*1000*60*60*24));
@@ -16,10 +14,13 @@ const range = (start, end) => Array.from(Array(end - start + 1).keys()).map(x =>
 function Timetable({ calendar, restrictions }) {
   
   const ctx = useContext(AppContext);
-  const { laborHours, lastLaborDay, enableGrid } = ctx;
+  const { laborHours, lastLaborDay, enableGrid, langSet } = ctx;
+
+  const days = langSet.days;
+  const months = langSet.months;
+
   /* -------------------------- VARIABLES -------------------------- */
-  
-  // TODO: Fix error: Sunday is always the first day, should be at the end
+
   const [currentWeek, setCurrentWeek] = useState([]);
   let currentDate = new Date();
   currentDate.setHours(0,0,0,0);
@@ -47,7 +48,7 @@ function Timetable({ calendar, restrictions }) {
     while (theWeek.length < 7) {
       theWeek.push(addDays(currentDate,theWeek.length-currentDate.getDay()));
     }
-    
+
     theWeek = theWeek.slice(1).concat(theWeek.slice(0,1));
     theWeek = theWeek.slice(0,lastLaborDay);
     

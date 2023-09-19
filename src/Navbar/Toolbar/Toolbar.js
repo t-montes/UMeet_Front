@@ -1,9 +1,23 @@
 import "./Toolbar.css";
-import React from "react";
+import React, { useContext } from "react";
 import SideMenu from "../Sidemenu/Sidemenu";
 import logo from "../../assets/large-logo.png";
+import AppContext from "../../AppContext";
 
-const Toolbar = props => (
+const Toolbar = props => {
+
+  const ctx = useContext(AppContext);
+  const { lang, langSet, setLang } = ctx;
+
+  const changeLang = () => {
+    if (lang === 'es') {
+      setLang('en');
+    } else {
+      setLang('es');
+    }
+  }
+
+  return (
   <header className="toolbar">
     <nav className="toolbar_navigator">
       <div />
@@ -36,7 +50,9 @@ const Toolbar = props => (
             <a href="/"><i className="fa fa-bell"></i></a>
           </li>
           <li>
-            <a href="/"><i className="fa fa-globe"></i>&nbsp;ES</a>
+            <button onClick={changeLang}>
+              <i className="fa fa-globe"></i>&nbsp;{lang.toUpperCase()}
+            </button>
           </li>
           <li className="toolbar-user-button">
             <a href="/friends">t.tamaio</a>
@@ -48,6 +64,6 @@ const Toolbar = props => (
       </div>
     </nav>
   </header>
-);
+)};
 
 export default Toolbar;

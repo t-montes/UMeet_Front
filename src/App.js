@@ -13,30 +13,36 @@ import GroupsPage from './GroupsPage/GroupsPage';
 //import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
 //import BannerLinking from './BannerLinking/BannerLinking';
 
-const recoverFromLocalStorage = (key, state, setState) => {
-  if (localStorage.getItem(key) !== null) {
-    setState(localStorage.getItem(key));
-  } else {
-    localStorage.setItem(key, state);
-  }
-}
+import es from './lang/es.json';
+import en from './lang/en.json';
 
 function App() {
+
+  const langs = { es, en };
+
+  // get default lang from localStorage, if not, set it to 'es'
+  const defaultLang = localStorage.getItem('lang');
+  if (defaultLang === null) {
+    localStorage.setItem('lang', 'es');
+  }
   
   const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
   const [lastLaborDay, setLastLaborDay] = useState(6); // Monday to Saturday
   const [enableGrid, setEnableGrid] = useState(true);
-  const [lang, setLang] = useState('es'); // ['es', 'en']
+  const [lang, setLang] = useState(localStorage.getItem('lang'));
+  const [langSet, setLangSet] = useState(langs[lang]);
 
   useEffect(() => {
-    recoverFromLocalStorage('lang', lang, setLang);
+    localStorage.setItem('lang', lang);
+    setLangSet(langs[lang]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ lang ]);
 
   const ctx = {
     laborHours, setLaborHours,
     lastLaborDay, setLastLaborDay,
     enableGrid, setEnableGrid,
+    lang, setLang, langSet
   }
 
   return (
