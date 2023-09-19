@@ -32,6 +32,7 @@ function App() {
   const [lang, setLang] = useState(localStorage.getItem('lang'));
   const [langSet, setLangSet] = useState(langs[lang]);
   const [user, setUser] = useState({});
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
     localStorage.setItem('lang', lang);
@@ -48,12 +49,23 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    // TODO: delete this - get element from Mockup API
+    fetch('https://my.api.mockaroo.com/groups.json?key=13d161b0')
+      .then(response => response.json())
+      .then(data => {
+        setGroups(data);
+        console.log(data[0].imagenesPerfil);
+      });
+  }, []);
+
   const ctx = {
     laborHours, setLaborHours,
     lastLaborDay, setLastLaborDay,
     enableGrid, setEnableGrid,
     lang, setLang, langSet,
     user, setUser,
+    groups, setGroups,
   }
 
   return (
