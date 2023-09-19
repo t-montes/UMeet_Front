@@ -7,7 +7,7 @@ import AppContext from "../../AppContext";
 const Toolbar = props => {
 
   const ctx = useContext(AppContext);
-  const { lang, langSet, setLang } = ctx;
+  const { lang, langSet, setLang, user } = ctx;
 
   const changeLang = () => {
     if (lang === 'es') {
@@ -55,10 +55,10 @@ const Toolbar = props => {
             </button>
           </li>
           <li className="toolbar-user-button">
-            <a title={langSet["Profile"]} href="/friends">t.tamaio</a>
+            <a title={langSet["Profile"]} href="/">{user.username}</a>
           </li>
           <li className="toolbar-settings-button">
-            <a title={langSet["Settings"]} href="/friends"><i className="fa fa-gear"></i></a>
+            <a title={langSet["Settings"]} href="/settings"><i className="fa fa-gear"></i></a>
           </li>
         </ul>
       </div>
