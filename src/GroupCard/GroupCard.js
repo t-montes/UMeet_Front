@@ -1,7 +1,8 @@
 import React from 'react';
 
 const GroupCard = ({ colorFondo, textoCentral, imagenesPerfil }) => {
-    return (
+  // TODO: Make responsive!
+  return (
         <div style={{
             backgroundColor: colorFondo,
             borderRadius: '15px',

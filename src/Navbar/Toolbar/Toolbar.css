@@ -45,7 +45,8 @@
   padding: 0 1.5rem;
 }
 
-.toolbar_navigation-items a,button {
+.toolbar_navigation-items a,
+.toolbar_navigation-items button {
   color: var(--black);
   text-decoration: none;
   font-size: 1.25rem;
@@ -64,10 +65,7 @@
 }
 
 .toolbar_navigation-items a:hover,
-.toolbar_navigation-items a:active {
-  color: var(--blue);
-}
-
+.toolbar_navigation-items a:active,
 .toolbar_navigation-items button:hover,
 .toolbar_navigation-items button:active {
   color: var(--blue);

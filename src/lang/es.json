@@ -1,4 +1,42 @@
 {
+    "Settings": "Configuración",
+    "Language": "Idioma",
+    "Notifications": "Notificaciones",
+    "UMeetLogo": "UMeet Logo",
+    "Profile": "Perfil",
+    "MySchedule": "Mi Horario",
+    "Friends": "Amigos",
+    "Groups": "Grupos",
+
     "months": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-    "days": ["D", "L", "M", "I", "J", "V", "S"]
+    "days": ["D", "L", "M", "I", "J", "V", "S"],
+    "Today": "Hoy",
+
+    "AddFriend": "Agregar Amigo",
+    "CreateGroup": "Crear Grupo",
+    "CreateEvent": "Crear Evento",
+
+    "Search": "Buscar",
+
+    "NewGroup": "Nuevo Grupo",
+    "Name": "Nombre",
+    "GroupName": "Nombre del Grupo",
+    "Members": "Miembros",
+    "Save": "Guardar",
+
+    "EventName": "Nombre del Evento",
+    "Location": "Ubicación",
+    "Link": "Enlace",
+    "PrivateEvent": "Evento Privado",
+    "MinutesBefore": "minutos antes",
+    "HoursBefore": "horas antes",
+    "DaysBefore": "días antes",
+    "StartTime": "Hora Inicial",
+    "EndTime": "Hora Final",
+    "Create": "Crear",
+
+    "Welcome": "Bienvenid@",
+    "LinkWithBanner": "Vincular tu horario de Banner",
+
+    "404": "404 - Página no encontrada"
 }

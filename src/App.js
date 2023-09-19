@@ -62,6 +62,8 @@ function App() {
               <Route path="/groups" element={<GroupsPage/>}/>
               {/*TODO: <Route path="/groups/:id" element={<GroupsPage/>}/>*/}
               {/*TODO: <Route path="/users/:id" element={<UserPage/>}/>*/}
+              {/*TODO: <Route path="/settings" element={<Settings/>}/>*/}
+              <Route path="*" element={<h1>{langSet["404"]}</h1>}/>
             </Routes>
           </BrowserRouter>
         </div>
@@ -74,17 +76,17 @@ function App() {
         styles={{ backgroundColor: '#2c3e50' }}
       >
         <Action
-          text="Agregar Evento"
+          text={langSet["CreateEvent"]}
         >
           <i className="fa fa-calendar"></i>
         </Action>
         <Action
-            text="Crear Grupo"
+            text={langSet["CreateGroup"]}
           >
             <i className="fa fa-group"></i>
         </Action>
         <Action
-            text="Agregar Amigo"
+            text={langSet["AddFriend"]}
           >
             <i className="fa fa-user-plus"></i>
         </Action>

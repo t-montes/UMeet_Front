@@ -1,4 +1,42 @@
 {
+    "Settings": "Settings",
+    "Language": "Language",
+    "Notifications": "Notifications",
+    "UMeetLogo": "UMeet Logo",
+    "Profile": "Profile",
+    "MySchedule": "My Schedule",
+    "Friends": "Friends",
+    "Groups": "Groups",
+
     "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    "days": ["U", "M", "Tu", "W", "Th", "F", "S"]
+    "days": ["U", "M", "Tu", "W", "Th", "F", "S"],
+    "Today": "Today",
+    
+    "AddFriend": "Add Friend",
+    "CreateGroup": "Create Group",
+    "CreateEvent": "Create Event",
+
+    "Search": "Search",
+
+    "NewGroup": "New Group",
+    "Name": "Name",
+    "GroupName": "Name of the group",
+    "Members": "Members",
+    "Save": "Save",
+
+    "EventName": "Event Name",
+    "Location": "Location",
+    "Link": "Link",
+    "PrivateEvent": "Private Event",
+    "MinutesBefore": "minutes before",
+    "HoursBefore": "hours before",
+    "DaysBefore": "days before",
+    "StartTime": "Start Time",
+    "EndTime": "End Time",
+    "Create": "Create",
+
+    "Welcome": "Welcome",
+    "LinkWithBanner": "Link your Banner schedule",
+
+    "404": "404 - Page not found"
 }

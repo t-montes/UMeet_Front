@@ -100,7 +100,7 @@ function Timetable({ calendar, restrictions }) {
           <tr>
             <th>
               <div className="timetable-navbar">
-                <button onClick={backToToday}>Hoy</button>
+                <button onClick={backToToday}>{langSet["Today"]}</button>
               </div>
               <div className="timetable-navbar">
                 <button onClick={backWeek}>&lt;</button>

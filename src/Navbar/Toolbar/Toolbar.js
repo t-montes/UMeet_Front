@@ -25,7 +25,7 @@ const Toolbar = props => {
         <SideMenu click={props.drawerToggleClickHandler} />
       </div>
       <div className="toolbar_logo">
-        <a href="/">
+        <a href="/" title={langSet["UMeetLogo"]}>
             <img src={logo} alt="Umeet Logo"/>
         </a>
       </div>
@@ -33,13 +33,13 @@ const Toolbar = props => {
       <div className="toolbar_navigation-items toolbar_navigation-center">
         <ul>
           <li>
-            <a href="/">Mi Horario</a>
+            <a href="/">{langSet["MySchedule"]}</a>
           </li>
           <li>
-            <a href="/friends">Amigos</a>
+            <a href="/friends">{langSet["Friends"]}</a>
           </li>
           <li>
-            <a href="/groups">Grupos</a>
+            <a href="/groups">{langSet["Groups"]}</a>
           </li>
         </ul>
       </div>
@@ -47,18 +47,18 @@ const Toolbar = props => {
       <div className="toolbar_navigation-items">
         <ul>
           <li>
-            <a href="/"><i className="fa fa-bell"></i></a>
+            <button title={langSet["Notifications"]}><i className="fa fa-bell"></i></button>
           </li>
           <li>
-            <button onClick={changeLang}>
+            <button title={langSet["Language"]} onClick={changeLang}>
               <i className="fa fa-globe"></i>&nbsp;{lang.toUpperCase()}
             </button>
           </li>
           <li className="toolbar-user-button">
-            <a href="/friends">t.tamaio</a>
+            <a title={langSet["Profile"]} href="/friends">t.tamaio</a>
           </li>
           <li className="toolbar-settings-button">
-            <a href="/friends"><i className="fa fa-gear"></i></a>
+            <a title={langSet["Settings"]} href="/friends"><i className="fa fa-gear"></i></a>
           </li>
         </ul>
       </div>
