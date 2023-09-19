@@ -39,7 +39,7 @@
   color: #fa923f;
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 992px) {
   .side-drawer {
     display: none;
   }

@@ -11,13 +11,13 @@ const Sidedrawer = props => {
     <nav className={drawerClasses.join(" ")}>
       <ul>
         <li>
-          <a href="/">Product</a>
+          <a href="/">Mi Horario</a>
         </li>
         <li>
-          <a href="/">User</a>
+          <a href="/">Amigos</a>
         </li>
         <li>
-          <a href="/">Music</a>
+          <a href="/">Grupos</a>
         </li>
       </ul>
     </nav>

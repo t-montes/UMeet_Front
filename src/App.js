@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppContext from "./AppContext";
-//import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Fab, Action } from 'react-tiny-fab';
 
 import Navbar from './Navbar/Navbar';
@@ -9,15 +9,29 @@ import FriendsPage from './FriendsPage/FriendsPage';
 
 import './App.css';
 import GroupsPage from './GroupsPage/GroupsPage';
-import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
-import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
-import BannerLinking from './BannerLinking/BannerLinking';
+//import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
+//import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
+//import BannerLinking from './BannerLinking/BannerLinking';
+
+const recoverFromLocalStorage = (key, state, setState) => {
+  if (localStorage.getItem(key) !== null) {
+    setState(localStorage.getItem(key));
+  } else {
+    localStorage.setItem(key, state);
+  }
+}
 
 function App() {
   
   const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
-  const [lastLaborDay, setLastLaborDay] = useState(7); // Monday to Saturday
+  const [lastLaborDay, setLastLaborDay] = useState(6); // Monday to Saturday
   const [enableGrid, setEnableGrid] = useState(true);
+  const [lang, setLang] = useState('es'); // ['es', 'en']
+
+  useEffect(() => {
+    recoverFromLocalStorage('lang', lang, setLang);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ctx = {
     laborHours, setLaborHours,
@@ -30,18 +44,21 @@ function App() {
       <AppContext.Provider value={ctx}>
         <Navbar/>
 
-        <Timetable/>
-        <FriendsPage/>
-        <GroupsPage/>
-        <GroupCreateMenu/>
+        {/*<GroupCreateMenu/>
         <EventCreateMenu/>  
-        <BannerLinking/>
+        <BannerLinking/>*/}
 
-        {/*<BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Timetable/>}/>
-          </Routes>
-        </BrowserRouter>*/}
+        <div className="Content">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Timetable/>}/>
+              <Route path="/friends" element={<FriendsPage/>}/>
+              <Route path="/groups" element={<GroupsPage/>}/>
+              {/*TODO: <Route path="/groups/:id" element={<GroupsPage/>}/>*/}
+              {/*TODO: <Route path="/users/:id" element={<UserPage/>}/>*/}
+            </Routes>
+          </BrowserRouter>
+        </div>
 
       </AppContext.Provider>
 
@@ -63,7 +80,7 @@ function App() {
         <Action
             text="Agregar Amigo"
           >
-            <i className="fa fa-hand-peace-o"></i>
+            <i className="fa fa-user-plus"></i>
         </Action>
       </Fab>
     </div>

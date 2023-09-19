@@ -2,7 +2,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  /*background-color: rgb(70, 111, 161);*/
+  background-color: white;
   height: 100px;
   border-bottom: 2px solid var(--gray);
   margin-bottom: 1rem;
@@ -83,7 +83,7 @@
   color: var(--black);
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 991px) {
   .toolbar_navigation-center {
     display: none;
   }
@@ -112,7 +112,7 @@
   }
 }
 
-@media screen and (min-width: 991px) {
+@media screen and (min-width: 992px) {
   .toggle-btn {
     display: none;
   }
