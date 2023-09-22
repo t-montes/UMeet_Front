@@ -38,5 +38,13 @@
     "Welcome": "Welcome",
     "LinkWithBanner": "Link your Banner schedule",
 
+    "ScheduleCustomization": "Schedule Customization",
+    "FirstDay": "First Day",
+    "LastDay": "Last Day",
+    "StartHour": "Start Hour",
+    "EndHour": "End Hour",
+    "SelectTextSize": "Select Text Size",
+    "SelectTextColor": "Select Text Color",
+
     "404": "404 - Page not found"
 }

@@ -6,6 +6,7 @@ import { Fab, Action } from 'react-tiny-fab';
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/FriendsPage';
+import Customization from './Customization/Customization';
 
 import './App.css';
 import GroupsPage from './GroupsPage/GroupsPage';
@@ -71,6 +72,7 @@ function App() {
   return (
     <div className="App">
       <AppContext.Provider value={ctx}>
+        
         <Navbar/>
 
         {/*<GroupCreateMenu/>
@@ -114,6 +116,9 @@ function App() {
             <i className="fa fa-user-plus"></i>
         </Action>
       </Fab>
+
+      <Customization/>
+
     </div>
   );
 }

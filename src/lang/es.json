@@ -38,5 +38,13 @@
     "Welcome": "Bienvenid@",
     "LinkWithBanner": "Vincular tu horario de Banner",
 
+    "ScheduleCustomization": "Personalización de Horario",
+    "FisrtDay": "Primer Día",
+    "LastDay": "Último Día",
+    "StartHour": "Hora de Inicio",
+    "EndHour": "Hora de Fin",
+    "SelectTextSize": "Seleccionar Tamaño de Texto",
+    "SelectTextColor": "Seleccionar Color del Texto",
+
     "404": "404 - Página no encontrada"
 }
