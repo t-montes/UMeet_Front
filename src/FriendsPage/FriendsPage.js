@@ -1,11 +1,10 @@
-import React from "react";
-import Carousel from "@itseasy21/react-elastic-carousel";
 import "./FriendsPage.css";
+import React, { useContext } from "react";
+import Carousel from "@itseasy21/react-elastic-carousel";
 import flechaDer from '../assets/flechaDerecha.png';
 import flechaIzq from '../assets/felchaIzquierda.png';
 import SearchBar from '../SearchBar/SearchBar';
-
-import { friends } from "./friends";
+import AppContext from "../AppContext";
 
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
@@ -15,9 +14,13 @@ const breakPoints = [
 ];
 
 function FriendsPage() {
+
+  const ctx = useContext(AppContext);
+  const { friends } = ctx;
+
   const friendPairs = [];
-  for (let i = 0; i < friends.items.length; i += 2) {
-    friendPairs.push(friends.items.slice(i, i + 2));
+  for (let i = 0; i < friends.length; i += 2) {
+    friendPairs.push(friends.slice(i, i + 2));
   }
 
   return (

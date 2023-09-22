@@ -11,17 +11,10 @@ const GroupsPage = () => {
 
     //const { id } = useParams(); // id of the group
 
-    // const cardsData = [
-    //     { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: [userImage1, userImage2, userImage3]},
-    //     { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: [userImage1, userImage2, userImage3]},
-    //     { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: [userImage1, userImage2, userImage3]},
-    //     { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: [userImage1, userImage2, userImage3]},
-    //     { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: [userImage1, userImage2, userImage3]},
-    //     { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: [userImage1, userImage2, userImage3]},
-    // ];
+    // TODO: Delete this sample data
 
     return (
-        <div className="grid-container">  {}
+        <div className="grid-container">
             {groups.map((card, index) => (
                 <CardUsuario 
                     key={index}

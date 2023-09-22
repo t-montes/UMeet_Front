@@ -17,6 +17,34 @@ import GroupsPage from './GroupsPage/GroupsPage';
 import es from './lang/es.json';
 import en from './lang/en.json';
 
+// mock default data
+const defaultUser = {
+  username: "t.tamaio",
+  name: "Thais Tamaio",
+  image: "assets/icon1.png",
+  email: "t.tamaio@uniandes.edu.co"
+}
+
+const defaultGroups = [
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+];
+
+const defaultFriends = [
+    { name: "Sofia Torres", image: 'assets/icon1.png'},
+    { name: "Jesús Jiménez", image: 'assets/icon3.png'},
+    { name: "Juan Ramírez", image: 'assets/icon2.png'},
+    { name: "Mariana Gómez", image: 'assets/icon4.png'},
+    { name: "Paula Daza", image: 'assets/icon5.png'},
+    { name: "Carlos Falla", image: 'assets/icon6.png'},
+    { name: "Diego López", image: 'assets/icon1.png'},
+    { name: "Santiago Pérez", image: 'assets/icon2.png'},
+];
+
 function App() {
 
   const langs = { es, en };
@@ -34,6 +62,7 @@ function App() {
   const [langSet, setLangSet] = useState(langs[lang]);
   const [user, setUser] = useState({});
   const [groups, setGroups] = useState([]);
+  const [friends, setFriends] = useState(defaultFriends);
 
   useEffect(() => {
     localStorage.setItem('lang', lang);
@@ -42,20 +71,26 @@ function App() {
   }, [ lang ]);
 
   useEffect(() => {
-    // TODO: delete this - get element from Mockup API
+    // TODO: change this - get element from Mockup API
     fetch('https://my.api.mockaroo.com/users.json?key=b07daaf0')
-      .then(response => response.json())
-      .then(data => {
-        setUser(data[0]);
+      .then( response => {
+        if (response.ok) {
+          setUser(response.json());
+        } else {
+          setUser(defaultUser);
+        }
       });
   }, []);
 
   useEffect(() => {
-    // TODO: delete this - get element from Mockup API
+    // TODO: change this - get element from Mockup API
     fetch('https://my.api.mockaroo.com/groups.json?key=13d161b0')
-      .then(response => response.json())
-      .then(data => {
-        setGroups(data);
+      .then( response => {
+        if (response.ok) {
+          setGroups(response.json());
+        } else {
+          setGroups(defaultGroups);
+        }
       });
   }, []);
 
@@ -66,6 +101,7 @@ function App() {
     lang, setLang, langSet,
     user, setUser,
     groups, setGroups,
+    friends, setFriends,
   }
 
   return (
