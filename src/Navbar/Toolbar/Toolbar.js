@@ -55,7 +55,7 @@ const Toolbar = props => {
             </button>
           </li>
           <li className="toolbar-user-button">
-            <a title={langSet["Profile"]} href="/">{user.username}</a>
+            <a title={langSet["Profile"]} href="/">{user?.username ?? "t.tamaio"}</a>
           </li>
           <li className="toolbar-settings-button">
             <a title={langSet["Settings"]} href="/settings"><i className="fa fa-gear"></i></a>

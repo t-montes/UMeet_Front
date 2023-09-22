@@ -56,7 +56,6 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setGroups(data);
-        console.log(data[0].imagenesPerfil);
       });
   }, []);
 
