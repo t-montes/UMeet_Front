@@ -1,48 +1,48 @@
 import React from 'react';
 
 const GroupCard = ({ colorFondo, textoCentral, imagenesPerfil }) => {
-  // TODO: Make responsive!
   return (
+    <div style={{
+        backgroundColor: colorFondo,
+        borderRadius: '15px',
+        width: '90%',
+        maxWidth: '500px',
+        height: '350px',
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '2em',
+        textAlign: 'center',
+        color: 'white',
+        margin: 'auto'
+    }}>
         <div style={{
-            backgroundColor: colorFondo,
-            borderRadius: '15px',
-            width: '375px',
-            height: '375px',
-            position: 'relative',
+            position: 'absolute',
+            top: '5%',
+            left: '5%',
             display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: '30px',
-            textAlign: 'center',
-            color: 'white'
         }}>
-            {/* Display user profile images */}
-            <div style={{
-                position: 'absolute',
-                top: '10px',
-                left: '10px',
-                display: 'flex',
-            }}>
-                {imagenesPerfil.slice(0, 3).map((img, index) => (
-                    <img 
-                        key={index}
-                        src={img} 
-                        alt={"User " + (index + 1)} 
-                        style={{
-                            width: '83px',
-                            height: '83px',
-                            borderRadius: '50%',
-                            border: '2px solid white',
-                            zIndex: 3 - index,
-                            marginLeft: index === 0 ? '0' : '-41.5px'  // Overlap half of the circle
-                        }} 
-                    />
-                ))}
-            </div>
-            {/* Display central text */}
-            <span>{textoCentral}</span>
+            {imagenesPerfil.slice(0, 3).map((img, index) => (
+                <img 
+                    key={index}
+                    src={img} 
+                    alt={"User " + (index + 1)} 
+                    style={{
+                        width: '20%', // width relative to the parent container
+                        aspectRatio: '1/1', // to maintain the aspect ratio
+                        objectFit: 'cover', // to make sure the image covers the area
+                        borderRadius: '50%',
+                        border: '2px solid white',
+                        zIndex: 3 - index,
+                        marginLeft: index === 0 ? '0' : '-10%' // overlap is relative to the parent container
+                    }} 
+                />
+            ))}
         </div>
-    );
+        <span>{textoCentral}</span>
+    </div>
+  );
 };
 
 export default GroupCard;
