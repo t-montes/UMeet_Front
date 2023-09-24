@@ -7,8 +7,8 @@ import Modal from '@mui/material/Modal';
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/FriendsPage';
-import Customization from './Customization/Customization';
 import EventCreateMenu from './EventCreateMenu/EventCreateMenu'; // Uncomment this import
+import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu'; // Assuming you have it in the root, change the path accordingly
 
 
 import './App.css';
@@ -67,6 +67,8 @@ function App() {
   const [groups, setGroups] = useState([]);
   const [friends, setFriends] = useState(defaultFriends);
   const [showEventCreateMenu, setShowEventCreateMenu] = useState(false); // Step 1: Add a new state variable
+  const [showGroupCreateMenu, setShowGroupCreateMenu] = useState(false); // State to control the visibility of the GroupCreateMenu
+
 
   useEffect(() => {
     localStorage.setItem('lang', lang);
@@ -113,7 +115,6 @@ function App() {
       <AppContext.Provider value={ctx}>
         
         <Navbar/>
-        {showEventCreateMenu && <EventCreateMenu onClose={() => setShowEventCreateMenu(false)}/>}
         {/*<GroupCreateMenu/>
         <EventCreateMenu/>  
         <BannerLinking/>*/}
@@ -131,7 +132,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
-        {!showEventCreateMenu && (
+        {!showGroupCreateMenu && !showEventCreateMenu && (
 
 <Fab
   alwaysShowTitle={true /* false, makes items only show title on hover */}
@@ -147,6 +148,8 @@ function App() {
   </Action>
   <Action
       text={langSet["CreateGroup"]}
+      onClick={() => setShowGroupCreateMenu(true)}
+
     >
       <i className="fa fa-group"></i>
   </Action>
@@ -165,6 +168,15 @@ aria-labelledby="event-create-modal"
 >
 <EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
 </Modal>
+
+ {/* Modal to hold the GroupCreateMenu */}
+ <Modal
+          open={showGroupCreateMenu}
+          onClose={() => setShowGroupCreateMenu(false)}
+          aria-labelledby="group-create-modal"
+        >
+          <GroupCreateMenu onClose={() => setShowGroupCreateMenu(false)} />
+        </Modal>
   </AppContext.Provider>
 </div>
 );
