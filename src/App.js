@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import AppContext from "./AppContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Fab, Action } from 'react-tiny-fab';
+import Modal from '@mui/material/Modal';
 
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/FriendsPage';
 import Customization from './Customization/Customization';
+import EventCreateMenu from './EventCreateMenu/EventCreateMenu'; // Uncomment this import
+
 
 import './App.css';
 import GroupsPage from './GroupsPage/GroupsPage';
@@ -63,6 +66,7 @@ function App() {
   const [user, setUser] = useState({});
   const [groups, setGroups] = useState([]);
   const [friends, setFriends] = useState(defaultFriends);
+  const [showEventCreateMenu, setShowEventCreateMenu] = useState(false); // Step 1: Add a new state variable
 
   useEffect(() => {
     localStorage.setItem('lang', lang);
@@ -109,7 +113,7 @@ function App() {
       <AppContext.Provider value={ctx}>
         
         <Navbar/>
-
+        {showEventCreateMenu && <EventCreateMenu onClose={() => setShowEventCreateMenu(false)}/>}
         {/*<GroupCreateMenu/>
         <EventCreateMenu/>  
         <BannerLinking/>*/}
@@ -127,35 +131,43 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
+        {!showEventCreateMenu && (
 
-      </AppContext.Provider>
+<Fab
+  alwaysShowTitle={true /* false, makes items only show title on hover */}
+  icon={<i className="fa fa-plus"></i>}
+  styles={{ backgroundColor: '#2c3e50' }}
+>
+  <Action
+    text={langSet["CreateEvent"]}
+    onClick={() => setShowEventCreateMenu(true)}
 
-      <Fab
-        alwaysShowTitle={true /* false, makes items only show title on hover */}
-        icon={<i className="fa fa-plus"></i>}
-        styles={{ backgroundColor: '#2c3e50' }}
-      >
-        <Action
-          text={langSet["CreateEvent"]}
-        >
-          <i className="fa fa-calendar"></i>
-        </Action>
-        <Action
-            text={langSet["CreateGroup"]}
-          >
-            <i className="fa fa-group"></i>
-        </Action>
-        <Action
-            text={langSet["AddFriend"]}
-          >
-            <i className="fa fa-user-plus"></i>
-        </Action>
-      </Fab>
-
-      <Customization/>
-
-    </div>
-  );
+  >
+    <i className="fa fa-calendar"></i>
+  </Action>
+  <Action
+      text={langSet["CreateGroup"]}
+    >
+      <i className="fa fa-group"></i>
+  </Action>
+  <Action
+      text={langSet["AddFriend"]}
+    >
+      <i className="fa fa-user-plus"></i>
+  </Action>
+</Fab>
+)};
+{/* Modal to hold the EventCreateMenu */}
+<Modal
+open={showEventCreateMenu}
+onClose={() => setShowEventCreateMenu(false)}
+aria-labelledby="event-create-modal"
+>
+<EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
+</Modal>
+  </AppContext.Provider>
+</div>
+);
 }
 
 export default App;
