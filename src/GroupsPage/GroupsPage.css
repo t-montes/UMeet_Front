@@ -1,14 +1,31 @@
-.GroupsPage-carousel-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 columnas de igual ancho */
+    gap: 20px;  /* Espacio entre las tarjetas */
+    justify-content: center;  /* Centra las tarjetas horizontalmente */
+    align-items: center;  /* Centra las tarjetas verticalmente */
+    max-width: 1000px;  /* Un ancho máximo para que no se vean demasiado grandes en pantallas anchas */
+    margin: 0 auto;  /* Centra el contenedor principal en la página */
 }
 
-.GroupsPage-group-pair-container{
-    display: block;
+
+/* Mobile view: one card per row */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
-.GroupsPage-group-container{
-    margin-block-start: 50px;
-    margin-block-end: 10px;
+
+/* Tablet view: two cards per row */
+@media (min-width: 601px) and (max-width: 900px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop view: three cards per row */
+@media (min-width: 901px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
