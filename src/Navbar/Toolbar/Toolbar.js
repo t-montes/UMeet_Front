@@ -1,11 +1,12 @@
 import "./Toolbar.css";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import SideMenu from "../Sidemenu/Sidemenu";
+import DropdownMenu from "../../DropdownMenu/DropdownMenu";
+import DropdownFriends from "../../FriendsPage/DropdownFriends/DropdownFriends";
 import logo from "../../assets/large-logo.png";
 import AppContext from "../../AppContext";
 
 const Toolbar = props => {
-
   const ctx = useContext(AppContext);
   const { lang, langSet, setLang, user } = ctx;
 
@@ -16,6 +17,51 @@ const Toolbar = props => {
       setLang('es');
     }
   }
+
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    setDropdownVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setDropdownVisible(false);
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setOpen(!open);
+  };
+
+  // Ref para el botón de notificaciones
+  const notificationButtonRef = useRef(null);
+  
+  // Ref para el dropdownMenu
+  const dropdownMenuRef = useRef(null);
+
+  // Efecto para cerrar el DropdownMenu cuando se hace clic en cualquier parte excepto en el menú o el botón de notificaciones
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        open &&
+        notificationButtonRef.current &&
+        !notificationButtonRef.current.contains(event.target) &&
+        dropdownMenuRef.current &&
+        !dropdownMenuRef.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    // Agregar el manejador de eventos al documento
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      // Limpiar el manejador de eventos al desmontar el componente
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [open]);
 
   return (
   <header className="toolbar">
@@ -29,14 +75,21 @@ const Toolbar = props => {
             <img src={logo} alt="Umeet Logo"/>
         </a>
       </div>
-      {/*<div className="spacer" />*/}
       <div className="toolbar_navigation-items toolbar_navigation-center">
         <ul>
           <li>
             <a href="/">{langSet["MySchedule"]}</a>
           </li>
           <li>
-            <a href="/friends">{langSet["Friends"]}</a>
+            <div
+                className="menu"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button>Amigos</button>
+                {/* <DropdownMenu /> */}
+                {isDropdownVisible && <DropdownFriends />}
+            </div>
           </li>
           <li>
             <a href="/groups">{langSet["Groups"]}</a>
@@ -47,7 +100,18 @@ const Toolbar = props => {
       <div className="toolbar_navigation-items">
         <ul>
           <li>
-            <button title={langSet["Notifications"]}><i className="fa fa-bell"></i></button>
+            <button
+              ref={notificationButtonRef}
+              title={langSet["Notifications"]}
+              onClick={toggleDropdown}
+            >
+              <i className="fa fa-bell"></i>
+            </button>
+            {open && (
+              <div ref={dropdownMenuRef}>
+                <DropdownMenu />
+              </div>
+            )}
           </li>
           <li>
             <button title={langSet["Language"]} onClick={changeLang}>

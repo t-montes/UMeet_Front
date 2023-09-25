@@ -1,0 +1,104 @@
+.AddFriendsPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .AddFriendsPage_friends {
+    max-width: 300px;
+  }
+  
+  .AddFriendsPage_friend-image {
+    height: auto;
+    max-width: 300px;
+  }
+  
+  .AddFriendsPage_img1 {
+    max-width: 20px;
+    margin: 0 auto;
+    margin-left: 50px;
+  }
+  
+  .AddFriendsPage_img2 {
+    max-width: 20px;
+    margin: 0 auto;
+    margin-right: 50px;
+  }
+  
+  .AddFriendsPage_friend-name {
+    color: white;
+    text-align: center;
+    background-color: #4A6FA5;
+    border-radius: 10px;
+    padding: 10px;
+    margin: auto;
+    max-width: 200px;
+  }
+  
+  .AddFriendsPage_add-button {
+    background-color: #4A6FA5;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+    max-width: 200px;
+    text-align: center;
+  }
+  
+  .added {
+    background-color: #7DC855; /* Cambia el color cuando se hace clic */
+  }
+  
+  .custom-arrow-PREV,
+  .custom-arrow-NEXT {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .custom-arrow-PREV {
+    left: 0; /* Posición a la izquierda */
+  }
+  
+  .custom-arrow-NEXT {
+    right: 0; /* Posición a la derecha */
+  }
+  
+  .AddFriendsPage_pagination-container {
+    margin: 20px 0;
+  }
+  
+  .AddFriendsPage_custom-pagination-dot {
+    width: 12px;
+    height: 14px;
+    border: 1px solid #00272B;
+    background-color: transparent;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .AddFriendsPage_custom-pagination-dot.active {
+    background-color: #00272B;
+  }
+  
+  .carousel-single-section .custom-arrow-PREV,
+  .carousel-single-section .custom-arrow-NEXT,
+  .carousel-single-section .AddFriendsPage_custom-pagination-dot {
+    display: none;
+  }
+  
+  .AddFriendsPage_no-results-message{
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    background-color: #4A6FA5;
+    border-radius: 10px;
+    padding: 10px;
+    margin: auto;
+  }

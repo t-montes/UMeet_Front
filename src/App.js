@@ -6,7 +6,9 @@ import Modal from '@mui/material/Modal';
 
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
-import FriendsPage from './FriendsPage/FriendsPage';
+import FriendsPage from './FriendsPage/Friends/FriendsPage';
+import AddFriendsPage from './FriendsPage/AddFriends/AddFriendsPage';
+import Customization from './Customization/Customization';
 import EventCreateMenu from './EventCreateMenu/EventCreateMenu'; // Uncomment this import
 import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu'; // Assuming you have it in the root, change the path accordingly
 
@@ -124,7 +126,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Timetable/>}/>
               <Route path="/friends" element={<FriendsPage/>}/>
+              <Route path="/friends/add" element={<AddFriendsPage/>}/>
               <Route path="/groups" element={<GroupsPage/>}/>
+              <Route path="/settings" element={<Customization/>}/>
               {/*TODO: <Route path="/groups/:id" element={<GroupsPage/>}/>*/}
               {/*TODO: <Route path="/users/:id" element={<UserPage/>}/>*/}
               {/*TODO: <Route path="/settings" element={<Settings/>}/>*/}
