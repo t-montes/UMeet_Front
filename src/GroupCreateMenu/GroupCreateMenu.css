@@ -1,17 +1,37 @@
 .container {
-    width: 550px;
-    height: 250px;
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    border: 1px solid #000000;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #000000;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
   }
+  .title, .label, .button {
+    font-size: 0.8rem;
+  }
+  .input, .button {
+    padding: 5px;
+  }
+  .membersContainer {
+    gap: 5px;
+  }
+  .member {
+    width: 30px;
+    height: 30px;
+  }
+}
   
   .title {
     margin: 0;

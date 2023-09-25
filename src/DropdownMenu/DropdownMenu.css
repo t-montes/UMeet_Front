@@ -1,0 +1,93 @@
+.dropdown {
+  position: absolute;
+  top: 75px;
+  width: 300px;
+  transform: translateX(-45%);
+  background-color: var(--grey);
+  padding: 1rem;
+  z-index: 10;
+  background-color: var(--cyan);
+  border: 1px solid #00272b;
+  border-radius: 10px;
+  transition: height 0.3s ease;
+  flex-direction: column; /* te amo felx-direction */
+  max-height: 400px; /* Cambia esto al ancho máximo deseado */
+  overflow-x: auto; /* Permite desplazamiento horizontal si se excede el ancho máximo */
+}
+
+.dropdown_menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  max-width: 275px; /* Cambia max-width a 275px */
+  white-space: normal; /* Agrega white-space para permitir el ajuste de línea */
+}
+
+.dropdown_menu-item:last-child {
+  border-bottom: none; /* No se muestra la línea divisoria en el último elemento */
+}
+
+.dropdown_menu-item-content {
+  width: 100%; /* Cambiamos el ancho al 100% para evitar recortes */
+}
+
+.dropdown_menu-item:hover {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  width: 100%;
+}
+
+/* ... Código previo ... */
+
+.dropdown_item-button {
+  background-color: var(--cyan);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  text-align: center; /* Centra el texto horizontalmente */
+  text-decoration: none;
+  display: block; /* Cambia a "block" para centrar verticalmente */
+  font-size: 14px;
+  margin: 10px auto; /* Centra el botón horizontalmente */
+  border-radius: 4px;
+}
+
+/* Estilos para el botón "Cargar más" */
+.dropdown_load-more-button {
+  background-color: #4A6FA5 !important; /* Agregar !important */
+  color: white !important;;
+  text-align: center;
+  border-radius: 4px;
+  margin: 10px auto; /* Centra el botón horizontalmente */
+  display: block; /* Cambia a "block" para centrar verticalmente */
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+}
+
+.dropdown_load-more-button:hover {
+  background-color: #2E4C7E !important; /* Agregar !important */
+}
+
+.dropdown_notification-text {
+  font-size: 16px; /* Tamaño de fuente para el texto */
+  margin-bottom: 5px; /* Espacio entre el texto y el tiempo */
+}
+
+.dropdown_notification-time {
+  font-size: 12px; /* Tamaño de fuente para el tiempo */
+  color: gray; /* Color del tiempo */
+  text-align: right;
+}
+
+.dropdown_notification-text.centered {
+  text-align: center;
+}
+
+.dropdown.open {
+  opacity: 1; /* Añade esta línea */
+  transform: translateY(0); /* Añade esta línea */
+  pointer-events: auto; /* Añade esta línea */
+}

@@ -8,19 +8,23 @@ import {
   MenuItem,
   Button,
   Paper,
-  FormControlLabel
+  FormControlLabel,
+  useMediaQuery
 } from '@mui/material';
 import { Alarm } from '@mui/icons-material';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { styled } from '@mui/system';
 import AppContext from "../AppContext";
+import CloseIcon from '@mui/icons-material/Close'; // Import Close Icon
+
 
 const CustomCalendar = styled(Calendar)`
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 8px;
   width: 100%;
+  margin: 0 auto;
 
 
   .react-calendar__tile--active {
@@ -30,33 +34,65 @@ const CustomCalendar = styled(Calendar)`
   }
 `;
 
-export default function CreateEventComponent() {
+export default function CreateEventComponent({ onClose }) {
 
   const ctx = useContext(AppContext);
   const { langSet, lang } = ctx;
 
   const [date, setDate] = useState(new Date());
 
+  const isSmallScreen = useMediaQuery('(max-width:770px)');
+  const isLargeScreen = useMediaQuery('(max-width:1200px)');
+
+
   // TODO: Make responsive!
   return (
-    <Paper elevation={3} style={{ width: '1058px', height: '580px', padding: '24px', backgroundColor: '#DBE9EE',  border: '1px solid black',   margin: '0 auto'}}>
+    <Box sx={{
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      p: 2,
+      backgroundColor: 'white',
+      outline: 'none',
+      width: isLargeScreen ? '100%' : 'auto',
+    }}>
+      <Paper
+        elevation={3}
+        sx={{
+          width: isLargeScreen ? '100%' : '1058px',
+          height: isLargeScreen ? 'auto' : '580px',
+          p: 2,
+          backgroundColor: '#DBE9EE',
+          border: '1px solid black',
+          margin: '0 auto',
+          overflowY: isLargeScreen ? 'auto' : 'visible',
+        }}
+      >
+                {/* Close IconButton with an X icon */}
+        <IconButton 
+          onClick={onClose}
+          style={{ position: 'absolute', top: '10px', right: '10px' }}
+        >
+          <CloseIcon />
+        </IconButton>
         <h2>{langSet["CreateEvent"]}</h2>
 
-      <Box display="flex" justifyContent="space-between" height="100%">
+      <Box  sx = {{display: isSmallScreen? "block":"flex", justifyContent:"space-between", height:"100%"}}>
         {/* Primera columna */}
         <Box display="flex" flexDirection="column" flex="1" pr={2}>
         <TextField label={langSet["EventName"]} fullWidth margin="normal" />
         <TextField label={langSet["Location"]} fullWidth margin="normal" />
         <TextField label={langSet["Link"]} fullWidth margin="normal" />
 
-        <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
+        <Box sx={{display: isSmallScreen?"none":"flex", justifyContent:"center", alignItems:"center", mt:2}}>
           <FormControlLabel
             control={<Switch color="primary" />}
             label={langSet["PrivateEvent"]}
           />
         </Box>
 
-        <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
+        <Box sx={{display:isSmallScreen?"none":"flex", justifyContent:"center", alignItems:"center", mt:2}}>
           <IconButton color="primary">
             <Alarm />
           </IconButton>
@@ -73,7 +109,7 @@ export default function CreateEventComponent() {
       </Box>
 
         {/* Segunda columna */}
-        <Box flex="1" pl={2}>
+        <Box flex="1" pl={1}>
           {/* Componente de Calendario */}
           <CustomCalendar 
           onChange={setDate}
@@ -124,5 +160,6 @@ export default function CreateEventComponent() {
         </Box>
       </Box>
     </Paper>
+    </Box>
   );
 }

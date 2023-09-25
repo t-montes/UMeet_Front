@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import AppContext from "./AppContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Fab, Action } from 'react-tiny-fab';
+import Modal from '@mui/material/Modal';
 
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
-import FriendsPage from './FriendsPage/FriendsPage';
+import FriendsPage from './FriendsPage/Friends/FriendsPage';
+import AddFriendsPage from './FriendsPage/AddFriends/AddFriendsPage';
+import Customization from './Customization/Customization';
+import EventCreateMenu from './EventCreateMenu/EventCreateMenu'; // Uncomment this import
+import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu'; // Assuming you have it in the root, change the path accordingly
+
 
 import './App.css';
 import GroupsPage from './GroupsPage/GroupsPage';
@@ -15,6 +21,34 @@ import GroupsPage from './GroupsPage/GroupsPage';
 
 import es from './lang/es.json';
 import en from './lang/en.json';
+
+// mock default data
+const defaultUser = {
+  username: "t.tamaio",
+  name: "Thais Tamaio",
+  image: "assets/icon1.png",
+  email: "t.tamaio@uniandes.edu.co"
+}
+
+const defaultGroups = [
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+];
+
+const defaultFriends = [
+    { name: "Sofia Torres", image: 'assets/icon1.png'},
+    { name: "Jesús Jiménez", image: 'assets/icon3.png'},
+    { name: "Juan Ramírez", image: 'assets/icon2.png'},
+    { name: "Mariana Gómez", image: 'assets/icon4.png'},
+    { name: "Paula Daza", image: 'assets/icon5.png'},
+    { name: "Carlos Falla", image: 'assets/icon6.png'},
+    { name: "Diego López", image: 'assets/icon1.png'},
+    { name: "Santiago Pérez", image: 'assets/icon2.png'},
+];
 
 function App() {
 
@@ -32,6 +66,11 @@ function App() {
   const [lang, setLang] = useState(localStorage.getItem('lang'));
   const [langSet, setLangSet] = useState(langs[lang]);
   const [user, setUser] = useState({});
+  const [groups, setGroups] = useState([]);
+  const [friends, setFriends] = useState(defaultFriends);
+  const [showEventCreateMenu, setShowEventCreateMenu] = useState(false); // Step 1: Add a new state variable
+  const [showGroupCreateMenu, setShowGroupCreateMenu] = useState(false); // State to control the visibility of the GroupCreateMenu
+
 
   useEffect(() => {
     localStorage.setItem('lang', lang);
@@ -40,11 +79,26 @@ function App() {
   }, [ lang ]);
 
   useEffect(() => {
-    // TODO: delete this - get element from Mockup API
+    // TODO: change this - get element from Mockup API
     fetch('https://my.api.mockaroo.com/users.json?key=b07daaf0')
-      .then(response => response.json())
-      .then(data => {
-        setUser(data[0]);
+      .then( response => {
+        if (response.ok) {
+          setUser(response.json());
+        } else {
+          setUser(defaultUser);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    // TODO: change this - get element from Mockup API
+    fetch('https://my.api.mockaroo.com/groups.json?key=13d161b0')
+      .then( response => {
+        if (response.ok) {
+          setGroups(response.json());
+        } else {
+          setGroups(defaultGroups);
+        }
       });
   }, []);
 
@@ -54,13 +108,15 @@ function App() {
     enableGrid, setEnableGrid,
     lang, setLang, langSet,
     user, setUser,
+    groups, setGroups,
+    friends, setFriends,
   }
 
   return (
     <div className="App">
       <AppContext.Provider value={ctx}>
+        
         <Navbar/>
-
         {/*<GroupCreateMenu/>
         <EventCreateMenu/>  
         <BannerLinking/>*/}
@@ -70,7 +126,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Timetable/>}/>
               <Route path="/friends" element={<FriendsPage/>}/>
+              <Route path="/friends/add" element={<AddFriendsPage/>}/>
               <Route path="/groups" element={<GroupsPage/>}/>
+              <Route path="/settings" element={<Customization/>}/>
               {/*TODO: <Route path="/groups/:id" element={<GroupsPage/>}/>*/}
               {/*TODO: <Route path="/users/:id" element={<UserPage/>}/>*/}
               {/*TODO: <Route path="/settings" element={<Settings/>}/>*/}
@@ -78,32 +136,54 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
+        {!showGroupCreateMenu && !showEventCreateMenu && (
 
-      </AppContext.Provider>
+<Fab
+  alwaysShowTitle={true /* false, makes items only show title on hover */}
+  icon={<i className="fa fa-plus"></i>}
+  styles={{ backgroundColor: '#2c3e50' }}
+>
+  <Action
+    text={langSet["CreateEvent"]}
+    onClick={() => setShowEventCreateMenu(true)}
 
-      <Fab
-        alwaysShowTitle={true /* false, makes items only show title on hover */}
-        icon={<i className="fa fa-plus"></i>}
-        styles={{ backgroundColor: '#2c3e50' }}
-      >
-        <Action
-          text={langSet["CreateEvent"]}
+  >
+    <i className="fa fa-calendar"></i>
+  </Action>
+  <Action
+      text={langSet["CreateGroup"]}
+      onClick={() => setShowGroupCreateMenu(true)}
+
+    >
+      <i className="fa fa-group"></i>
+  </Action>
+  <Action
+      text={langSet["AddFriend"]}
+    >
+      <i className="fa fa-user-plus"></i>
+  </Action>
+</Fab>
+)};
+{/* Modal to hold the EventCreateMenu */}
+<Modal
+open={showEventCreateMenu}
+onClose={() => setShowEventCreateMenu(false)}
+aria-labelledby="event-create-modal"
+>
+<EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
+</Modal>
+
+ {/* Modal to hold the GroupCreateMenu */}
+ <Modal
+          open={showGroupCreateMenu}
+          onClose={() => setShowGroupCreateMenu(false)}
+          aria-labelledby="group-create-modal"
         >
-          <i className="fa fa-calendar"></i>
-        </Action>
-        <Action
-            text={langSet["CreateGroup"]}
-          >
-            <i className="fa fa-group"></i>
-        </Action>
-        <Action
-            text={langSet["AddFriend"]}
-          >
-            <i className="fa fa-user-plus"></i>
-        </Action>
-      </Fab>
-    </div>
-  );
+          <GroupCreateMenu onClose={() => setShowGroupCreateMenu(false)} />
+        </Modal>
+  </AppContext.Provider>
+</div>
+);
 }
 
 export default App;

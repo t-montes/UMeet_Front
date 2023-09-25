@@ -1,0 +1,82 @@
+/* Customization */
+.customization {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: 50px;
+  }
+  
+  .customization_btn {
+    padding: 10px 20px;
+    display: block;
+    margin: 100px auto 0;
+    font-size: 18px;
+    color: #00272B; /* Cambiar el color del texto del botón */
+  }
+  
+  .customization,
+  .customization_overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  }
+  
+  .customization_overlay {
+    background: rgba(254, 252, 252, 0.548);
+  }
+  
+  .customization_content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #ffffff;
+    padding: 14px 28px;
+    border-radius: 10px;
+    max-height: 70vh; /* Altura máxima del contenido */
+    overflow-y: auto; /* Habilitar el desplazamiento vertical si el contenido excede la altura máxima */
+    border: 1px solid #00272B; /* Cambiar el color del borde */
+    color: #00272B; /* Cambiar el color del texto dentro del contenido */
+  }
+  
+  .customization_close {
+    background-color: #C1FF72; /* Cambiar el color de fondo del botón a #C1FF72 */
+    color: #00272B; /* Cambiar el color del texto del botón a #00272B */
+    border-radius: 10px; /* Hacer que las esquinas sean redondas */
+    padding: 10px 20px; /* Ajustar el relleno del botón según sea necesario */
+    cursor: pointer; /* Cambiar el cursor al puntero al pasar el mouse sobre el botón */
+    border: none; /* Eliminar el borde del botón si es necesario */
+    font-size: 16px; /* Cambiar el tamaño del texto del botón */
+  }
+  
+  
+  .customization_btn-container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+  }
+  
+  .customization_select-customization_container {
+    display: flex;
+    gap: 20px;
+    margin: 0 auto;
+  }
+  
+  .customization_container {
+    margin: 30px;
+    justify-content: center; /* Centrar horizontalmente */
+  }
+  
+  .customization_container2 {
+    margin: 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .customization_select-label2 {
+    margin-right: 10px;
+  }

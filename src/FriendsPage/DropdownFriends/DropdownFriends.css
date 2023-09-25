@@ -1,0 +1,23 @@
+.dropdown_friends-menu{
+  box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
+  transition: all linear 0.3s;
+}
+
+.dropdown_friends {
+  position: absolute;
+  transform: translateX(-30%);
+  background-color: var(--grey);
+  padding: 1rem;
+  z-index: 10;
+  background-color: var(--cyan);
+  border: 1px solid #00272b;
+  border-radius: 10px;
+  transition: height 0.3s ease;
+  overflow-x: auto; /* Permite desplazamiento horizontal si se excede el ancho máximo */
+}
+
+.dropdown_friends-notifications-text {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
