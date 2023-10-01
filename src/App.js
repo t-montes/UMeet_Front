@@ -8,16 +8,14 @@ import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/Friends/FriendsPage';
 import AddFriendsPage from './FriendsPage/AddFriends/AddFriendsPage';
-import Customization from './Customization/Customization';
+import GroupsPage from './GroupsPage/GroupsPage';
 import EventCreateMenu from './EventCreateMenu/EventCreateMenu'; // Uncomment this import
 import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu'; // Assuming you have it in the root, change the path accordingly
+import BannerLinking from './BannerLinking/BannerLinking';
+import Settings from './Settings/Settings';
 
 
 import './App.css';
-import GroupsPage from './GroupsPage/GroupsPage';
-//import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
-//import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
-//import BannerLinking from './BannerLinking/BannerLinking';
 
 import es from './lang/es.json';
 import en from './lang/en.json';
@@ -31,12 +29,13 @@ const defaultUser = {
 }
 
 const defaultGroups = [
-  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
-  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
-  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
-  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
-  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
-  { colorFondo: "#4A6FA5" , textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , colorTexto:"white", textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#C0D6DF" , colorTexto:"black", textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#C0D6DF" , colorTexto:"black", textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , colorTexto:"white", textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#4A6FA5" , colorTexto:"white", textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#C0D6DF" , colorTexto:"black", textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
+  { colorFondo: "#C0D6DF" , colorTexto:"black", textoCentral: "Programación con tecnologías web" , imagenesPerfil: ["assets/icon1.png", "assets/icon2.png", "assets/icon3.png"]},
 ];
 
 const defaultFriends = [
@@ -57,7 +56,7 @@ function App() {
   // get default lang from localStorage, if not, set it to 'es'
   const defaultLang = localStorage.getItem('lang');
   if (defaultLang === null) {
-    localStorage.setItem('lang', 'es');
+    localStorage.setItem('lang', (navigator.language || navigator.userLanguage).split('-')[0]);
   }
   
   const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
@@ -65,9 +64,7 @@ function App() {
   const [enableGrid, setEnableGrid] = useState(true);
   const [lang, setLang] = useState(localStorage.getItem('lang'));
   const [langSet, setLangSet] = useState(langs[lang]);
-  const [user, setUser] = useState({});
-  const [groups, setGroups] = useState([]);
-  const [friends, setFriends] = useState(defaultFriends);
+  const [user, setUser] = useState(defaultUser);
   const [showEventCreateMenu, setShowEventCreateMenu] = useState(false); // Step 1: Add a new state variable
   const [showGroupCreateMenu, setShowGroupCreateMenu] = useState(false); // State to control the visibility of the GroupCreateMenu
 
@@ -79,28 +76,37 @@ function App() {
   }, [ lang ]);
 
   useEffect(() => {
-    // TODO: change this - get element from Mockup API
     fetch('https://my.api.mockaroo.com/users.json?key=b07daaf0')
       .then( response => {
-        if (response.ok) {
-          setUser(response.json());
-        } else {
-          setUser(defaultUser);
-        }
+        if (response.ok) 
+          return response.json();
+        else
+          return defaultUser;
+      })
+      .then( response => {
+        setUser(response);
       });
   }, []);
 
-  useEffect(() => {
-    // TODO: change this - get element from Mockup API
-    fetch('https://my.api.mockaroo.com/groups.json?key=13d161b0')
+    const loadGroups = (async () => {
+      return await fetch('https://my.api.mockaroo.com/groups.json?key=13d161b0')
       .then( response => {
-        if (response.ok) {
-          setGroups(response.json());
-        } else {
-          setGroups(defaultGroups);
-        }
+        if (response.ok) 
+          return response.json();
+        else
+          return defaultGroups;
       });
-  }, []);
+  });
+
+  const loadFriends = (async () => {
+    return await fetch('https://my.api.mockaroo.com/friends.json?key=b07daaf0')
+    .then( response => {
+      if (response.ok) 
+        return response.json();
+      else
+        return defaultFriends;
+    });
+  });
 
   const ctx = {
     laborHours, setLaborHours,
@@ -108,8 +114,7 @@ function App() {
     enableGrid, setEnableGrid,
     lang, setLang, langSet,
     user, setUser,
-    groups, setGroups,
-    friends, setFriends,
+    loadGroups, loadFriends
   }
 
   return (
@@ -117,10 +122,6 @@ function App() {
       <AppContext.Provider value={ctx}>
         
         <Navbar/>
-        {/*<GroupCreateMenu/>
-        <EventCreateMenu/>  
-        <BannerLinking/>*/}
-
         <div className="Content">
           <BrowserRouter>
             <Routes>
@@ -128,59 +129,56 @@ function App() {
               <Route path="/friends" element={<FriendsPage/>}/>
               <Route path="/friends/add" element={<AddFriendsPage/>}/>
               <Route path="/groups" element={<GroupsPage/>}/>
-              <Route path="/settings" element={<Customization/>}/>
+              <Route path="/settings" element={<Settings/>}/>
+              <Route path="/banner-linking" element={<BannerLinking/>}/>
               {/*TODO: <Route path="/groups/:id" element={<GroupsPage/>}/>*/}
               {/*TODO: <Route path="/users/:id" element={<UserPage/>}/>*/}
-              {/*TODO: <Route path="/settings" element={<Settings/>}/>*/}
               <Route path="*" element={<h1>{langSet["404"]}</h1>}/>
             </Routes>
           </BrowserRouter>
         </div>
         {!showGroupCreateMenu && !showEventCreateMenu && (
+          <Fab
+            alwaysShowTitle={true /* false, makes items only show title on hover */}
+            icon={<i className="fa fa-plus"></i>}
+            styles={{ backgroundColor: '#2c3e50' }}
+          >
+            <Action
+              text={langSet["CreateEvent"]}
+              onClick={() => setShowEventCreateMenu(true)}
 
-<Fab
-  alwaysShowTitle={true /* false, makes items only show title on hover */}
-  icon={<i className="fa fa-plus"></i>}
-  styles={{ backgroundColor: '#2c3e50' }}
->
-  <Action
-    text={langSet["CreateEvent"]}
-    onClick={() => setShowEventCreateMenu(true)}
-
-  >
-    <i className="fa fa-calendar"></i>
-  </Action>
-  <Action
-      text={langSet["CreateGroup"]}
-      onClick={() => setShowGroupCreateMenu(true)}
-
-    >
-      <i className="fa fa-group"></i>
-  </Action>
-  <Action
-      text={langSet["AddFriend"]}
-    >
-      <i className="fa fa-user-plus"></i>
-  </Action>
-</Fab>
-)};
-{/* Modal to hold the EventCreateMenu */}
-<Modal
-open={showEventCreateMenu}
-onClose={() => setShowEventCreateMenu(false)}
-aria-labelledby="event-create-modal"
->
-<EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
-</Modal>
-
- {/* Modal to hold the GroupCreateMenu */}
- <Modal
+            >
+              <i className="fa fa-calendar"></i>
+            </Action>
+            <Action
+                text={langSet["CreateGroup"]}
+                onClick={() => setShowGroupCreateMenu(true)}
+              >
+                <i className="fa fa-group"></i>
+            </Action>
+            <Action
+                text={langSet["AddFriend"]}
+                onClick={() => window.location.href = "/friends/add"}
+              >
+                <i className="fa fa-user-plus"></i>
+            </Action>
+          </Fab>
+        )}
+        <Modal
+          open={showEventCreateMenu}
+          onClose={() => setShowEventCreateMenu(false)}
+          aria-labelledby="event-create-modal"
+          // fix: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+        >
+          <EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
+        </Modal>
+        <Modal
           open={showGroupCreateMenu}
           onClose={() => setShowGroupCreateMenu(false)}
           aria-labelledby="group-create-modal"
         >
           <GroupCreateMenu onClose={() => setShowGroupCreateMenu(false)} />
-        </Modal>
+      </Modal>
   </AppContext.Provider>
 </div>
 );

@@ -1,11 +1,10 @@
-// AddFriendsPage.js
-import React, { useState, useEffect } from "react";
-import Carousel from "@itseasy21/react-elastic-carousel";
 import "./AddFriendsPage.css";
+import React, { useState, useEffect, useContext } from "react";
+import AppContext from "../../AppContext";
+import Carousel from "@itseasy21/react-elastic-carousel";
 import flechaDer from '../../assets/flechaDerecha.png';
 import flechaIzq from '../../assets/felchaIzquierda.png';
 import SearchBar from '../../SearchBar/SearchBar';
-import { friends } from "../friends";
 
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
@@ -15,11 +14,13 @@ const breakPoints = [
 ];
 
 function AddFriendsPage() {
-  // Estado para el texto de búsqueda
-  const [searchText, setSearchText] = useState('');
+  const { loadFriends } = useContext(AppContext);
 
   // Estado para los pares de amigos filtrados
   const [filteredFriendPairs, setFilteredFriendPairs] = useState([]);
+
+  // Estado para el texto de búsqueda
+  const [searchText, setSearchText] = useState('');
 
   // Estado local para el estado de cada botón de amigo
   const [friendButtonStates, setFriendButtonStates] = useState({});
@@ -30,19 +31,22 @@ function AddFriendsPage() {
   };
 
   useEffect(() => {
-    // Filtrar amigos basados en el texto de búsqueda
-    const filteredFriends = friends.items.filter(friend =>
-      friend.name.toLowerCase().includes(searchText.toLowerCase())
-    );
+    loadFriends().then((friends) => {
+      // Filtrar amigos basados en el texto de búsqueda
+      const filteredFriends = friends.filter(friend =>
+        friend.name.toLowerCase().includes(searchText.toLowerCase())
+      );
 
-    // Crear pares de amigos filtrados
-    const newFriendPairs = [];
-    for (let i = 0; i < filteredFriends.length; i += 2) {
-      newFriendPairs.push(filteredFriends.slice(i, i + 2));
-    }
+      // Crear pares de amigos filtrados
+      const newFriendPairs = [];
+      for (let i = 0; i < filteredFriends.length; i += 2) {
+        newFriendPairs.push(filteredFriends.slice(i, i + 2));
+      }
 
-    // Actualizar el estado de los pares de amigos filtrados
-    setFilteredFriendPairs(newFriendPairs);
+      // Actualizar el estado de los pares de amigos filtrados
+      setFilteredFriendPairs(newFriendPairs);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText]);  // Dependencia en searchText para re-ejecutar useEffect cuando searchText cambie
 
   // Función para manejar el clic en el botón
