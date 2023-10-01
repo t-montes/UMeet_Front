@@ -76,36 +76,75 @@ function App() {
   }, [ lang ]);
 
   useEffect(() => {
-    fetch('https://my.api.mockaroo.com/users.json?key=b07daaf0')
-      .then( response => {
-        if (response.ok) 
-          return response.json();
-        else
-          return defaultUser;
-      })
-      .then( response => {
-        setUser(response);
-      });
+    if (navigator.onLine) {
+      fetch('https://my.api.mockaroo.com/users.json?key=b07daaf0')
+        .then( response => {
+          if (response.ok) 
+            return response.json();
+          else
+            return defaultUser;
+        })
+        .then( response => {
+          setUser(response);
+          localStorage.setItem('user', JSON.stringify(response));
+        });
+    } else {
+      const localUser = JSON.parse(localStorage.getItem('user'));
+      if (localUser !== null) {
+        setUser(localUser);
+      } else {
+        setUser(defaultUser);
+      }
+    }
   }, []);
 
-    const loadGroups = (async () => {
+  const loadGroups = (async () => {
+    if (navigator.onLine) {
       return await fetch('https://my.api.mockaroo.com/groups.json?key=13d161b0')
       .then( response => {
         if (response.ok) 
           return response.json();
         else
           return defaultGroups;
+      })
+      .then( response => {
+        console.log("groups",response);
+        localStorage.setItem('groups', JSON.stringify(response));
+        return response;
       });
+    } else {
+      const localGroups = JSON.parse(localStorage.getItem('groups'));
+      if (localGroups !== null) {
+        return localGroups;
+      } else {
+        return defaultGroups;
+      }
+    }
   });
 
   const loadFriends = (async () => {
-    return await fetch('https://my.api.mockaroo.com/friends.json?key=b07daaf0')
-    .then( response => {
-      if (response.ok) 
-        return response.json();
-      else
+    if (navigator.onLine) {
+      return await fetch('https://my.api.mockaroo.com/friends.json?key=b07daaf0')
+      .then( response => {
+        if (response.ok)
+          return response.json();
+        else
+          return defaultFriends;
+      })
+      .then( response => {
+        console.log("friends",response);
+        localStorage.setItem('friends', JSON.stringify(response));
+        return response;
+      });
+    }
+    else {
+      const localFriends = JSON.parse(localStorage.getItem('friends'));
+      if (localFriends !== null) {
+        return localFriends;
+      } else {
         return defaultFriends;
-    });
+      }
+    }
   });
 
   const ctx = {
@@ -123,7 +162,7 @@ function App() {
         
         <Navbar/>
         <div className="Content">
-          <BrowserRouter>
+          <BrowserRouter basename="/">
             <Routes>
               <Route path="/" element={<Timetable/>}/>
               <Route path="/friends" element={<FriendsPage/>}/>
