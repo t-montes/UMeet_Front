@@ -19,7 +19,10 @@ const Sidedrawer = props => {
           <a href="/">{langSet["MySchedule"]}</a>
         </li>
         <li>
-          <a href="/friends">{langSet["Friends"]}</a>
+          <a href="/friends">{langSet["SeeFriends"]}</a>
+        </li>
+        <li>
+          <a href="/friends-add">{langSet["AddFriends"]}</a>
         </li>
         <li>
           <a href="/groups">{langSet["Groups"]}</a>

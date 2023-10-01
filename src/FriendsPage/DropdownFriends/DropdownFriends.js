@@ -19,7 +19,7 @@ function DropdownFriends() {
         >
           <div className="dropdown_friends-item-content">
             <div className="dropdown_friends-notifications-text">
-                <a href="/friends/add">Agregar amigos</a>
+                <a href="/friends-add">Agregar amigos</a>
             </div>
           </div>
         </div>
