@@ -127,7 +127,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Timetable/>}/>
               <Route path="/friends" element={<FriendsPage/>}/>
-              <Route path="/friends/add" element={<AddFriendsPage/>}/>
+              <Route path="/friends-add" element={<AddFriendsPage/>}/>
               <Route path="/groups" element={<GroupsPage/>}/>
               <Route path="/settings" element={<Settings/>}/>
               <Route path="/banner-linking" element={<BannerLinking/>}/>
@@ -158,7 +158,7 @@ function App() {
             </Action>
             <Action
                 text={langSet["AddFriend"]}
-                onClick={() => window.location.href = "/friends/add"}
+                onClick={() => window.location.href = "/friends-add"}
               >
                 <i className="fa fa-user-plus"></i>
             </Action>
