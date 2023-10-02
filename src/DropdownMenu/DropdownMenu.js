@@ -3,6 +3,9 @@ import "./DropdownMenu.css";
 import AppContext from "../AppContext";
 
 function DropdownMenu() {
+
+  const { loadNotifications, langSet } = useContext(AppContext);
+
   function DropdownItem(props) {
     return (
       //Cambiar el primer div por "a" cuando funcione lo demás de notificaciones
@@ -14,8 +17,6 @@ function DropdownMenu() {
       </div>
     );
   }
-
-  const { loadNotifications } = useContext(AppContext);
 
   const [notifications, setNotifications] = useState([]);
   const [visibleNotifications, setVisibleNotifications] = useState(5);
@@ -53,7 +54,7 @@ function DropdownMenu() {
         onClick={loadMoreNotifications}
         type="button"
       >
-        Cargar más
+        {langSet["LoadMore"]}
       </button>
     </div>
   );
