@@ -9,8 +9,9 @@ import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/Friends/FriendsPage';
 import AddFriendsPage from './FriendsPage/AddFriends/AddFriendsPage';
 import GroupsPage from './GroupsPage/GroupsPage';
-import EventCreateMenu from './EventCreateMenu/EventCreateMenu'; // Uncomment this import
-import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu'; // Assuming you have it in the root, change the path accordingly
+import GroupPage from './GroupPage/GroupPage';
+import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
+import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
 import BannerLinking from './BannerLinking/BannerLinking';
 import Settings from './Settings/Settings';
 
@@ -170,7 +171,7 @@ function App() {
               <Route path="/groups" element={<GroupsPage/>}/>
               <Route path="/settings" element={<Settings/>}/>
               <Route path="/banner-linking" element={<BannerLinking/>}/>
-              {/*TODO: <Route path="/groups/:id" element={<GroupsPage/>}/>*/}
+              <Route path="/group/:groupId" element={<GroupPage />} />
               {/*TODO: <Route path="/users/:id" element={<UserPage/>}/>*/}
               <Route path="*" element={<h1>{langSet["404"]}</h1>}/>
             </Routes>
