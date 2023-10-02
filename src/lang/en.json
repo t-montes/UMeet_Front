@@ -9,6 +9,8 @@
     "Groups": "Groups",
     "SeeFriends": "See Friends",
     "AddFriends": "Add Friends",
+    "Add": "Add",
+    "Added": "Added",
 
     "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     "days": ["U", "M", "Tu", "W", "Th", "F", "S"],
@@ -17,6 +19,7 @@
     "AddFriend": "Add Friend",
     "CreateGroup": "Create Group",
     "CreateEvent": "Create Event",
+    "MyFriends": "My Friends",
 
     "Search": "Search",
 
@@ -50,5 +53,6 @@
 
     "LoadMore": "Load More",
 
+    "NoResults": "No results found",
     "404": "404 - Page not found"
 }
