@@ -86,7 +86,7 @@ const Toolbar = props => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <button>Amigos</button>
+                <button>{langSet["Friends"]}</button>
                 {/* <DropdownMenu /> */}
                 {isDropdownVisible && <DropdownFriends />}
             </div>

@@ -14,7 +14,7 @@ const breakPoints = [
 ];
 
 function AddFriendsPage() {
-  const { loadFriends } = useContext(AppContext);
+  const { loadFriends, langSet } = useContext(AppContext);
 
   // Estado para los pares de amigos filtrados
   const [filteredFriendPairs, setFilteredFriendPairs] = useState([]);
@@ -69,7 +69,7 @@ function AddFriendsPage() {
         {noResults ? (
           // Mostrar un mensaje en la mitad de la ventana cuando no hay resultados
           <div className="AddFriendsPage_no-results-message">
-            No se encontraron resultados
+            {langSet["NoResults"]}
           </div>
         ) : (
           // Mostrar el carrusel si hay resultados
@@ -110,11 +110,11 @@ function AddFriendsPage() {
                       {friend.name}
                     </div>
                     <button
-                      className={`AddFriendsPage_add-button ${friendButtonStates[friend.name] ? "added" : ""}`}
-                      onClick={() => handleButtonClick(friend.name)}
-                      disabled={friendButtonStates[friend.name]}
+                        className={`AddFriendsPage_add-button ${friendButtonStates[friend.name] ? "added" : ""}`}
+                        onClick={() => handleButtonClick(friend.name)}
+                        disabled={friendButtonStates[friend.name]}
                     >
-                      {friendButtonStates[friend.name] ? "Agregado" : "Agregar"}
+                        {friendButtonStates[friend.name] ? langSet["Added"] : langSet["Add"]}
                     </button>
                   </div>
                 ))}

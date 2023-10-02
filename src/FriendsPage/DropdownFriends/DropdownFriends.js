@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./DropdownFriends.css";
+import AppContext from "../../AppContext";
 
 function DropdownFriends() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { langSet } = useContext(AppContext);
 
   const handleMenuItemClick = (item) => {
     // Implementa la lógica para manejar los clics en los elementos del menú aquí
@@ -19,7 +22,7 @@ function DropdownFriends() {
         >
           <div className="dropdown_friends-item-content">
             <div className="dropdown_friends-notifications-text">
-                <a href="/friends-add">Agregar amigos</a>
+                <a href="/friends-add">{langSet["AddFriends"]}</a>
             </div>
           </div>
         </div>
@@ -29,7 +32,7 @@ function DropdownFriends() {
         >
           <div className="dropdown_friends-item-content">
             <div className="dropdown_friends-notifications-text">
-                <a href="/friends">Ver amigos</a>
+                <a href="/friends">{langSet["MyFriends"]}</a>
             </div>
           </div>
         </div>

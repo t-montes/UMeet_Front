@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { days } from './days.js';
+import React, { useState, useContext } from 'react';
+import AppContext from '../../AppContext';
 
 function ControlledSelect() {
+  const { langSet } = useContext(AppContext);
   const [value, setValue] = useState('Lunes');
 
   const handleChange = (event) => {
@@ -11,9 +12,9 @@ function ControlledSelect() {
   return (
     <form>
         <select value={value} onChange={handleChange}>
-          {days.items.map((day) => (
-            <option key={day.name} value={day.name}>
-              {day.name}
+          {langSet.daysList.map((day) => (
+            <option key={day} value={day}>
+              {day}
             </option>
           ))}
         </select>

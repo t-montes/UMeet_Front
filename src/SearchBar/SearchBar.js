@@ -1,8 +1,12 @@
 // SearchBar.js
 import "./SearchBar.css";
-import React from 'react';
+import React, { useContext } from "react";
+import AppContext from "../AppContext";
 
 function SearchBar({ onSearchChange }) {
+
+  const { langSet } = useContext(AppContext);
+
   const handleInputChange = (event) => {
     onSearchChange(event.target.value);
   };
@@ -15,7 +19,7 @@ function SearchBar({ onSearchChange }) {
         </g>
       </svg>
       <input
-        placeholder="Search"
+        placeholder={langSet["Search"]}
         type="search"
         className="searchbar-input"
         onChange={handleInputChange}

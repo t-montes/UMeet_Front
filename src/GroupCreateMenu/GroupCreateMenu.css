@@ -1,4 +1,4 @@
-.container {
+.GroupCreateMenu-container {
   width: 100%;
   max-width: 550px;
   height: auto;
@@ -15,71 +15,73 @@
 }
 
 @media (max-width: 600px) {
-  .container {
+  .GroupCreateMenu-container {
     padding: 10px;
   }
-  .title, .label, .button {
+  .GroupCreateMenu-title,
+  .GroupCreateMenu-label,
+  .GroupCreateMenu-button {
     font-size: 0.8rem;
   }
-  .input, .button {
+  .GroupCreateMenu-input,
+  .GroupCreateMenu-button {
     padding: 5px;
   }
-  .membersContainer {
+  .GroupCreateMenu-membersContainer {
     gap: 5px;
   }
-  .member {
+  .GroupCreateMenu-member {
     width: 30px;
     height: 30px;
   }
 }
-  
-  .title {
-    margin: 0;
-    color: black;
-  }
-  
-  .fieldContainer {
-    width: 100%;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .label {
-    color: black;
-  }
-  
-  .input {
-    flex-grow: 1;
-    margin-left: 10px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-    outline: none;
-  }
-  
-  .membersContainer {
-    display: flex;
-    gap: 10px;
-    margin-left: 0px;
-  }
-  
-  .member {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  
-  .button {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #C1FF72;
-    color: black;
-    cursor: pointer;
-    margin-top: auto;
-  }
-  
+
+.GroupCreateMenu-title {
+  margin: 0;
+  color: black;
+}
+
+.GroupCreateMenu-fieldContainer {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.GroupCreateMenu-label {
+  color: black;
+}
+
+.GroupCreateMenu-input {
+  flex-grow: 1;
+  margin-left: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+  outline: none;
+}
+
+.GroupCreateMenu-membersContainer {
+  display: flex;
+  gap: 10px;
+  margin-left: 0px;
+}
+
+.GroupCreateMenu-member {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.GroupCreateMenu-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #c1ff72;
+  color: black;
+  cursor: pointer;
+  margin-top: auto;
+}

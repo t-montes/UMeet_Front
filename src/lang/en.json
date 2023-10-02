@@ -9,14 +9,18 @@
     "Groups": "Groups",
     "SeeFriends": "See Friends",
     "AddFriends": "Add Friends",
+    "Add": "Add",
+    "Added": "Added",
 
     "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "daysList": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
     "days": ["U", "M", "Tu", "W", "Th", "F", "S"],
     "Today": "Today",
     
     "AddFriend": "Add Friend",
     "CreateGroup": "Create Group",
     "CreateEvent": "Create Event",
+    "MyFriends": "My Friends",
 
     "Search": "Search",
 
@@ -25,6 +29,11 @@
     "GroupName": "Name of the group",
     "Members": "Members",
     "Save": "Save",
+
+    "Personalize": "Personalize",
+    "FistDay": "First Day",
+    "TextSize": "Select Text Size",
+    "TextColor": "Select Text Color",
 
     "EventName": "Event Name",
     "Location": "Location",
@@ -48,5 +57,8 @@
     "SelectTextSize": "Select Text Size",
     "SelectTextColor": "Select Text Color",
 
+    "LoadMore": "Load More",
+
+    "NoResults": "No results found",
     "404": "404 - Page not found"
 }

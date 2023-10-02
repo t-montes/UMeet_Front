@@ -1,14 +1,52 @@
-.GroupsPage-carousel-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
+.GroupsPage-carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
 }
 
-.GroupsPage-group-pair-container{
-    display: block;
+.GroupsPage-group-pair-container {
+  display: block;
+  width: 100%;
 }
-.GroupsPage-group-container{
-    margin-block-start: 50px;
-    margin-block-end: 10px;
+.GroupsPage-group-container {
+  margin-block-start: 50px;
+  margin-block-end: 10px;
+}
+
+.GroupsPage-custom-arrow-PREV,
+.GroupsPage-custom-arrow-NEXT {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.GroupsPage-pagination-container {
+  margin: 20px 0;
+}
+
+.GroupsPage-custom-pagination-dot {
+  width: 12px;
+  height: 14px;
+  border: 1px solid #00272b;
+  background-color: transparent;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.GroupsPage-custom-pagination-dot.active {
+  background-color: #00272b;
+}
+
+.GroupsPage-img1 {
+  max-width: 20px;
+  margin: 0 auto;
+  margin-left: 50px;
+}
+
+.GroupsPage-img2 {
+  max-width: 20px;
+  margin: 0 auto;
+  margin-right: 50px;
 }
