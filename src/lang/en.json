@@ -13,6 +13,7 @@
     "Added": "Added",
 
     "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "daysList": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
     "days": ["U", "M", "Tu", "W", "Th", "F", "S"],
     "Today": "Today",
     
@@ -28,6 +29,11 @@
     "GroupName": "Name of the group",
     "Members": "Members",
     "Save": "Save",
+
+    "Personalize": "Personalize",
+    "FistDay": "First Day",
+    "TextSize": "Select Text Size",
+    "TextColor": "Select Text Color",
 
     "EventName": "Event Name",
     "Location": "Location",

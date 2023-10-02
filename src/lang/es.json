@@ -13,6 +13,7 @@
     "Added": "Agregado",
 
     "months": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    "daysList": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
     "days": ["D", "L", "M", "I", "J", "V", "S"],
     "Today": "Hoy",
 
@@ -28,6 +29,11 @@
     "GroupName": "Nombre del Grupo",
     "Members": "Miembros",
     "Save": "Guardar",
+
+    "Personalize": "Personalizar",
+    "FirstDay": "Primer Día",
+    "TextSize": "Selecciona el tamaño del texto",
+    "TextColor": "Selecciona el color del texto",
 
     "EventName": "Nombre del Evento",
     "Location": "Ubicación",

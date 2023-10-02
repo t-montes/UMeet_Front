@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Customization.css";
 import ControlledSelect from './ControlledSelect/ControlledSelect';
 import CheckBox from './Checkbox/Checkbox';
 import Slider from './Slider/Slider';
 import ColorPicker from "./ColorPicker/ColorPicker";
+import AppContext from "../AppContext";
 
 function Customization() {
+
+    const { langSet } = useContext(AppContext);
 
     const [customization, setCustomization] = useState(false);
 
@@ -25,7 +28,7 @@ function Customization() {
             <button
                 onClick={toggleCustom}
                 className="customization_btn">
-                Personalizar
+                {langSet["Personalize"]}
             </button>
 
             {customization && (
@@ -35,18 +38,18 @@ function Customization() {
                         className="customization_overlay"></div>
                     <div className="customization_content">
                         <div className="customization_btn-container">
-                            <h2>Personalización de Horario</h2>
+                            <h2>{langSet["ScheduleCustomization"]}</h2>
                         </div>
                         <div className="customization_select-customization_container">
                             <div className="customization_container">
                                 <div className="customization_select-label">
-                                    Primer día:
+                                    {langSet["FirstDay"]}:
                                 </div>
                                 <ControlledSelect />
                             </div>
                             <div className="customization_container">
                                 <div className="customization_select-label">
-                                    Último día:
+                                    {langSet["LastDay"]}:
                                 </div>
                                 <ControlledSelect />
                             </div>
@@ -55,13 +58,13 @@ function Customization() {
                         <div className="customization_select-customization_container">
                             <div className="customization_container">
                                 <div className="customization_select-label">
-                                    Hora inicio:
+                                    {langSet["StartTime"]}:
                                 </div>
                                 <CheckBox />
                             </div>
                             <div className="customization_container">
                                 <div className="customization_select-label">
-                                    Hora fin:
+                                    {langSet["EndTime"]}:
                                 </div>
                                 <CheckBox />
                             </div>
@@ -69,14 +72,14 @@ function Customization() {
 
                         <div className="customization_container">
                             <div className="customization_select-label">
-                                Selecciona el tamaño del texto:
+                                {langSet["TextSize"]}:
                             </div>
                             <Slider />
                         </div>
 
                         <div className="customization_container2">
                             <div className="customization_select-label2">
-                                Selecciona el color del texto:
+                                {langSet["TextColor"]}:
                             </div>
                             <ColorPicker />
                         </div>
