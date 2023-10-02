@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./DropdownMenu.css";
-import { notifications } from "./notifications"; // Importa el objeto notifications desde notificaciones.js
+import AppContext from "../AppContext";
 
 function DropdownMenu() {
   function DropdownItem(props) {
@@ -15,17 +15,22 @@ function DropdownMenu() {
     );
   }
 
-  // Obtiene las notificaciones, notificationTimes y timeUnits del objeto notifications
-  const { items } = notifications;
-  const notificationTimes = items.map((item) => parseInt(item.time));
-  const timeUnits = items.map((item) => item.unit);
+  const { loadNotifications } = useContext(AppContext);
 
+  const [notifications, setNotifications] = useState([]);
   const [visibleNotifications, setVisibleNotifications] = useState(5);
   const [menuOpen] = useState(false);
 
+  useEffect(() => {
+    (async () => {
+      const loadedNotifications = await loadNotifications();
+      setNotifications(loadedNotifications);
+    })();
+  }, [loadNotifications]);
+
   const loadMoreNotifications = () => {
     const nextVisibleNotifications = visibleNotifications + 3;
-    if (nextVisibleNotifications <= notifications.items.length) {
+    if (nextVisibleNotifications <= notifications.length) {
       setVisibleNotifications(nextVisibleNotifications);
     }
   };
@@ -33,13 +38,16 @@ function DropdownMenu() {
   return (
     <div className={`dropdown ${menuOpen ? 'open' : ''}`}>
       <div className="dropdown_content">
-        {notifications.items.slice(0, visibleNotifications).map((notification, index) => (
-          <DropdownItem key={index} centered timeAgo={`${notificationTimes[index]} ${timeUnits[index]} ago`}>
+        {notifications.slice(0, visibleNotifications).map((notification, index) => (
+          <DropdownItem
+            key={index}
+            centered
+            timeAgo={`${parseInt(notification.time)} ${notification.unit} ago`}
+          >
             {notification.name}
           </DropdownItem>
         ))}
       </div>
-
       <button
         className="dropdown_item-button dropdown_load-more-button"
         onClick={loadMoreNotifications}
