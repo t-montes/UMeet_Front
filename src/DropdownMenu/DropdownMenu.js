@@ -4,7 +4,15 @@ import AppContext from "../AppContext";
 
 function DropdownMenu() {
 
-  const { loadNotifications, langSet } = useContext(AppContext);
+  const { loadNotifications, langSet, lang } = useContext(AppContext);
+
+  function formatTimeAgo(time, unit) {
+    if (lang === 'es') {
+      return `Hace ${time} ${unit}`;
+    } else {
+      return `${time} ${unit} ago`;
+    }
+  }
 
   function DropdownItem(props) {
     return (
@@ -43,7 +51,7 @@ function DropdownMenu() {
           <DropdownItem
             key={index}
             centered
-            timeAgo={`${parseInt(notification.time)} ${notification.unit} ago`}
+            timeAgo={formatTimeAgo(parseInt(notification.time), notification.unit)}
           >
             {notification.name}
           </DropdownItem>
