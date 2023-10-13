@@ -144,7 +144,8 @@ test("goes back to today after moving to previous week", () => {
 });
 
 /* -------------------------- INTERNATIONALIZATION -------------------------- */
-test("changes language to spanish: month", () => {
+
+test("renders month in spanish", () => {
     render(<App />);
     const langSet = langs.es;
 
@@ -160,7 +161,7 @@ test("changes language to spanish: month", () => {
     expect(title).toHaveTextContent(today.getFullYear());
 });
 
-test("changes language to spanish: day", () => {
+test("renders day in spanish", () => {
     render(<App />);
     const langSet = langs.es;
 

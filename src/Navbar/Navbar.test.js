@@ -59,13 +59,13 @@ test("renders friends button", () => {
     // should only be one, in navbar
     expect(button).toBeInTheDocument();
 
-    // on hover, should show dropdown with 'SeeFriends' and 'AddFriends' buttons
+    // on hover, should show dropdown with 'myFriends' and 'AddFriends' buttons
     fireEvent.mouseEnter(button);
 
-    const seeFriends = screen.getAllByText(langSet["MyFriends"]);
+    const myFriends = screen.getAllByText(langSet["MyFriends"]);
     const addFriends = screen.getAllByText(langSet["AddFriends"]);
     // should be 2, one in navbar dropdown and one in sidemenu
-    expect(seeFriends.length).toBe(2);
+    expect(myFriends.length).toBe(2);
     expect(addFriends.length).toBe(2);
 
     fireEvent.mouseLeave(button);
@@ -87,140 +87,156 @@ test("renders logo", () => {
 
 /* -------------------------- BEHAVIOUR -------------------------- */
 
-// TODO: test navbar buttons
+test("goes to settings page", () => {
+    render(<App testingPath="/settings"/>);
+    const langSet = langs.en; // default
+    const button = screen.getByTitle(langSet["Settings"]);
+    expect(button).toHaveAttribute("href", "/settings");
+});
 
+test("goes to profile page", () => {
+    render(<App testingPath="/profile"/>);
+    const langSet = langs.en; // default
+    const button = screen.getByTitle(langSet["Profile"]);
+    expect(button).toHaveAttribute("href", "/"); // to be changed to /profile
+});
 
-/*
-import "./Toolbar.css";
-import React, { useContext, useState, useEffect, useRef } from "react";
-import SideMenu from "../Sidemenu/Sidemenu";
-import DropdownMenu from "../../DropdownMenu/DropdownMenu";
-import DropdownFriends from "../../FriendsPage/DropdownFriends/DropdownFriends";
-import logo from "../../assets/large-logo.png";
-import AppContext from "../../AppContext";
+test("changes language", () => {
+    render(<App />);
+    const langSet = langs.en; // default
+    const button = screen.getByTitle(langSet["Language"]);
+    expect(button).toHaveTextContent("EN");
+    fireEvent.click(button);
+    expect(button).toHaveTextContent("ES");
+});
 
-const Toolbar = props => {
-  const ctx = useContext(AppContext);
-  const { lang, langSet, setLang, user } = ctx;
+test("opens notifications dropdown", () => {
+    render(<App />);
+    const langSet = langs.en; // default
+    const button = screen.getByTitle(langSet["Notifications"]);
+    fireEvent.click(button);
+    const dropdown = screen.getByTestId("notifications-dropdown");
+    expect(dropdown).toBeInTheDocument();
+});
 
-  const changeLang = () => {
-    if (lang === 'es') {
-      setLang('en');
-    } else {
-      setLang('es');
-    }
-  }
+test("goes to groups page", () => {
+    render(<App testingPath="/groups"/>);
+    const langSet = langs.en; // default
+    const buttons = screen.getAllByText(langSet["Groups"]);
+    // should be 2, one in navbar and one in sidemenu
+    expect(buttons.length).toBe(2);
+    expect(buttons[0]).toHaveAttribute("href", "/groups");
+    expect(buttons[1]).toHaveAttribute("href", "/groups");
+});
 
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
+test("goes to friends page", () => {
+    render(<App testingPath="/friends"/>);
+    const langSet = langs.en; // default
+    const button = screen.getByText(langSet["Friends"]);
 
-  const handleMouseEnter = () => {
-    setDropdownVisible(true);
-  };
+    // on hover, should show dropdown with 'myFriends' and 'AddFriends' buttons
+    fireEvent.mouseEnter(button);
 
-  const handleMouseLeave = () => {
-    setDropdownVisible(false);
-  };
+    const myFriends = screen.getAllByText(langSet["MyFriends"]);
+    const addFriends = screen.getAllByText(langSet["AddFriends"]);
+    // should be 2, one in navbar dropdown and one in sidemenu
+    expect(myFriends.length).toBe(2);
+    expect(addFriends.length).toBe(2);
 
-  const [open, setOpen] = useState(false);
+    expect(myFriends[0]).toHaveAttribute("href", "/friends");
+    expect(myFriends[1]).toHaveAttribute("href", "/friends");
+    expect(addFriends[0]).toHaveAttribute("href", "/friends-add");
+    expect(addFriends[1]).toHaveAttribute("href", "/friends-add");
 
-  const toggleDropdown = () => {
-    setOpen(!open);
-  };
+    fireEvent.mouseLeave(button);
+});
 
-  // Ref para el botón de notificaciones
-  const notificationButtonRef = useRef(null);
-  
-  // Ref para el dropdownMenu
-  const dropdownMenuRef = useRef(null);
+test("goes to my schedule page", () => {
+    render(<App testingPath="/"/>);
+    const langSet = langs.en; // default
+    const buttons = screen.getAllByText(langSet["MySchedule"]);
+    // should be 2, one in navbar and one in sidemenu
+    expect(buttons.length).toBe(2);
+    expect(buttons[0]).toHaveAttribute("href", "/");
+    expect(buttons[1]).toHaveAttribute("href", "/");
+});
 
-  // Efecto para cerrar el DropdownMenu cuando se hace clic en cualquier parte excepto en el menú o el botón de notificaciones
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        open &&
-        notificationButtonRef.current &&
-        !notificationButtonRef.current.contains(event.target) &&
-        dropdownMenuRef.current &&
-        !dropdownMenuRef.current.contains(event.target)
-      ) {
-        setOpen(false);
-      }
-    };
+/* -------------------------- INTERNATIONALIZATION -------------------------- */
 
-    // Agregar el manejador de eventos al documento
-    document.addEventListener("click", handleOutsideClick);
+test("renders navbar in spanish", () => {
+    localStorage.setItem("lang", "es");
+    render(<App />);
+    const navbar = screen.getByTestId("navbar");
+    expect(navbar).toBeInTheDocument();
+});
 
-    return () => {
-      // Limpiar el manejador de eventos al desmontar el componente
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, [open]);
+test("renders settings button in spanish", () => {
+    render(<App />);
+    const langSet = langs.es;
+    const langButton = screen.getByTitle(langs.en["Language"]);
+    expect(langButton).toBeInTheDocument();
 
-  return (
-  <header className="toolbar">
-    <nav className="toolbar_navigator">
-      <div />
-      <div className="toggle-btn">
-        <SideMenu click={props.drawerToggleClickHandler} />
-      </div>
-      <div className="toolbar_logo">
-        <a href="/" title={langSet["UMeetLogo"]}>
-            <img src={logo} alt="Umeet Logo"/>
-        </a>
-      </div>
-      <div className="toolbar_navigation-items toolbar_navigation-center">
-        <ul>
-          <li>
-            <a href="/">{langSet["MySchedule"]}</a>
-          </li>
-          <li>
-            <div
-                className="menu"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button>{langSet["Friends"]}</button>
-                {isDropdownVisible && <DropdownFriends />}
-            </div>
-          </li>
-          <li>
-            <a href="/groups">{langSet["Groups"]}</a>
-          </li>
-        </ul>
-      </div>
-      <div className="spacer" />
-      <div className="toolbar_navigation-items">
-        <ul>
-          <li>
-            <button
-              ref={notificationButtonRef}
-              title={langSet["Notifications"]}
-              onClick={toggleDropdown}
-            >
-              <i className="fa fa-bell"></i>
-            </button>
-            {open && (
-              <div ref={dropdownMenuRef}>
-                <DropdownMenu />
-              </div>
-            )}
-          </li>
-          <li>
-            <button title={langSet["Language"]} onClick={changeLang}>
-              <i className="fa fa-globe"></i>&nbsp;{lang.toUpperCase()}
-            </button>
-          </li>
-          <li className="toolbar-user-button">
-            <a title={langSet["Profile"]} href="/">{user?.username}</a>
-          </li>
-          <li className="toolbar-settings-button">
-            <a title={langSet["Settings"]} href="/settings"><i className="fa fa-gear"></i></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-)};
+    fireEvent.click(langButton);
+    const button = screen.getByTitle(langSet["Settings"]);
+    expect(button).toBeInTheDocument();
+});
 
-export default Toolbar;
- */
+test("renders profile button in spanish", () => {
+    render(<App />);
+    const langSet = langs.es;
+    const langButton = screen.getByTitle(langs.en["Language"]);
+    expect(langButton).toBeInTheDocument();
+
+    fireEvent.click(langButton);
+    const button = screen.getByTitle(langSet["Profile"]);
+    expect(button).toBeInTheDocument();
+});
+
+test("renders language button in spanish", () => {
+    render(<App />);
+    const langSet = langs.es;
+    const langButton = screen.getByTitle(langs.en["Language"]);
+    expect(langButton).toBeInTheDocument();
+
+    fireEvent.click(langButton);
+    const button = screen.getByTitle(langSet["Language"]);
+    expect(button).toBeInTheDocument();
+});
+
+test("renders notifications button in spanish", () => {
+    render(<App />);
+    const langSet = langs.es;
+    const langButton = screen.getByTitle(langs.en["Language"]);
+    expect(langButton).toBeInTheDocument();
+
+    fireEvent.click(langButton);
+    const button = screen.getByTitle(langSet["Notifications"]);
+    expect(button).toBeInTheDocument();
+});
+
+test("renders options in spanish", () => {
+    render(<App />);
+    const langSet = langs.es;
+    const langButton = screen.getByTitle(langs.en["Language"]);
+    expect(langButton).toBeInTheDocument();
+
+    fireEvent.click(langButton);
+    const buttonsGroups = screen.getAllByText(langSet["Groups"]);
+    expect(buttonsGroups.length).toBe(2);
+
+    const buttonFriends = screen.getByText(langSet["Friends"]);
+    expect(buttonFriends).toBeInTheDocument();
+
+    fireEvent.mouseEnter(buttonFriends);
+
+    const buttonsMyFriends = screen.getAllByText(langSet["MyFriends"]);
+    const buttonsAddFriends = screen.getAllByText(langSet["AddFriends"]);
+
+    expect(buttonsMyFriends.length).toBe(2);
+    expect(buttonsAddFriends.length).toBe(2);
+
+    fireEvent.mouseLeave(buttonFriends);
+
+    const buttonsMySchedule = screen.getAllByText(langSet["MySchedule"]);
+    expect(buttonsMySchedule.length).toBe(2);
+});
