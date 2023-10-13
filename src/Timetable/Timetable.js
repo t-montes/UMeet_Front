@@ -85,8 +85,8 @@ function Timetable({ calendar, restrictions }) {
 
   /* -------------------------- COMPONENT -------------------------- */
   return (
-    <div className="timetable-main">
-      <div className="timetable-month">
+    <div className="timetable-main" data-testid="timetable" >
+      <div className="timetable-month" data-testid="timetable-title">
         {currentWeek.length > 0 ? 
           (currentWeek[0].getMonth() === currentWeek[lastLaborDay-1].getMonth() ? 
             months[currentWeek[0].getMonth()] 
@@ -97,7 +97,7 @@ function Timetable({ calendar, restrictions }) {
       </div>
       <table className="timetable-calendar">
         <thead>
-          <tr>
+          <tr data-testid="timetable-header">
             <th>
               <div className="timetable-navbar">
                 <button onClick={backToToday}>{langSet["Today"]}</button>

@@ -7,7 +7,7 @@
     "MySchedule": "My Schedule",
     "Friends": "Friends",
     "Groups": "Groups",
-    "SeeFriends": "See Friends",
+    "MyFriends": "Mis Amigos",
     "AddFriends": "Add Friends",
     "Add": "Add",
     "Added": "Added",
@@ -20,7 +20,6 @@
     "AddFriend": "Add Friend",
     "CreateGroup": "Create Group",
     "CreateEvent": "Create Event",
-    "MyFriends": "My Friends",
 
     "Search": "Search",
 

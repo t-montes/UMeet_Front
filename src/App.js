@@ -1,8 +1,9 @@
+import './App.css';
 import React, { useState, useEffect } from 'react';
 import AppContext from "./AppContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Fab, Action } from 'react-tiny-fab';
-import Modal from '@mui/material/Modal';
+//import Modal from '@mui/material/Modal';
 
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
@@ -10,16 +11,12 @@ import FriendsPage from './FriendsPage/Friends/FriendsPage';
 import AddFriendsPage from './FriendsPage/AddFriends/AddFriendsPage';
 import GroupsPage from './GroupsPage/GroupsPage';
 import GroupPage from './GroupPage/GroupPage';
-import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
-import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
+//import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
+//import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
 import BannerLinking from './BannerLinking/BannerLinking';
 import Settings from './Settings/Settings';
 
-
-import './App.css';
-
-import es from './lang/es.json';
-import en from './lang/en.json';
+import * as langs from './langs';
 
 // mock default data
 const defaultUser = {
@@ -65,9 +62,6 @@ const defaultNotifications = [
 ];
 
 function App() {
-
-  const langs = { es, en };
-
   // get default lang from localStorage, if not, set it to 'es'
   const defaultLang = localStorage.getItem('lang');
   if (defaultLang === null) {
@@ -75,7 +69,7 @@ function App() {
   }
   
   const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
-  const [lastLaborDay, setLastLaborDay] = useState(6); // Monday to Saturday
+  const [lastLaborDay, setLastLaborDay] = useState(7); // Monday to Saturday
   const [enableGrid, setEnableGrid] = useState(true);
   const [lang, setLang] = useState(localStorage.getItem('lang'));
   const [langSet, setLangSet] = useState(langs[lang]);
@@ -199,7 +193,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App" data-testid="App">
       <AppContext.Provider value={ctx}>
         
         <Navbar/>
@@ -245,21 +239,22 @@ function App() {
             </Action>
           </Fab>
         )}
+          
+        {/* TODO: fix: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
         <Modal
           open={showEventCreateMenu}
           onClose={() => setShowEventCreateMenu(false)}
           aria-labelledby="event-create-modal"
-          // fix: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
         >
           <EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
-        </Modal>
-        <Modal
+        </Modal>*/}
+        {/*<Modal
           open={showGroupCreateMenu}
           onClose={() => setShowGroupCreateMenu(false)}
           aria-labelledby="group-create-modal"
         >
           <GroupCreateMenu onClose={() => setShowGroupCreateMenu(false)} />
-      </Modal>
+        </Modal>*/}
   </AppContext.Provider>
 </div>
 );
