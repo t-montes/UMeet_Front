@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import AppContext from "./AppContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Fab, Action } from 'react-tiny-fab';
-//import Modal from '@mui/material/Modal';
+import Modal from '@mui/material/Modal';
 
 import Navbar from './Navbar/Navbar';
 import Timetable from './Timetable/Timetable';
@@ -11,8 +11,8 @@ import FriendsPage from './FriendsPage/Friends/FriendsPage';
 import AddFriendsPage from './FriendsPage/AddFriends/AddFriendsPage';
 import GroupsPage from './GroupsPage/GroupsPage';
 import GroupPage from './GroupPage/GroupPage';
-//import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
-//import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
+import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
+import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
 import BannerLinking from './BannerLinking/BannerLinking';
 import Settings from './Settings/Settings';
 
@@ -239,22 +239,22 @@ function App() {
             </Action>
           </Fab>
         )}
-          
-        {/* TODO: fix: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+
         <Modal
           open={showEventCreateMenu}
           onClose={() => setShowEventCreateMenu(false)}
           aria-labelledby="event-create-modal"
         >
           <EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
-        </Modal>*/}
-        {/*<Modal
+        </Modal>
+        {/* TODO: fix: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef() */}
+        <Modal
           open={showGroupCreateMenu}
           onClose={() => setShowGroupCreateMenu(false)}
           aria-labelledby="group-create-modal"
         >
           <GroupCreateMenu onClose={() => setShowGroupCreateMenu(false)} />
-        </Modal>*/}
+        </Modal>
   </AppContext.Provider>
 </div>
 );

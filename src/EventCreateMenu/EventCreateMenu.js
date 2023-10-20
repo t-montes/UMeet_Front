@@ -32,7 +32,7 @@ const CustomCalendar = styled(Calendar)`
   }
 `;
 
-export default function CreateEventComponent({ onClose }) {
+const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
   const ctx = useContext(AppContext);
   const { langSet, lang } = ctx;
 
@@ -182,4 +182,6 @@ export default function CreateEventComponent({ onClose }) {
       </Paper>
     </Box>
   );
-}
+});
+
+export default CreateEventMenu;
