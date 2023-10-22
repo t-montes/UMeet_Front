@@ -8,8 +8,6 @@ function DropdownFriends() {
   const { langSet } = useContext(AppContext);
 
   const handleMenuItemClick = (item) => {
-    // Implementa la lógica para manejar los clics en los elementos del menú aquí
-    console.log(`Hiciste clic en "${item}"`);
     setMenuOpen(false); // Cierra el menú después de hacer clic en un elemento
   };
 
