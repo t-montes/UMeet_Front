@@ -9,7 +9,7 @@ import userImage2 from "../assets/icon8.png";
 import userImage3 from "../assets/icon9.png";
 import AppContext from "../AppContext";
 
-const GroupCreateMenu = ({ onClose }) => {
+const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
   const ctx = useContext(AppContext);
   const { langSet } = ctx;
 
@@ -69,6 +69,6 @@ const GroupCreateMenu = ({ onClose }) => {
       </div>
     </Box>
   );
-};
+});
 
 export default GroupCreateMenu;
