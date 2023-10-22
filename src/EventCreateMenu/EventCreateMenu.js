@@ -10,6 +10,7 @@ import {
   Paper,
   FormControlLabel,
   useMediaQuery,
+  Snackbar
 } from "@mui/material";
 import { Alarm } from "@mui/icons-material";
 import Calendar from "react-calendar";
@@ -32,7 +33,7 @@ const CustomCalendar = styled(Calendar)`
   }
 `;
 
-export default function CreateEventComponent({ onClose }) {
+const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
   const ctx = useContext(AppContext);
   const { langSet, lang } = ctx;
 
@@ -41,7 +42,66 @@ export default function CreateEventComponent({ onClose }) {
   const isSmallScreen = useMediaQuery("(max-width:770px)");
   const isLargeScreen = useMediaQuery("(max-width:1200px)");
 
+  const [eventName, setEventName] = useState("");
+  const [location, setLocation] = useState("");
+  const [link, setLink] = useState("");
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [reminder, setReminder] = useState("30 " + langSet["MinutesBefore"]);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [periodStart, setPeriodStart] = useState("AM");
+  const [periodEnd, setPeriodEnd] = useState("AM");
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const [eventNameError, setEventNameError] = useState(false);
+  const [startTimeError, setStartTimeError] = useState(false);
+  const [endTimeError, setEndTimeError] = useState(false);
+
+
+
+  const validateFields = () => {
+    let error = true;
+
+    if (!endTime) {
+      setSnackbarMessage("Please select an end time.");
+      setSnackbarOpen(true);
+      setEndTimeError(true);
+      error = false;
+    } else {
+      setEndTimeError(false);
+    }
+
+    if (!startTime) {
+      setSnackbarMessage("Please select a start time.");
+      setSnackbarOpen(true);
+      setStartTimeError(true);
+      error = false;
+    } else {
+      setStartTimeError(false);
+    }
+
+    if (!eventName) {
+      setSnackbarMessage("Please enter an event name.");
+      setSnackbarOpen(true);
+      setEventNameError(true);
+      error = false;
+    } else {
+      setEventNameError(false);
+    }
+  
+    return error;
+  };
+
+  const handleCreateClick = () => {
+    if (validateFields()) {
+      onClose();
+    }
+  };
+
   return (
+    
     <Box
       sx={{
         position: "absolute",
@@ -54,6 +114,8 @@ export default function CreateEventComponent({ onClose }) {
         width: isLargeScreen ? "100%" : "auto",
       }}
     >
+
+
       <Paper
         elevation={3}
         sx={{
@@ -82,9 +144,9 @@ export default function CreateEventComponent({ onClose }) {
           }}
         >
           <Box display="flex" flexDirection="column" flex="1" pr={2}>
-            <TextField label={langSet["EventName"]} fullWidth margin="normal" />
-            <TextField label={langSet["Location"]} fullWidth margin="normal" />
-            <TextField label={langSet["Link"]} fullWidth margin="normal" />
+            <TextField label={langSet["EventName"]} fullWidth margin="normal" value={eventName} onChange={(e) => {setEventName(e.target.value); setEventNameError(false);}} error={eventNameError}/>
+            <TextField label={langSet["Location"]} fullWidth margin="normal" value={location} onChange={(e) => setLocation(e.target.value)} />
+            <TextField label={langSet["Link"]} fullWidth margin="normal" value={link} onChange={(e) => setLink(e.target.value)} />
 
             <Box
               sx={{
@@ -95,7 +157,7 @@ export default function CreateEventComponent({ onClose }) {
               }}
             >
               <FormControlLabel
-                control={<Switch color="primary" />}
+                control={<Switch color="primary" value={isPrivate} onChange={(e) => setIsPrivate(e.target.value)}/>}
                 label={langSet["PrivateEvent"]}
               />
             </Box>
@@ -113,7 +175,8 @@ export default function CreateEventComponent({ onClose }) {
               </IconButton>
               <Select
                 variant="outlined"
-                value={"30 " + langSet["MinutesBefore"]}
+                value= {reminder}
+                onChange={(e) => setReminder(e.target.value)}
                 style={{ marginLeft: "8px" }}
               >
                 <MenuItem value={"5 " + langSet["MinutesBefore"]}>
@@ -138,10 +201,13 @@ export default function CreateEventComponent({ onClose }) {
                 type="time"
                 InputLabelProps={{ shrink: true }}
                 sx={{ flex: "1", marginRight: "8px" }}
+                value={startTime}
+                onChange={(e) => {setStartTime(e.target.value); setStartTimeError(false);}} error={startTimeError}
               />
               <Select
                 variant="outlined"
-                value="AM"
+                value={periodStart}
+                onChange={(e) => setPeriodStart(e.target.value)}
                 style={{ flex: "1", marginRight: "8px" }}
               >
                 <MenuItem value="AM">AM</MenuItem>
@@ -154,10 +220,13 @@ export default function CreateEventComponent({ onClose }) {
                 type="time"
                 InputLabelProps={{ shrink: true }}
                 sx={{ flex: "1", marginRight: "8px" }}
+                value={endTime}
+                onChange={(e) => {setEndTime(e.target.value); setEndTimeError(false);}} error={endTimeError}
               />
               <Select
                 variant="outlined"
-                value="AM"
+                value={periodEnd}
+                onChange={(e) => setPeriodEnd(e.target.value)}
                 style={{ flex: "1", marginRight: "8px" }}
               >
                 <MenuItem value="AM">AM</MenuItem>
@@ -166,6 +235,7 @@ export default function CreateEventComponent({ onClose }) {
             </Box>
 
             <Button
+              onClick={handleCreateClick}
               variant="contained"
               color="primary"
               style={{
@@ -180,6 +250,19 @@ export default function CreateEventComponent({ onClose }) {
           </Box>
         </Box>
       </Paper>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+        action={
+          <IconButton size="small" aria-label="close" color="inherit" onClick={() => setSnackbarOpen(false)}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      />
     </Box>
   );
-}
+});
+
+export default CreateEventMenu;
