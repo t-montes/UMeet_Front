@@ -247,7 +247,7 @@ function App() {
         >
           <EventCreateMenu onClose={() => setShowEventCreateMenu(false)} />
         </Modal>
-        {/* TODO: fix: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef() */}
+        
         <Modal
           open={showGroupCreateMenu}
           onClose={() => setShowGroupCreateMenu(false)}
