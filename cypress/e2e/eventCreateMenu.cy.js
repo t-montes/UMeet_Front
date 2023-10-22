@@ -1,7 +1,11 @@
 describe('eventCreateMenu Component', () => {
 
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3000', {
+      onBeforeLoad (win) {
+          Object.defineProperty(win.navigator, 'language', {value: 'en'});
+      }
+    })
   });
 
   it('should render the group create menu component', () => {
@@ -11,14 +15,14 @@ describe('eventCreateMenu Component', () => {
 
   it('should fail to create an event with no name', () => {
     cy.get('[data-testid="action-button-0"]').click({ force: true });
-    cy.contains('button', 'Crear').click();
+    cy.contains('button', 'Create').click();
     cy.contains('Please enter an event name.');
   })
 
   it('should fail to create an event with no start time', () => {
     cy.get('[data-testid="action-button-0"]').click({ force: true });
     cy.get('#\\:r1\\:').type('Test Event');
-    cy.contains('button', 'Crear').click();
+    cy.contains('button', 'Create').click();
     cy.contains('Please select a start time.');
   })
 
@@ -26,7 +30,7 @@ describe('eventCreateMenu Component', () => {
     cy.get('[data-testid="action-button-0"]').click({ force: true });
     cy.get('#\\:r1\\:').type('Test Event');
     cy.get('#\\:r7\\:').type('10:00');
-    cy.contains('button', 'Crear').click();
+    cy.contains('button', 'Create').click();
     cy.contains('Please select an end time.');
   })
 
@@ -35,7 +39,7 @@ describe('eventCreateMenu Component', () => {
     cy.get('#\\:r1\\:').type('Test Event');
     cy.get('#\\:r7\\:').type('10:00');
     cy.get('#\\:r9\\:').type('11:00');
-    cy.contains('button', 'Crear').click();
+    cy.contains('button', 'Create').click();
     cy.get('.MuiBox-root.css-n71kjy').should('not.exist');
   })
 })
