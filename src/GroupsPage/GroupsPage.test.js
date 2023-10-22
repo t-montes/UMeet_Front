@@ -40,6 +40,7 @@ describe('GroupsPage', () => {
   
     it('renders the component', async () => {
       mockLoadGroups.mockResolvedValueOnce(mockGroups);
+      // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(async () => {
         render(
           <AppContext.Provider value={{ loadGroups: mockLoadGroups }}>
@@ -54,6 +55,7 @@ describe('GroupsPage', () => {
   
     it('renders the GroupCard components', async () => {
       mockLoadGroups.mockResolvedValueOnce(mockGroups);
+      // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(async () => {
         render(
           <AppContext.Provider value={{ loadGroups: mockLoadGroups }}>
