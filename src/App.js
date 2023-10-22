@@ -62,7 +62,6 @@ const defaultNotifications = [
 ];
 
 function App() {
-  // get default lang from localStorage, if not, set it to 'es'
   const defaultLang = localStorage.getItem('lang');
   if (defaultLang === null) {
     localStorage.setItem('lang', (navigator.language || navigator.userLanguage).split('-')[0]);
