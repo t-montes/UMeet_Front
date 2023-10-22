@@ -34,15 +34,15 @@
     "TextSize": "Selecciona el tamaño del texto",
     "TextColor": "Selecciona el color del texto",
 
-    "EventName": "Nombre del Evento",
+    "EventName": "Nombre del Evento *",
     "Location": "Ubicación",
     "Link": "Enlace",
     "PrivateEvent": "Evento Privado",
     "MinutesBefore": "minutos antes",
     "HoursBefore": "horas antes",
     "DaysBefore": "días antes",
-    "StartTime": "Hora Inicial",
-    "EndTime": "Hora Final",
+    "StartTime": "Hora Inicial *",
+    "EndTime": "Hora Final *",
     "Create": "Crear",
 
     "Welcome": "Bienvenid@",

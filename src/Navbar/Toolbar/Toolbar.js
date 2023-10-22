@@ -122,7 +122,7 @@ const Toolbar = props => {
             <a title={langSet["Profile"]} href="/">{user?.username}</a>
           </li>
           <li className="toolbar-settings-button">
-            <a title={langSet["Settings"]} href="/settings" data-testid="navbar-settings-button"><i className="fa fa-gear"></i></a>
+            <a title={langSet["Settings"]} href="/settings"><i className="fa fa-gear"></i></a>
           </li>
         </ul>
       </div>

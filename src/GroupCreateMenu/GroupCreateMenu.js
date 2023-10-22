@@ -1,8 +1,10 @@
 import "./GroupCreateMenu.css";
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
+import TextField from "@mui/material/TextField";
 
 import userImage1 from "../assets/icon7.png";
 import userImage2 from "../assets/icon8.png";
@@ -12,6 +14,32 @@ import AppContext from "../AppContext";
 const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
   const ctx = useContext(AppContext);
   const { langSet } = ctx;
+
+  const [groupName, setGroupName] = useState("");
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const [groupNameError, setGroupNameError] = useState(false);
+
+  const validateFields = () => {
+    if (!groupName) {
+      setSnackbarMessage("Please enter an group name.");
+      setSnackbarOpen(true);
+      setGroupNameError(true);
+      return false;
+    } else {
+      setGroupNameError(false);
+    }
+  
+    return true;
+  };
+
+  const handleCreateClick = () => {
+    if (validateFields()) {
+      onClose();
+    }
+  };
 
   return (
     <Box
@@ -38,9 +66,12 @@ const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
 
         <div className="GroupCreateMenu-fieldContainer">
           <label className="GroupCreateMenu-label">{langSet["Name"]}</label>
-          <input
+          <TextField
             className="GroupCreateMenu-input"
             placeholder={langSet["GroupName"]}
+            value={groupName}
+            onChange={(e) => {setGroupName(e.target.value); setGroupNameError(false);}}
+            error={groupNameError}
           />
         </div>
 
@@ -65,8 +96,23 @@ const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
           </div>
         </div>
 
-        <button className="GroupCreateMenu-button">{langSet["Save"]}</button>
+        <button className="GroupCreateMenu-button"
+          onClick={handleCreateClick}
+        >
+          {langSet["Save"]}
+        </button>
       </div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+        action={
+          <IconButton size="small" aria-label="close" color="inherit" onClick={() => setSnackbarOpen(false)}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      />
     </Box>
   );
 });

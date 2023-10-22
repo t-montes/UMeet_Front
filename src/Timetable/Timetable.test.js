@@ -6,6 +6,8 @@ import * as langs from '../langs';
 
 beforeEach(() => {
     localStorage.setItem("lang", "en");
+    // set date to 2023 October 10th
+    jest.useFakeTimers().setSystemTime(new Date(2023, 9, 10));
 });
 
 /* -------------------------- RENDERING -------------------------- */
