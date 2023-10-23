@@ -16,6 +16,9 @@ const breakPoints = [
 function AddFriendsPage() {
   const { loadFriends, langSet } = useContext(AppContext);
 
+  // Estado para todos los amigos
+  const [allFriends, setAllFriends] = useState([]);
+  
   // Estado para los pares de amigos filtrados
   const [filteredFriendPairs, setFilteredFriendPairs] = useState([]);
 
@@ -30,24 +33,26 @@ function AddFriendsPage() {
     setSearchText(text);
   };
 
+  // Obtener todos los amigos al montar el componente
   useEffect(() => {
     loadFriends().then((friends) => {
-      // Filtrar amigos basados en el texto de búsqueda
-      const filteredFriends = friends.filter(friend =>
-        friend.name.toLowerCase().includes(searchText.toLowerCase())
-      );
-
-      // Crear pares de amigos filtrados
-      const newFriendPairs = [];
-      for (let i = 0; i < filteredFriends.length; i += 2) {
-        newFriendPairs.push(filteredFriends.slice(i, i + 2));
-      }
-
-      // Actualizar el estado de los pares de amigos filtrados
-      setFilteredFriendPairs(newFriendPairs);
+      setAllFriends(friends);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText]);  // Dependencia en searchText para re-ejecutar useEffect cuando searchText cambie
+  }, [loadFriends]);
+
+  // Filtrar amigos cuando cambia searchText
+  useEffect(() => {
+    const filteredFriends = allFriends.filter(friend =>
+      friend.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    
+    const newFriendPairs = [];
+    for (let i = 0; i < filteredFriends.length; i += 2) {
+      newFriendPairs.push(filteredFriends.slice(i, i + 2));
+    }
+
+    setFilteredFriendPairs(newFriendPairs);
+  }, [searchText, allFriends]);
 
   // Función para manejar el clic en el botón
   const handleButtonClick = (friendName) => {
@@ -67,12 +72,10 @@ function AddFriendsPage() {
       <SearchBar onSearchChange={handleSearchChange}/>
       <div className="AddFriendsPage">
         {noResults ? (
-          // Mostrar un mensaje en la mitad de la ventana cuando no hay resultados
           <div className="AddFriendsPage_no-results-message">
             {langSet["NoResults"]}
           </div>
         ) : (
-          // Mostrar el carrusel si hay resultados
           <Carousel
             className={carouselClass}
             breakPoints={breakPoints}
@@ -99,16 +102,8 @@ function AddFriendsPage() {
               <div key={index} className="AddFriendsPage_friend-pair-container">
                 {pair.map((friend, friendIndex) => (
                   <div key={friendIndex} className="AddFriendsPage_friend-container">
-                    <div className="AddFriendsPage_friends">
-                      <img
-                        className="AddFriendsPage_friend-image"
-                        src={friend.image}
-                        alt={friend.name}
-                      />
-                    </div>
-                    <div className="AddFriendsPage_friend-name">
-                      {friend.name}
-                    </div>
+                    <img className="AddFriendsPage_friend-image" src={friend.image} alt={friend.name} />
+                    <div className="AddFriendsPage_friend-name">{friend.name}</div>
                     <button
                         className={`AddFriendsPage_add-button ${friendButtonStates[friend.name] ? "added" : ""}`}
                         onClick={() => handleButtonClick(friend.name)}
