@@ -49,8 +49,6 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
   const [reminder, setReminder] = useState("30 " + langSet["MinutesBefore"]);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [periodStart, setPeriodStart] = useState("AM");
-  const [periodEnd, setPeriodEnd] = useState("AM");
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -58,8 +56,6 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
   const [eventNameError, setEventNameError] = useState(false);
   const [startTimeError, setStartTimeError] = useState(false);
   const [endTimeError, setEndTimeError] = useState(false);
-
-
 
   const validateFields = () => {
     let error = true;
@@ -149,7 +145,7 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
             <TextField label={langSet["Link"]} fullWidth margin="normal" value={link} onChange={(e) => setLink(e.target.value)} />
 
             <Box
-              sx={{
+              sx={{ // privacy checkbox
                 display: isSmallScreen ? "none" : "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -163,7 +159,7 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
             </Box>
 
             <Box
-              sx={{
+              sx={{ // notification reminder selector
                 display: isSmallScreen ? "none" : "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -202,36 +198,24 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
                 InputLabelProps={{ shrink: true }}
                 sx={{ flex: "1", marginRight: "8px" }}
                 value={startTime}
-                onChange={(e) => {setStartTime(e.target.value); setStartTimeError(false);}} error={startTimeError}
+                onChange={(e) => {setStartTime(e.target.value); setStartTimeError(false);}} 
+                error={startTimeError}
+                inputProps={{
+                    step: 300, // 5 min
+                  }}
               />
-              <Select
-                variant="outlined"
-                value={periodStart}
-                onChange={(e) => setPeriodStart(e.target.value)}
-                style={{ flex: "1", marginRight: "8px" }}
-              >
-                <MenuItem value="AM">AM</MenuItem>
-                <MenuItem value="PM">PM</MenuItem>
-              </Select>
-            </Box>
-            <Box display="flex" mt={2} justifyContent="space-between">
               <TextField
                 label={langSet["EndTime"]}
                 type="time"
                 InputLabelProps={{ shrink: true }}
                 sx={{ flex: "1", marginRight: "8px" }}
                 value={endTime}
-                onChange={(e) => {setEndTime(e.target.value); setEndTimeError(false);}} error={endTimeError}
-              />
-              <Select
-                variant="outlined"
-                value={periodEnd}
-                onChange={(e) => setPeriodEnd(e.target.value)}
-                style={{ flex: "1", marginRight: "8px" }}
-              >
-                <MenuItem value="AM">AM</MenuItem>
-                <MenuItem value="PM">PM</MenuItem>
-              </Select>
+                onChange={(e) => {setEndTime(e.target.value); setEndTimeError(false);}} 
+                error={endTimeError}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
+            />
             </Box>
 
             <Button
