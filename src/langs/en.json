@@ -57,6 +57,9 @@
     "SelectTextColor": "Select Text Color",
 
     "LoadMore": "Load More",
+    "PleaseSelectEndTime": "Please select an end time",
+    "PleaseSelectStartTime": "Please select a start time",
+    "PleaseSelectEventName": "Please select an event name",
 
     "NoResults": "No results found",
     "404": "404 - Page not found"

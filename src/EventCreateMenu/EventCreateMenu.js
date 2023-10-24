@@ -61,7 +61,7 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
     let error = true;
 
     if (!endTime) {
-      setSnackbarMessage("Please select an end time.");
+      setSnackbarMessage(langSet["PleaseSelectEndTime"]);
       setSnackbarOpen(true);
       setEndTimeError(true);
       error = false;
@@ -70,7 +70,7 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
     }
 
     if (!startTime) {
-      setSnackbarMessage("Please select a start time.");
+      setSnackbarMessage(langSet["PleaseSelectStartTime"]);
       setSnackbarOpen(true);
       setStartTimeError(true);
       error = false;
@@ -79,7 +79,7 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
     }
 
     if (!eventName) {
-      setSnackbarMessage("Please enter an event name.");
+      setSnackbarMessage(langSet["PleaseSelectEventName"]);
       setSnackbarOpen(true);
       setEventNameError(true);
       error = false;
