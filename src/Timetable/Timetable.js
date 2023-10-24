@@ -12,7 +12,10 @@ const range = (start, end) => Array.from(Array(end - start + 1).keys()).map(x =>
  * @param {Calendar[]} restrictions: array of calendars to check for available spaces between calendar and the rest
  */
 function Timetable({ calendar, restrictions }) {
-  
+
+  if (!calendar) calendar = [];
+  if (!restrictions) restrictions = [];
+
   const ctx = useContext(AppContext);
   const { laborHours, lastLaborDay, enableGrid, langSet } = ctx;
 
@@ -39,7 +42,7 @@ function Timetable({ calendar, restrictions }) {
   }
 
   const classOfCell = (m) => {
-    let cls = (m === 0 && enableGrid) ? 'timetable-grid' : '';
+    let cls = ((m === 0 && enableGrid) ? 'timetable-grid' : '');
     return cls;
   }
 
@@ -71,15 +74,43 @@ function Timetable({ calendar, restrictions }) {
     setCurrentWeek(theWeek);
   }
 
-  const renderEvents = () => {
-    /* TODO: render all the calendar events, based on the current week */
-    /* TODO: render all the AVAILABLE spaces between calendar an the rest of calendars in restrictions */
+  const eventOnTime = (time, m) => {
+    /* Function that receives time and returns <td> element.
+        If an event STARTS in this time, return a <td> with the event, and all the rowspans needed.
+        If an event CROSSES this time, return null, because it was rendered at the start and spans all the time it needs.
+        If NONE of those, return a <td> with a blank space. (<td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>) */
+    // TODO: 1. handle title overflow (...) should show the full title on hover
+    // TODO: 2. make responsive
+    // TODO: 3. fix: If event time is too short (< 1h05m) and time title has one line, it starts to anchor the cell height, which is wrong. Event should resize to fit the cell.
+    // TODO: 4. handle click
+    // TODO: 5. handle hover
+    // TODO: 6. handle drag!!
+    // TODO: 7. handle resize!!
+    if (calendar.some((e) => (e.start.getTime() === time.getTime()))) {
+      // case STARTS
+      const event = calendar.find((e) => (e.start.getTime() === time.getTime()));
+      const rowspan = Math.ceil((event.end - time)/(1000*60*60/hourDivisions));
+      return (
+      <td className="timetable-event" key={time} rowSpan={rowspan} data-testid="timetable-event">
+        <div onClick={() => console.log("clicked", event.title)} className="timetable-event-card">
+          <div className="timetable-event-title">{event.title}</div>
+          {/* TODO: fix: <div className="timetable-event-location">{event.location}</div>*/}
+        </div>
+      </td>);
+    } else if (calendar.some((e) => (e.start < time && e.end > time))) {
+      // case CROSSES
+      return null;
+    } else {
+      // case NONE
+      return <td key={time} className={classOfCell(m)} rowSpan={1}>
+        &nbsp;
+        </td>;
+    }
   }
 
   // Execute on load; [] means execute only at reaload
   useEffect(() => {
     backToToday();
-    renderEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -123,17 +154,16 @@ function Timetable({ calendar, restrictions }) {
             range(laborHours[0],laborHours[1]).map((h) => (
               range(0,hourDivisions-1).map((m) => (
                 <React.Fragment key={`${h},${m}`}>
-                  <tr>
-                    {m === 0 ? <td className="bordercell timetable-firstcol" rowSpan={hourDivisions}>{h%12 ? h%12 : 12}<br/>{h >= 12 ? "pm" : "am"}</td> : null}
+                  <tr style={{lineHeight: "2.8px"}}>
+                    {m === 0 ? <td className="bordercell timetable-firstcol" rowSpan={hourDivisions}>{h%12 ? h%12 : 12}
+                    <br/><br/><br/><br/><br/><br/> {/* TODO: fix: maybe this should be just one <br/> */}
+                    {h >= 12 ? "pm" : "am"}</td> : null}
                     {
                       currentWeek.map((d) => {
                         const time = d;
                         time.setHours(h,m*60/hourDivisions,0,0);
-                        return (
-                          <td key={time} className={classOfCell(m)}>
-                            
-                          </td>
-                      )})
+                        return eventOnTime(time, m);
+                      })
                     }
                   </tr>
                 </React.Fragment>

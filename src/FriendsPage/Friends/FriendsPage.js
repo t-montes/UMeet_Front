@@ -16,52 +16,50 @@ const breakPoints = [
 function FriendsPage() {
   const { loadFriends } = useContext(AppContext);
 
-  // Estado para los pares de amigos filtrados
+  const [allFriends, setAllFriends] = useState([]);  // Estado para todos los amigos
   const [filteredFriendPairs, setFilteredFriendPairs] = useState([]);
-
-  // Estado para el texto de búsqueda
   const [searchText, setSearchText] = useState('');
 
-  // Manejar cambios en el texto de búsqueda
   const handleSearchChange = (text) => {
     setSearchText(text);
   };
 
+  // Obtener todos los amigos al montar el componente
   useEffect(() => {
     loadFriends().then((friends) => {
-      // Filtrar amigos basados en el texto de búsqueda
-      const filteredFriends = friends.filter(friend =>
-        friend.name.toLowerCase().includes(searchText.toLowerCase())
-      );
-
-      // Crear pares de amigos filtrados
-      const newFriendPairs = [];
-      for (let i = 0; i < filteredFriends.length; i += 2) {
-        newFriendPairs.push(filteredFriends.slice(i, i + 2));
-      }
-
-      // Actualizar el estado de los pares de amigos filtrados
-      setFilteredFriendPairs(newFriendPairs);
+      setAllFriends(friends);  // Guardar todos los amigos en el estado
+      setFilteredFriendPairs(createFriendPairs(friends));  // Establecer los pares de amigos iniciales
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText]);  // Dependencia en searchText para re-ejecutar useEffect cuando searchText cambie
+  }, [loadFriends]);  // Agregamos loadFriends a las dependencias
+
+  // Filtrar amigos cuando cambia searchText
+  useEffect(() => {
+    const filteredFriends = allFriends.filter(friend =>
+      friend.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredFriendPairs(createFriendPairs(filteredFriends));
+  }, [searchText, allFriends]);
+
+  const createFriendPairs = (friendsList) => {
+    const newFriendPairs = [];
+    for (let i = 0; i < friendsList.length; i += 2) {
+      newFriendPairs.push(friendsList.slice(i, i + 2));
+    }
+    return newFriendPairs;
+  };
 
   const carouselClass = filteredFriendPairs.length > 1 ? 'carousel-multiple-sections' : 'carousel-single-section';
-
-  // Verificar si no hay resultados de búsqueda
   const noResults = filteredFriendPairs.length === 0;
 
   return (
     <>
-      <SearchBar onSearchChange={handleSearchChange}/>
+      <SearchBar onSearchChange={handleSearchChange} />
       <div className="FriendsPage">
         {noResults ? (
-          // Mostrar un mensaje en la mitad de la ventana cuando no hay resultados
           <div className="FriendsPage_no-results-message">
             No se encontraron resultados
           </div>
         ) : (
-          // Mostrar el carrusel si hay resultados
           <Carousel
             className={carouselClass}
             breakPoints={breakPoints}

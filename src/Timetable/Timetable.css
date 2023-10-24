@@ -92,6 +92,47 @@
   table-layout: fixed;
   text-align: center;
   border-collapse: collapse;
+  height: 1px; /* trick to make divs fill */
+}
+
+.timetable-event {
+  padding: 0px 2.5px 0px 5px; /* top right bottom left */
+}
+
+.timetable-event-card {
+  height: 100%;
+  width: 100%;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fcf67d;
+  color: var(--black);
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid var(--black);
+  border-radius: 7.5px;
+
+  /* align content center vertically (all 3 are required) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timetable-event-title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.timetable-event-location {
+  font-size: 0.9em;
+  font-weight: normal;
+  text-align: right;
+  padding: 0px 5px 0px 0px; /* top right bottom left */
+}
+
+
+.timetable-calendar tr th:nth-child(1) { 
+  letter-spacing: 0.5em !important;
 }
 
 .timetable-firstcol {

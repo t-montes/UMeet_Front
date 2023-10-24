@@ -61,8 +61,53 @@ const defaultNotifications = [
   { name: "Gran manera de gastar mi viernes por la tarde (llevo tres horas haciendo el componente)", time: "45", unit: "hours"}
 ];
 
+const defaultCalendar = [
+  // both, start and end must be multiple of 5 minutes
+  {
+    title: "Desarrollo Web",
+    start: new Date("2023-10-24T08:00:00"), 
+    end: new Date("2023-10-24T09:20:00"),
+    location: "RGD 202",
+  },
+  {
+    title: "Desarrollo Web",
+    start: new Date("2023-10-27T08:00:00"), 
+    end: new Date("2023-10-27T09:20:00"),
+    location: "RGD 202",
+  },
+  {
+    title: "Elementos",
+    start: new Date("2023-10-23T09:30:00"), 
+    end: new Date("2023-10-23T10:50:00"),
+    location: "O 105",
+  },
+  {
+    title: "Elementos",
+    start: new Date("2023-10-25T09:30:00"), 
+    end: new Date("2023-10-25T10:50:00"),
+    location: "O 105",
+  },
+  {
+    title: "Computación",
+    start: new Date("2023-10-24T09:30:00"), 
+    end: new Date("2023-10-24T10:50:00"),
+    location: "SD 806",
+  },
+  {
+    title: "Computación",
+    start: new Date("2023-10-26T09:30:00"), 
+    end: new Date("2023-10-26T10:50:00"),
+    location: "SD 806",
+  },
+  {
+    title: "Ejercicio",
+    start: new Date("2023-10-28T07:30:00"), 
+    end: new Date("2023-10-28T07:50:00"), // the minimum (good-look) duration is 20 minutes
+    location: "Gym",
+  },
+];
+
 function App() {
-  // get default lang from localStorage, if not, set it to 'es'
   const defaultLang = localStorage.getItem('lang');
   if (defaultLang === null) {
     localStorage.setItem('lang', (navigator.language || navigator.userLanguage).split('-')[0]);
@@ -76,7 +121,6 @@ function App() {
   const [user, setUser] = useState(defaultUser);
   const [showEventCreateMenu, setShowEventCreateMenu] = useState(false); // Step 1: Add a new state variable
   const [showGroupCreateMenu, setShowGroupCreateMenu] = useState(false); // State to control the visibility of the GroupCreateMenu
-
 
   useEffect(() => {
     localStorage.setItem('lang', lang);
@@ -181,8 +225,6 @@ function App() {
     }
   });
 
-
-
   const ctx = {
     laborHours, setLaborHours,
     lastLaborDay, setLastLaborDay,
@@ -200,7 +242,7 @@ function App() {
         <div className="Content">
           <BrowserRouter basename="/">
             <Routes>
-              <Route path="/" element={<Timetable/>}/>
+              <Route path="/" element={<Timetable calendar={defaultCalendar}/>}/>
               <Route path="/friends" element={<FriendsPage/>}/>
               <Route path="/friends-add" element={<AddFriendsPage/>}/>
               <Route path="/groups" element={<GroupsPage/>}/>
