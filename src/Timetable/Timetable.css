@@ -19,6 +19,10 @@
   .timetable-calendar tr th:nth-child(1) { 
     width: 10%; 
   }
+
+  .timetable-event-title {
+    font-size: 1.1em;
+  }
 }
 
 /* Styles for Tablet */
@@ -35,6 +39,10 @@
   .timetable-calendar tr th:nth-child(1) { 
     width: 11.5%; 
   }
+
+  .timetable-event-title {
+    font-size: 1em;
+  }
 }
 
 /* Styles for Cellphone (mobile) */
@@ -50,6 +58,10 @@
 
   .timetable-calendar tr th:nth-child(1) { 
     width: 14%; 
+  }
+
+  .timetable-event-title {
+    font-size: 0.85em;
   }
 }
 
@@ -102,7 +114,6 @@
 .timetable-event-card {
   height: 100%;
   width: 100%;
-  font-size: 0.9em;
   font-weight: bold;
   margin-left: auto;
   margin-right: auto;
@@ -112,6 +123,7 @@
   transition: 0.3s;
   border: 1px solid var(--black);
   border-radius: 7.5px;
+  padding: 0 2.5px;
 
   /* align content center vertically (all 3 are required) */
   display: flex;
@@ -120,9 +132,19 @@
 }
 
 .timetable-event-title {
-  font-size: 1.1em;
   font-weight: bold;
+  --lheight: 1em;
+  line-height: var(--lheight);
+  overflow: clip;
+  text-overflow: ellipsis;
 }
+
+.timetable-event-title > span {
+  font-weight: normal;
+  font-size: 0.9em;
+  margin-left: 5px;
+}
+
 .timetable-event-location {
   font-size: 0.9em;
   font-weight: normal;

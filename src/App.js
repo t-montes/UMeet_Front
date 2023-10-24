@@ -63,46 +63,68 @@ const defaultNotifications = [
 
 const defaultCalendar = [
   // both, start and end must be multiple of 5 minutes
+  // visualEnd is the minimum end to look good in the timetable (20 minutes minimum, from start)
   {
     title: "Desarrollo Web",
     start: new Date("2023-10-24T08:00:00"), 
     end: new Date("2023-10-24T09:20:00"),
+    visualEnd: new Date("2023-10-24T09:20:00"), // if event lasts at least 20 minutes, visualEnd == end
     location: "RGD 202",
   },
   {
-    title: "Desarrollo Web",
+    title: "Desarrollo de Tecnologías Web",
     start: new Date("2023-10-27T08:00:00"), 
     end: new Date("2023-10-27T09:20:00"),
+    visualEnd: new Date("2023-10-27T09:20:00"),
     location: "RGD 202",
   },
   {
     title: "Elementos",
     start: new Date("2023-10-23T09:30:00"), 
     end: new Date("2023-10-23T10:50:00"),
+    visualEnd: new Date("2023-10-23T10:50:00"),
     location: "O 105",
   },
   {
     title: "Elementos",
     start: new Date("2023-10-25T09:30:00"), 
     end: new Date("2023-10-25T10:50:00"),
+    visualEnd: new Date("2023-10-25T10:50:00"),
     location: "O 105",
   },
   {
     title: "Computación",
     start: new Date("2023-10-24T09:30:00"), 
     end: new Date("2023-10-24T10:50:00"),
+    visualEnd: new Date("2023-10-24T10:50:00"),
     location: "SD 806",
   },
   {
-    title: "Computación",
+    title: "Computación Científica en Ingeniería Electrónica y de Telecomunicaciones",
     start: new Date("2023-10-26T09:30:00"), 
     end: new Date("2023-10-26T10:50:00"),
+    visualEnd: new Date("2023-10-26T10:50:00"),
     location: "SD 806",
   },
   {
-    title: "Ejercicio",
+    title: "Ejercicioooo del día de hoy",
     start: new Date("2023-10-28T07:30:00"), 
-    end: new Date("2023-10-28T07:50:00"), // the minimum (good-look) duration is 20 minutes
+    end: new Date("2023-10-28T07:35:00"), 
+    visualEnd: new Date("2023-10-28T07:50:00"), 
+    location: "Gym",
+  },
+  {
+    title: "Ejercicio Parte 2",
+    start: new Date("2023-10-28T08:00:00"), 
+    end: new Date("2023-10-28T08:30:00"), 
+    visualEnd: new Date("2023-10-28T08:30:00"), 
+    location: "Gym",
+  },
+  {
+    title: "Ejerciciooooo Parte 3",
+    start: new Date("2023-10-28T09:00:00"), 
+    end: new Date("2023-10-28T09:40:00"), 
+    visualEnd: new Date("2023-10-28T09:40:00"), 
     location: "Gym",
   },
 ];

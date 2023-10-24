@@ -79,25 +79,28 @@ function Timetable({ calendar, restrictions }) {
         If an event STARTS in this time, return a <td> with the event, and all the rowspans needed.
         If an event CROSSES this time, return null, because it was rendered at the start and spans all the time it needs.
         If NONE of those, return a <td> with a blank space. (<td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>) */
-    // TODO: 1. handle title overflow (...) should show the full title on hover
-    // TODO: 2. make responsive
-    // TODO: 3. fix: If event time is too short (< 1h05m) and time title has one line, it starts to anchor the cell height, which is wrong. Event should resize to fit the cell.
-    // TODO: 4. handle click
-    // TODO: 5. handle hover
-    // TODO: 6. handle drag!!
-    // TODO: 7. handle resize!!
+
+    // TODO: 1. handle multiple events at the same time
+    // TODO: 2. handle click
+    // TODO: 3. handle hover
+    // TODO: 4. handle drag!! (maybe not)
+    // TODO: 5. handle resize!! (maybe not)
     if (calendar.some((e) => (e.start.getTime() === time.getTime()))) {
       // case STARTS
       const event = calendar.find((e) => (e.start.getTime() === time.getTime()));
-      const rowspan = Math.ceil((event.end - time)/(1000*60*60/hourDivisions));
+      const rowspan = Math.ceil((event.visualEnd - time)/(1000*60*60/hourDivisions));
+      const maxRowsText = Math.floor(rowspan/3.3); // found experimentally
+
       return (
       <td className="timetable-event" key={time} rowSpan={rowspan} data-testid="timetable-event">
         <div onClick={() => console.log("clicked", event.title)} className="timetable-event-card">
-          <div className="timetable-event-title">{event.title}</div>
-          {/* TODO: fix: <div className="timetable-event-location">{event.location}</div>*/}
+          <span className="timetable-event-title" 
+            style={{maxHeight: "calc(var(--lheight) * "+maxRowsText+")"}}
+          >{event.title}<br/><span>{event.location}</span></span>
         </div>
       </td>);
-    } else if (calendar.some((e) => (e.start < time && e.end > time))) {
+
+} else if (calendar.some((e) => (e.start < time && e.visualEnd > time))) {
       // case CROSSES
       return null;
     } else {
