@@ -89,6 +89,7 @@
 
         &:nth-child(3) {
             width: 85%;
+            margin-bottom: 1em;
         }
     }
 }
