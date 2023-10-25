@@ -1,0 +1,143 @@
+.event-create-menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--cyan);
+    border-radius: 20px;
+    border: 3px solid var(--black);
+
+    box-shadow: 1px 1.5px 1px 1.5px rgba(0, 0, 0, 0.2);
+}
+
+.event-create-menu-popup {
+    width: auto;
+    background-color: transparent;
+    overflow-y: visible;
+    padding: 1rem;
+    border-radius: inherit;
+
+    > h2 {
+        text-align: center;
+    }
+
+    font-size: 1.15rem;
+}
+
+#event-createmenu-starttime, #event-createmenu-endtime {
+    width: 80%;
+    margin-top: 1em;
+    border: 1px solid var(--black);
+    padding: 0 0.5em;
+}
+
+.error {
+    border-color: red !important;
+}
+
+.event-createmenu-inputs {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 1rem;
+    /* center both vertically and horizontally */
+    align-items: center;
+    justify-content: center;
+
+      
+    > input {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+
+        background: none;
+        outline: none;
+
+        padding: 1.3rem 0 0 0;
+
+        text-align: center;
+
+        &:hover {
+            outline: none;
+            box-shadow: none;
+        }
+
+        &:focus {
+            border-color: #007bff;
+            box-shadow: none;
+            outline: none; /* Remove the default focus outline */
+        }
+
+        &:active {
+            border-color: #0056b3;
+        }
+        
+        /* Style the input when it is disabled */
+        &:disabled {
+            border-bottom: 2px solid #8D9091;
+            cursor: not-allowed;
+            /* Additional styles for disabled state if needed */
+        }
+
+        &:first-child {
+            width: 100%;
+        }
+
+        &:nth-child(2) {
+            width: 85%;
+        }
+
+        &:nth-child(3) {
+            width: 85%;
+        }
+    }
+}
+
+.popup.large {
+    width: 1058px;
+    height: 600px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.snackbar {
+    display: none;
+    /* Define styles for the snackbar */
+}
+
+.createmenu-icon-button {
+    /* prevent default button styles */
+    background: none;
+    border: none;
+    color: var(--black);
+}
+
+.createmenu-ib-bell {
+    font-size: 1.5rem;
+}
+
+.createmenu-ib-close {
+    font-size: 2rem;
+}
+
+.icon-after-input {
+    display: inline;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.event-createmenu-switch {
+    > input {
+        display: none;
+    }
+
+    > div {
+        background-color: #ccc;
+        cursor: pointer;
+        transition: .4s;
+    }
+}

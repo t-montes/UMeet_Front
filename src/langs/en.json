@@ -34,7 +34,7 @@
     "TextSize": "Select Text Size",
     "TextColor": "Select Text Color",
 
-    "EventName": "Event Name *",
+    "EventName": "Event name *",
     "Location": "Location",
     "Link": "Link",
     "PrivateEvent": "Private Event",
