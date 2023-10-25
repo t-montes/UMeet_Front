@@ -202,7 +202,8 @@ const CreateEventMenu = React.forwardRef(({ onClose }, ref) => {
                 onChange={(e) => setReminder(e.target.value)}
                 style={{
                   display: showNotifications ? 'block' : 'none',
-                  marginLeft: '10px'
+                  marginLeft: '10px',
+                  border: "1px solid var(--black)"
                 }}
               >
                 <option value={'5 ' + langSet['MinutesBefore']}>
