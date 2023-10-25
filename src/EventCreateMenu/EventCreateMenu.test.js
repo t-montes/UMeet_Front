@@ -8,7 +8,7 @@ describe('CreateEventComponent', () => {
 
   const mockLangSet = {
     CreateEvent: 'Create Event',
-    EventName: 'Event Name',
+    EventName: 'Event name *',
     Location: 'Location',
     Link: 'Link',
     PrivateEvent: 'Private Event',
@@ -34,9 +34,9 @@ describe('CreateEventComponent', () => {
 
   it('renders the appropriate language set', () => {
     expect(screen.getByText(mockLangSet.CreateEvent)).toBeInTheDocument();
-    expect(screen.getByLabelText(mockLangSet.EventName)).toBeInTheDocument();
-    expect(screen.getByLabelText(mockLangSet.Location)).toBeInTheDocument();
-    expect(screen.getByLabelText(mockLangSet.Link)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(mockLangSet.EventName)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(mockLangSet.Location)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(mockLangSet.Link)).toBeInTheDocument();
     expect(screen.getByText(mockLangSet.Create)).toBeInTheDocument();
   });
 

@@ -100,7 +100,7 @@ const defaultCalendar = [
     location: "SD 806",
   },
   {
-    title: "Computación Científica en Ingeniería Electrónica y de Telecomunicaciones",
+    title: "Computación Científica en Ingeniería Electrónica",
     start: new Date("2023-10-26T09:30:00"), 
     end: new Date("2023-10-26T10:50:00"),
     visualEnd: new Date("2023-10-26T10:50:00"),
@@ -126,6 +126,20 @@ const defaultCalendar = [
     end: new Date("2023-10-28T09:40:00"), 
     visualEnd: new Date("2023-10-28T09:40:00"), 
     location: "Gym",
+  },
+  {
+    title: "Móviles",
+    start: new Date("2023-10-25T11:00:00"), 
+    end: new Date("2023-10-25T12:20:00"),
+    visualEnd: new Date("2023-10-25T12:20:00"),
+    location: "SD 401",
+  },
+  {
+    title: "EJEMPLO",
+    start: new Date("2023-10-25T12:20:00"), 
+    end: new Date("2023-10-25T12:50:00"),
+    visualEnd: new Date("2023-10-25T12:50:00"),
+    location: "SD 401",
   },
 ];
 
