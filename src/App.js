@@ -6,7 +6,6 @@ import { Fab, Action } from 'react-tiny-fab';
 import Modal from '@mui/material/Modal';
 
 import Navbar from './Navbar/Navbar';
-import Timetable from './Timetable/Timetable';
 import FriendsPage from './FriendsPage/Friends/FriendsPage';
 import AddFriendsPage from './FriendsPage/AddFriends/AddFriendsPage';
 import GroupsPage from './GroupsPage/GroupsPage';
@@ -15,6 +14,7 @@ import EventCreateMenu from './EventCreateMenu/EventCreateMenu';
 import GroupCreateMenu from './GroupCreateMenu/GroupCreateMenu';
 import BannerLinking from './BannerLinking/BannerLinking';
 import Settings from './Settings/Settings';
+import Home from './Home/Home';
 
 import * as langs from './langs';
 
@@ -66,91 +66,96 @@ const defaultCalendar = [
   // visualEnd is the minimum end to look good in the timetable (20 minutes minimum, from start)
   {
     title: "Desarrollo Web",
-    start: new Date("2023-10-24T08:00:00"), 
-    end: new Date("2023-10-24T09:20:00"),
-    visualEnd: new Date("2023-10-24T09:20:00"), // if event lasts at least 20 minutes, visualEnd == end
+    startDate: "2023-10-24T08:00:00",
+    endDate: "2023-10-24T09:20:00",
+    visualendDate: "2023-10-24T09:20:00", // if event lasts at least 20 minutes, visualEnd == end
     location: "RGD 202",
   },
   {
     title: "Desarrollo de Tecnologías Web",
-    start: new Date("2023-10-27T08:00:00"), 
-    end: new Date("2023-10-27T09:20:00"),
-    visualEnd: new Date("2023-10-27T09:20:00"),
+    startDate: "2023-10-27T08:00:00", 
+    endDate: "2023-10-27T09:20:00",
+    visualendDate: "2023-10-27T09:20:00",
     location: "RGD 202",
   },
   {
     title: "Elementos",
-    start: new Date("2023-10-23T09:30:00"), 
-    end: new Date("2023-10-23T10:50:00"),
-    visualEnd: new Date("2023-10-23T10:50:00"),
+    startDate: "2023-10-23T09:30:00", 
+    endDate: "2023-10-23T10:50:00",
+    visualendDate: "2023-10-23T10:50:00",
     location: "O 105",
   },
   {
     title: "Elementos",
-    start: new Date("2023-10-25T09:30:00"), 
-    end: new Date("2023-10-25T10:50:00"),
-    visualEnd: new Date("2023-10-25T10:50:00"),
+    startDate: "2023-10-25T09:30:00", 
+    endDate: "2023-10-25T10:50:00",
+    visualendDate: "2023-10-25T10:50:00",
     location: "O 105",
   },
   {
     title: "Computación",
-    start: new Date("2023-10-24T09:30:00"), 
-    end: new Date("2023-10-24T10:50:00"),
-    visualEnd: new Date("2023-10-24T10:50:00"),
+    startDate: "2023-10-24T09:30:00", 
+    endDate: "2023-10-24T10:50:00",
+    visualendDate: "2023-10-24T10:50:00",
     location: "SD 806",
   },
   {
     title: "Computación Científica en Ingeniería Electrónica",
-    start: new Date("2023-10-26T09:30:00"), 
-    end: new Date("2023-10-26T10:50:00"),
-    visualEnd: new Date("2023-10-26T10:50:00"),
+    startDate: "2023-10-26T09:30:00", 
+    endDate: "2023-10-26T10:50:00",
+    visualendDate: "2023-10-26T10:50:00",
     location: "SD 806",
   },
   {
     title: "Ejercicioooo del día de hoy",
-    start: new Date("2023-10-28T07:30:00"), 
-    end: new Date("2023-10-28T07:35:00"), 
-    visualEnd: new Date("2023-10-28T07:50:00"), 
+    startDate: "2023-10-28T07:30:00", 
+    endDate: "2023-10-28T07:35:00", 
+    visualendDate: "2023-10-28T07:50:00", 
     location: "Gym",
   },
   {
     title: "Ejercicio Parte 2",
-    start: new Date("2023-10-28T08:00:00"), 
-    end: new Date("2023-10-28T08:30:00"), 
-    visualEnd: new Date("2023-10-28T08:30:00"), 
+    startDate: "2023-10-28T08:00:00", 
+    endDate: "2023-10-28T08:30:00", 
+    visualendDate: "2023-10-28T08:30:00", 
     location: "Gym",
   },
   {
     title: "Ejerciciooooo Parte 3",
-    start: new Date("2023-10-28T09:00:00"), 
-    end: new Date("2023-10-28T09:40:00"), 
-    visualEnd: new Date("2023-10-28T09:40:00"), 
+    startDate: "2023-12-28T09:00:00", 
+    endDate: "2023-12-28T09:40:00", 
+    visualendDate: "2023-12-28T09:40:00", 
     location: "Gym",
   },
   {
     title: "Móviles",
-    start: new Date("2023-10-25T11:00:00"), 
-    end: new Date("2023-10-25T12:20:00"),
-    visualEnd: new Date("2023-10-25T12:20:00"),
+    startDate: "2023-10-25T11:00:00", 
+    endDate: "2023-10-25T12:20:00",
+    visualendDate: "2023-10-25T12:20:00",
     location: "SD 401",
   },
   {
     title: "EJEMPLO",
-    start: new Date("2023-10-25T12:20:00"), 
-    end: new Date("2023-10-25T12:50:00"),
-    visualEnd: new Date("2023-10-25T12:50:00"),
+    startDate: "2023-10-25T12:20:00", 
+    endDate: "2023-10-25T12:50:00",
+    visualendDate: "2023-10-25T12:50:00",
     location: "SD 401",
   },
 ];
 
 function App() {
+  // this token was generated on purpose to test the app, it has no expiration date
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjowLCJwZXJtaXNzaW9ucyI6eyJncm91cHMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sInVzZXJzIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJjYWxlbmRhcnMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sImV2ZW50cyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0sImlhdCI6MTcwMTY0MDczNH0.tbvSjWDb87xNKM28Yov6n9SxY6zJXeETE_bBAWinraI';
+  // this userId is part of the MOCK data after loading the sql/data.sql file in the back-end DB
+  const userId = '381cc76d-0c7d-41be-b2d5-0be3995005fd';
+
   const defaultLang = localStorage.getItem('lang');
   if (defaultLang === null) {
     localStorage.setItem('lang', (navigator.language || navigator.userLanguage).split('-')[0]);
   }
   
   const [laborHours, setLaborHours] = useState([6,20]); // 6 a.m. to 8 p.m.
-  const [lastLaborDay, setLastLaborDay] = useState(7); // Monday to Saturday
+  const [lastLaborDay, setLastLaborDay] = useState(7); // Monday to Sunday
   const [enableGrid, setEnableGrid] = useState(true);
   const [lang, setLang] = useState(localStorage.getItem('lang'));
   const [langSet, setLangSet] = useState(langs[lang]);
@@ -161,22 +166,23 @@ function App() {
   useEffect(() => {
     localStorage.setItem('lang', lang);
     setLangSet(langs[lang]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ lang ]);
 
   useEffect(() => {
     if (navigator.onLine) {
-      fetch('https://my.api.mockaroo.com/users.json?key=b07daaf0')
-        .then( response => {
-          if (response.ok) 
-            return response.json();
-          else
-            return defaultUser;
-        })
-        .then( response => {
-          setUser(response);
-          localStorage.setItem('user', JSON.stringify(response));
-        });
+      fetch(`http://localhost:3001/api/v1/users/${userId}`,
+        { headers: { 'Authorization': `Bearer ${token}` } })
+      .then( response => {
+        if (response.ok) 
+          return response.json();
+        else
+          return defaultUser;
+      })
+      .then( response => {
+        console.log("user",response);
+        localStorage.setItem('user', JSON.stringify(response));
+        setUser(response);
+      });
     } else {
       const localUser = JSON.parse(localStorage.getItem('user'));
       if (localUser !== null) {
@@ -207,6 +213,36 @@ function App() {
         return localGroups;
       } else {
         return defaultGroups;
+      }
+    }
+  });
+
+  const loadCalendar = (async () => {
+    if (navigator.onLine) {
+      return await fetch(`http://localhost:3001/api/v1/users/${userId}/calendar`,
+        { headers: { 'Authorization': `Bearer ${token}` } })
+      .then( response => {
+        if (response.ok)
+          return response.json();
+        else
+          return defaultCalendar;
+      })
+      .then( response => {
+        response.events.forEach((e) => {
+          e.startDate = new Date(e.startDate);
+          e.endDate = new Date(e.endDate);
+          e.visualEndDate = new Date(e.visualEndDate);
+        });
+        console.log("calendar", response);
+        localStorage.setItem('calendar', JSON.stringify(response));
+        return response;
+      });
+    } else {
+      const localCalendar = JSON.parse(localStorage.getItem('calendar'));
+      if (localCalendar !== null) {
+        return localCalendar;
+      } else {
+        return defaultCalendar;
       }
     }
   });
@@ -262,12 +298,13 @@ function App() {
   });
 
   const ctx = {
+    token,
     laborHours, setLaborHours,
     lastLaborDay, setLastLaborDay,
     enableGrid, setEnableGrid,
     lang, setLang, langSet,
     user, setUser,
-    loadGroups, loadFriends, loadNotifications
+    loadGroups, loadFriends, loadNotifications, loadCalendar
   }
 
   return (
@@ -278,14 +315,13 @@ function App() {
         <div className="Content">
           <BrowserRouter basename="/">
             <Routes>
-              <Route path="/" element={<Timetable calendar={defaultCalendar}/>}/>
+              <Route path="/" element={<Home/>}/>
               <Route path="/friends" element={<FriendsPage/>}/>
               <Route path="/friends-add" element={<AddFriendsPage/>}/>
               <Route path="/groups" element={<GroupsPage/>}/>
               <Route path="/settings" element={<Settings/>}/>
               <Route path="/banner-linking" element={<BannerLinking/>}/>
               <Route path="/group/:groupId" element={<GroupPage />} />
-              {/*TODO: <Route path="/users/:id" element={<UserPage/>}/>*/}
               <Route path="*" element={<h1>{langSet["404"]}</h1>}/>
             </Routes>
           </BrowserRouter>

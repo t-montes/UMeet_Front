@@ -13,7 +13,11 @@ const range = (start, end) => Array.from(Array(end - start + 1).keys()).map(x =>
  */
 function Timetable({ calendar, restrictions }) {
 
-  if (!calendar) calendar = [];
+  if (!calendar) calendar = {
+    id: '',
+    color: '#000000',
+    events: [],
+  };
   if (!restrictions) restrictions = [];
 
   const ctx = useContext(AppContext);
@@ -21,6 +25,8 @@ function Timetable({ calendar, restrictions }) {
 
   const days = langSet.days;
   const months = langSet.months;
+
+  console.log("timetable", calendar);
 
   /* -------------------------- VARIABLES -------------------------- */
 
@@ -48,7 +54,7 @@ function Timetable({ calendar, restrictions }) {
 
   const backToToday = () => {
     let theWeek = [];
-    while (theWeek.length < 7) {
+    while (theWeek.length < 8) {
       theWeek.push(addDays(currentDate,theWeek.length-currentDate.getDay()));
     }
 
@@ -80,42 +86,48 @@ function Timetable({ calendar, restrictions }) {
         If an event CROSSES this time, return null, because it was rendered at the start and spans all the time it needs.
         If NONE of those, return a <td> with a blank space. (<td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>) */
 
-    // TODO: 1. handle multiple events at the same time
-    // TODO: 2. handle click
-    // TODO: 3. handle hover
-    // TODO: 4. handle drag!! (maybe not)
-    // TODO: 5. handle resize!! (maybe not)
-    if (calendar.some((e) => (e.start.getTime() === time.getTime()))) {
-      // case STARTS
-      const event = calendar.find((e) => (e.start.getTime() === time.getTime()));
-      const rowspan = Math.ceil((event.visualEnd - time)/(1000*60*60/hourDivisions));
-      const maxRowsText = Math.floor(rowspan/3.3); // found experimentally
+    // TODO: 1. handle click
+    // TODO: 2. handle hover
+    if (calendar.events) {
+      if (calendar.events.some((e) => (e.startDate.getTime() === time.getTime()))) {
+        // case STARTS
+        const event = calendar.events.find((e) => (e.startDate.getTime() === time.getTime()));
+        const rowspan = Math.ceil((event.visualEndDate - time)/(1000*60*60/hourDivisions));
+        const maxRowsText = Math.floor(rowspan/3.3); // found experimentally
 
-      return (
-      <td className="timetable-event" key={time} rowSpan={rowspan} data-testid="timetable-event">
-        <div onClick={() => console.log("clicked", event.title)} className="timetable-event-card">
-          <span className="timetable-event-title" 
-            style={{maxHeight: "calc(var(--lheight) * "+maxRowsText+")"}}
-          >{event.title}<br/><span>{event.location}</span></span>
-        </div>
-      </td>);
-
-} else if (calendar.some((e) => (e.start < time && e.visualEnd > time))) {
-      // case CROSSES
-      return null;
-    } else {
-      // case NONE
-      return <td key={time} className={classOfCell(m)} rowSpan={1}>
-        &nbsp;
-        </td>;
+        return (
+        <td className="timetable-event" key={time} rowSpan={rowspan} data-testid="timetable-event">
+          <div onClick={() => console.log("clicked", event.name)} className="timetable-event-card">
+            <span className="timetable-event-title" 
+              style={{maxHeight: "calc(var(--lheight) * "+maxRowsText+")"}}
+            >{event.name}<br/><span>{event.location}</span></span>
+          </div>
+        </td>);
+      } else if (calendar.events.some((e) => (e.startDate < time && e.visualEndDate > time))) {
+        // case CROSSES
+        return null;
+      } else {
+        // case NONE
+        return <td key={time} className={classOfCell(m)} rowSpan={1}>
+          &nbsp;
+          </td>;
+      }
     }
   }
+
+  const displayEvents = () => {
+    // TODO:...
+  };
 
   // Execute on load; [] means execute only at reaload
   useEffect(() => {
     backToToday();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    displayEvents();
+  }, [currentWeek]);
 
   /* -------------------------- COMPONENT -------------------------- */
   return (
