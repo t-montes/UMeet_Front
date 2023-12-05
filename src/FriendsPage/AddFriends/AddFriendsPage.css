@@ -10,8 +10,10 @@
   }
   
   .AddFriendsPage_friend-image {
-    height: auto;
-    max-width: 300px;
+    height: 200px;
+    width: 250px;
+    border-radius: 100%;
+    padding: 10px;
   }
   
   .AddFriendsPage_img1 {
