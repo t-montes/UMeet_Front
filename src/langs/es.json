@@ -56,6 +56,7 @@
     "SelectTextSize": "Seleccionar Tamaño de Texto",
     "SelectTextColor": "Seleccionar Color del Texto",
     "EnableGrid": "Habilitar Cuadrícula",
+    "StartTimeGreaterThanEndTime": "Hora inicio debe ser menor a Hora fin",
 
     "LoadMore": "Cargar más",
     "PleaseSelectEndTime": "Por favor selecciona una hora final",

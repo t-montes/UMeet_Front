@@ -235,9 +235,6 @@ function App() {
   // this userId is part of the MOCK data after loading the sql/data.sql file in the back-end DB
   const userId = '381cc76d-0c7d-41be-b2d5-0be3995005fd';
 
-  const tokenNotificaciones = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vdGlmaWNhdGlvblJlYWQiLCJzdWIiOjIyLCJwZXJtaXNzaW9ucyI6eyJub3RpZmljYXRpb24iOlsicmVhZCJdfSwiaWF0IjoxNzAxNzM4MzEwLCJleHAiOjE3MDE3NDU1MTB9.4Zo7UlR13tDIHH7dXX2TcOjwKoxSCXxlPocgMtdc8u0';
-  const tokenSettings = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNldHRpbmdzUmVhZCIsInN1YiI6MTgsInBlcm1pc3Npb25zIjp7InNldHRpbmdzIjpbInJlYWQiXX0sImlhdCI6MTcwMTczODkwNSwiZXhwIjoxNzAxNzQ2MTA1fQ.v2-7-ZKTXQIhGz4cwxvNdI0UCZeJaA4ERRPnhT-_zRE'
-
   const defaultLang = localStorage.getItem('lang');
   if (defaultLang === null) {
     localStorage.setItem('lang', (navigator.language || navigator.userLanguage).split('-')[0]);
@@ -391,7 +388,7 @@ function App() {
   const loadNotifications = (async () => {
     if (navigator.onLine) {
       return await fetch(`http://localhost:3001/api/v1/notifications/user/${userId}`,
-        { headers: { 'Authorization': `Bearer ${tokenNotificaciones}` } })
+        { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
           if (response.ok)
             return response.json();
@@ -416,7 +413,7 @@ function App() {
   const loadSettings = (async () => {
     if (navigator.onLine) {
       return await fetch(`http://localhost:3001/api/v1/settings/user/${userId}`,
-        { headers: { 'Authorization': `Bearer ${tokenSettings}` } })
+        { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
           if (response.ok)
             return response.json();

@@ -110,3 +110,10 @@
   color: red;
   margin-top: 5px;
 }
+
+.customization_warning{
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

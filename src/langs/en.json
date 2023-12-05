@@ -56,6 +56,7 @@
     "SelectTextSize": "Select Text Size",
     "SelectTextColor": "Select Text Color",
     "EnableGrid": "Enable Grid",
+    "StartTimeGreaterThanEndTime": "Start time must be greater than end time",
 
     "LoadMore": "Load More",
     "PleaseSelectEndTime": "Please select an end time",

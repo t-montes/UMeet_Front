@@ -1,80 +1,81 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./Customization.css";
-import TextField from './TextField/TextField';
+import ControlledSelect from './ControlledSelect/ControlledSelect';
+import CheckBox from './Checkbox/Checkbox';
 import AppContext from "../AppContext";
 
 function Customization() {
     const { loadSettings, langSet } = useContext(AppContext);
-    const [settings, setSettings] = useState({ startHour: '', endHour: '', lastLaborDay: '', enableGrid: false });
+
     const [customization, setCustomization] = useState(false);
-    const [warnings, setWarnings] = useState({ startHour: '', endHour: '', lastLaborDay: '' });
+    const [startTime, setStartTime] = useState(6);
+    const [endTime, setEndTime] = useState(20);
+    const [lastLaborDay, setLastLaborDay] = useState(1); // Asumiendo que Lunes es 1
+    const [enableGrid, setEnableGrid] = useState(false); // Estado inicial establecido por loadSettings
+    const [warning, setWarning] = useState('');
+    const [settingsId, setSettingsId] = useState('');
+    const [userId, setUserId] = useState('');
+
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjowLCJwZXJtaXNzaW9ucyI6eyJncm91cHMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sInVzZXJzIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJjYWxlbmRhcnMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sImV2ZW50cyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwic2V0dGluZ3MiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sIm5vdGlmaWNhdGlvbiI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0sImlhdCI6MTcwMTc0MjQxM30.lfTuthX7uO_k43vv_AYuw6Tv86ss2ib1QtnZLLKrTCk';
 
     useEffect(() => {
-        const fetchSettings = async () => {
-            const settingsData = await loadSettings();
-            if (settingsData && settingsData.length > 0) {
-                setSettings({
-                    startHour: settingsData[0].startHour,
-                    endHour: settingsData[0].endHour,
-                    lastLaborDay: settingsData[0].lastLaborDay,
-                    enableGrid: settingsData[0].enableGrid
-                });
+        loadSettings().then(data => {
+            if (data && data.length > 0) {
+                const settings = data[0];
+                setStartTime(settings.startHour);
+                setEndTime(settings.endHour);
+                setLastLaborDay(settings.lastLaborDay);
+                setEnableGrid(settings.enableGrid); // Establece el estado inicial de enableGrid
+                setSettingsId(settings.id);
+                setUserId(settings.user.id);
             }
-        };
-
-        fetchSettings();
+        });
     }, [loadSettings]);
+
+    const handleSave = () => {
+        if (parseInt(startTime) >= parseInt(endTime)) {
+            setWarning(langSet["StartTimeGreaterThanEndTime"]);
+        } else {
+            const url = `http://localhost:3001/api/v1/settings/${settingsId}/user/${userId}`;
+            const data = {
+                startHour: startTime,
+                endHour: endTime,
+                lastLaborDay: lastLaborDay,
+                enableGrid: enableGrid // Usa el estado actual de enableGrid
+            };
+
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                setCustomization(false);
+                document.body.style.overflow = "auto";
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+            setWarning('');
+        }
+    };
 
     const toggleCustom = () => {
         setCustomization(!customization);
         document.body.style.overflow = customization ? "auto" : "hidden";
-    }
+        setWarning('');
+    };
 
-    const handleInputChange = (event) => {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        setSettings({...settings, [name]: value});
-        setWarnings({...warnings, [name]: ''}); // Clear warning for the field
-    }
-
-    const validateSettings = () => {
-        let isValid = true;
-        let newWarnings = { ...warnings };
-
-        // Validaciones para startHour y endHour
-        if (settings.startHour !== '' && (parseInt(settings.startHour) < 1 || parseInt(settings.startHour) > 24)) {
-            newWarnings.startHour = 'Hour must be between 1 and 24';
-            isValid = false;
-        }
-        if (settings.endHour !== '' && (parseInt(settings.endHour) < 1 || parseInt(settings.endHour) > 24)) {
-            newWarnings.endHour = 'Hour must be between 1 and 24';
-            isValid = false;
-        }
-        // Validación para lastLaborDay
-        if (settings.lastLaborDay !== '' && (parseInt(settings.lastLaborDay) < 1 || parseInt(settings.lastLaborDay) > 7)) {
-            newWarnings.lastLaborDay = 'Day must be between 1 and 7';
-            isValid = false;
-        }
-
-        // Validación adicional para endHour < startHour
-        if (parseInt(settings.endHour) < parseInt(settings.startHour)) {
-            newWarnings.endHour = 'End hour must be greater than start hour';
-            isValid = false;
-        }
-
-        setWarnings(newWarnings);
-        return isValid;
-    }
-
-    const handleSave = () => {
-        if (validateSettings()) {
-            // Proceso de guardado si la validación es exitosa
-            // Por ejemplo, podrías llamar a una función para guardar los ajustes
-            console.log('Settings saved:', settings);
-            toggleCustom(); // Cierra el modal si todo está correcto
-        }
+    if (customization) {
+        document.body.classList.add('active-customization');
+    } else {
+        document.body.classList.remove('active-customization');
     }
 
     return (
@@ -90,52 +91,58 @@ function Customization() {
                         <div className="customization_btn-container">
                             <h2>{langSet["ScheduleCustomization"]}</h2>
                         </div>
+
+                        <div className="customization_select-customization_container">
+                            <div className="customization_container">
+                                <div className="customization_select-label">
+                                    {langSet["LastDay"]}:
+                                </div>
+                                <ControlledSelect 
+                                    value={lastLaborDay}
+                                    onChange={(value) => setLastLaborDay(value)}
+                                />
+                            </div>
+                        </div>
+
                         <div className="customization_select-customization_container">
                             <div className="customization_container">
                                 <div className="customization_select-label">
                                     {langSet["StartTime"]}:
                                 </div>
-                                <TextField
-                                    name="startHour"
-                                    value={settings.startHour}
-                                    onChange={handleInputChange}
+                                <input
+                                    type="number"
+                                    value={startTime}
+                                    onChange={(e) => setStartTime(e.target.value)}
+                                    min="1"
+                                    max="24"
                                 />
-                                {warnings.startHour && <p className="warning">{warnings.startHour}</p>}
                             </div>
                             <div className="customization_container">
                                 <div className="customization_select-label">
                                     {langSet["EndTime"]}:
                                 </div>
-                                <TextField
-                                    name="endHour"
-                                    value={settings.endHour}
-                                    onChange={handleInputChange}
+                                <input
+                                    type="number"
+                                    value={endTime}
+                                    onChange={(e) => setEndTime(e.target.value)}
+                                    min="1"
+                                    max="24"
                                 />
-                                {warnings.endHour && <p className="warning">{warnings.endHour}</p>}
-                            </div>
-                            <div className="customization_container">
-                                <div className="customization_select-label">
-                                    {langSet["LastLaborDay"]}:
-                                </div>
-                                <TextField
-                                    name="lastLaborDay"
-                                    value={settings.lastLaborDay}
-                                    onChange={handleInputChange}
-                                />
-                                {warnings.lastLaborDay && <p className="warning">{warnings.lastLaborDay}</p>}
                             </div>
                         </div>
-                        <div className="customization_enableGrid_container">
-                            <div className="customization_checkbox_label">
+
+                        <div className="customization_container">
+                            <div className="customization_select-label">
                                 {langSet["EnableGrid"]}:
                             </div>
-                            <input
-                                name="enableGrid"
-                                type="checkbox"
-                                checked={settings.enableGrid}
-                                onChange={handleInputChange}
+                            <CheckBox
+                                checked={enableGrid}
+                                onChange={(e) => setEnableGrid(e.target.checked)}
                             />
                         </div>
+
+                        {warning && <div className="customization_warning">{warning}</div>}
+
                         <div className="customization_btn-container">
                             <button className="customization_close" onClick={handleSave}>
                                 Guardar
