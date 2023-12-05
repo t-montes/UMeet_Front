@@ -432,7 +432,7 @@ function App() {
     enableGrid, setEnableGrid,
     lang, setLang, langSet,
     user, setUser,
-    loadGroups, loadFriends, loadNotifications, loadCalendar, loadNoFriends, loadSettings
+    loadGroups, loadFriends, loadNotifications, loadCalendar, loadNoFriends, loadSettings, userId
   }
 
   return (

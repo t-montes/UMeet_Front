@@ -5,7 +5,7 @@ import CheckBox from './Checkbox/Checkbox';
 import AppContext from "../AppContext";
 
 function Customization() {
-    const { loadSettings, langSet } = useContext(AppContext);
+    const { token, loadSettings, langSet } = useContext(AppContext);
 
     const [customization, setCustomization] = useState(false);
     const [startTime, setStartTime] = useState(6);
@@ -15,8 +15,6 @@ function Customization() {
     const [warning, setWarning] = useState('');
     const [settingsId, setSettingsId] = useState('');
     const [userId, setUserId] = useState('');
-
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjowLCJwZXJtaXNzaW9ucyI6eyJncm91cHMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sInVzZXJzIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJjYWxlbmRhcnMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sImV2ZW50cyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwic2V0dGluZ3MiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sIm5vdGlmaWNhdGlvbiI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0sImlhdCI6MTcwMTc0MjQxM30.lfTuthX7uO_k43vv_AYuw6Tv86ss2ib1QtnZLLKrTCk';
 
     useEffect(() => {
         loadSettings().then(data => {

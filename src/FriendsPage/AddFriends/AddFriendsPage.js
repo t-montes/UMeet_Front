@@ -14,38 +14,23 @@ const breakPoints = [
 ];
 
 function AddFriendsPage() {
-  const { loadNoFriends, langSet } = useContext(AppContext);
-
-  // Estado para todos los amigos
+  const { token, userId, loadNoFriends, langSet } = useContext(AppContext);
   const [allFriends, setAllFriends] = useState([]);
-  
-  // Estado para los pares de amigos filtrados
   const [filteredFriendPairs, setFilteredFriendPairs] = useState([]);
-
-  // Estado para el texto de búsqueda
   const [searchText, setSearchText] = useState('');
-
-  // Estado local para el estado de cada botón de amigo
   const [friendButtonStates, setFriendButtonStates] = useState({});
 
-  // Manejar cambios en el texto de búsqueda
-  const handleSearchChange = (text) => {
-    setSearchText(text);
-  };
-
-  // Obtener todos los amigos al montar el componente
   useEffect(() => {
     loadNoFriends().then((friends) => {
       setAllFriends(friends);
     });
   }, [loadNoFriends]);
 
-  // Filtrar amigos cuando cambia searchText
   useEffect(() => {
     const filteredFriends = allFriends.filter(friend =>
       friend.name.toLowerCase().includes(searchText.toLowerCase())
     );
-    
+
     const newFriendPairs = [];
     for (let i = 0; i < filteredFriends.length; i += 2) {
       newFriendPairs.push(filteredFriends.slice(i, i + 2));
@@ -54,17 +39,32 @@ function AddFriendsPage() {
     setFilteredFriendPairs(newFriendPairs);
   }, [searchText, allFriends]);
 
-  // Función para manejar el clic en el botón
-  const handleButtonClick = (friendName) => {
-    setFriendButtonStates((prevState) => ({
-      ...prevState,
-      [friendName]: true, // Cambia el estado del botón a true cuando se hace clic
-    }));
+  const handleButtonClick = (nonFriendId) => {
+    const url = `http://localhost:3001/api/v1/users/${userId}/friends/${nonFriendId}`;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Friend added:', data);
+        setFriendButtonStates((prevState) => ({
+            ...prevState,
+            [nonFriendId]: true,
+        }));
+    })
+    .catch(error => console.error('Error:', error));
+  };
+
+  const handleSearchChange = (text) => {
+    setSearchText(text);
   };
 
   const carouselClass = filteredFriendPairs.length > 1 ? 'carousel-multiple-sections' : 'carousel-single-section';
-
-  // Verificar si no hay resultados de búsqueda
   const noResults = filteredFriendPairs.length === 0;
 
   return (
@@ -91,8 +91,7 @@ function AddFriendsPage() {
                   <button
                     key={page}
                     onClick={() => onClick(page)}
-                    className={`AddFriendsPage_custom-pagination-dot ${activePage === page ? "active" : ""
-                      }`}
+                    className={`AddFriendsPage_custom-pagination-dot ${activePage === page ? "active" : ""}`}
                   ></button>
                 ))}
               </div>
@@ -105,11 +104,11 @@ function AddFriendsPage() {
                     <img className="AddFriendsPage_friend-image" src={friend.image} alt={friend.name} />
                     <div className="AddFriendsPage_friend-name">{friend.name}</div>
                     <button
-                        className={`AddFriendsPage_add-button ${friendButtonStates[friend.name] ? "added" : ""}`}
-                        onClick={() => handleButtonClick(friend.name)}
-                        disabled={friendButtonStates[friend.name]}
+                        className={`AddFriendsPage_add-button ${friendButtonStates[friend.id] ? "added" : ""}`}
+                        onClick={() => handleButtonClick(friend.id)}
+                        disabled={friendButtonStates[friend.id]}
                     >
-                        {friendButtonStates[friend.name] ? langSet["Added"] : langSet["Add"]}
+                        {friendButtonStates[friend.id] ? langSet["Added"] : langSet["Add"]}
                     </button>
                   </div>
                 ))}
