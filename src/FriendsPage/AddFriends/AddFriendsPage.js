@@ -14,7 +14,7 @@ const breakPoints = [
 ];
 
 function AddFriendsPage() {
-  const { loadFriends, langSet } = useContext(AppContext);
+  const { loadNoFriends, langSet } = useContext(AppContext);
 
   // Estado para todos los amigos
   const [allFriends, setAllFriends] = useState([]);
@@ -35,10 +35,10 @@ function AddFriendsPage() {
 
   // Obtener todos los amigos al montar el componente
   useEffect(() => {
-    loadFriends().then((friends) => {
+    loadNoFriends().then((friends) => {
       setAllFriends(friends);
     });
-  }, [loadFriends]);
+  }, [loadNoFriends]);
 
   // Filtrar amigos cuando cambia searchText
   useEffect(() => {

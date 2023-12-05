@@ -55,6 +55,7 @@
     "EndHour": "End Hour",
     "SelectTextSize": "Select Text Size",
     "SelectTextColor": "Select Text Color",
+    "EnableGrid": "Enable Grid",
 
     "LoadMore": "Load More",
     "PleaseSelectEndTime": "Please select an end time",

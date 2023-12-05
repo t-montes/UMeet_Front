@@ -55,6 +55,7 @@
     "EndHour": "Hora de Fin",
     "SelectTextSize": "Seleccionar Tamaño de Texto",
     "SelectTextColor": "Seleccionar Color del Texto",
+    "EnableGrid": "Habilitar Cuadrícula",
 
     "LoadMore": "Cargar más",
     "PleaseSelectEndTime": "Por favor selecciona una hora final",
