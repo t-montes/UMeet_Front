@@ -11,9 +11,10 @@
   
   .AddFriendsPage_friend-image {
     height: 200px;
-    width: 250px;
+    width: 200px;
     border-radius: 100%;
-    padding: 10px;
+    margin: 10px;
+    border: 1px solid var(--gray);
   }
   
   .AddFriendsPage_img1 {
