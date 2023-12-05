@@ -19,7 +19,6 @@ function Home() {
     return (
         <div className="home">
         <div className="home-timetable">
-            <h1>Home</h1>
             <Timetable calendar={calendar}/>
         </div>
         </div>
