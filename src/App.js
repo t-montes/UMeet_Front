@@ -277,6 +277,14 @@ function App() {
         setUser(defaultUser);
       }
     }
+    loadSettings().then(data => {
+      if (data && data.length > 0) {
+        const settings = data[0];
+        setLaborHours([settings.startHour, settings.endHour]);
+        setLastLaborDay(settings.lastLaborDay);
+        setEnableGrid(settings.enableGrid);
+      }
+    });
   }, []);
 
   const loadGroups = (async () => {
@@ -427,13 +435,13 @@ function App() {
   });
 
   const ctx = {
-    token,
+    token, userId,
     laborHours, setLaborHours,
     lastLaborDay, setLastLaborDay,
     enableGrid, setEnableGrid,
     lang, setLang, langSet,
     user, setUser,
-    loadGroups, loadFriends, loadNotifications, loadCalendar, loadNoFriends, loadSettings, userId
+    loadGroups, loadFriends, loadNotifications, loadCalendar, loadNoFriends, loadSettings
   }
 
   return (

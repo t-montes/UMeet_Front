@@ -13,7 +13,7 @@ import AppContext from "../AppContext";
 
 const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
   const ctx = useContext(AppContext);
-  const { langSet } = ctx;
+  const { token, langSet } = ctx;
 
   const [groupName, setGroupName] = useState("");
 
@@ -21,8 +21,6 @@ const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const [groupNameError, setGroupNameError] = useState(false);
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjowLCJwZXJtaXNzaW9ucyI6eyJncm91cHMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sInVzZXJzIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJjYWxlbmRhcnMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sImV2ZW50cyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwic2V0dGluZ3MiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sIm5vdGlmaWNhdGlvbiI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0sImlhdCI6MTcwMTc0MjQxM30.lfTuthX7uO_k43vv_AYuw6Tv86ss2ib1QtnZLLKrTCk';
-
 
   const validateFields = () => {
     if (!groupName) {

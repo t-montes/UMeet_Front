@@ -25,9 +25,6 @@ function Timetable({ calendar, restrictions }) {
 
   const days = langSet.days;
   const months = langSet.months;
-
-  console.log("timetable", calendar);
-
   /* -------------------------- VARIABLES -------------------------- */
 
   const [currentWeek, setCurrentWeek] = useState([]);
@@ -108,11 +105,10 @@ function Timetable({ calendar, restrictions }) {
         return null;
       } else {
         // case NONE
-        return <td key={time} className={classOfCell(m)} rowSpan={1}>
-          &nbsp;
-          </td>;
+        return <td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>;
       }
     }
+    return <td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>;
   }
 
   const displayEvents = () => {

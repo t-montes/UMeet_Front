@@ -28,7 +28,7 @@ const CustomCalendar = styled(Calendar)`
 
 const CreateEventMenu = React.forwardRef(({ onClose }, ref) => {
   const ctx = useContext(AppContext);
-  const { langSet, lang } = ctx;
+  const { userId, token, langSet, lang } = ctx;
 
   const [date, setDate] = useState(new Date());
 
@@ -81,12 +81,88 @@ const CreateEventMenu = React.forwardRef(({ onClose }, ref) => {
       setEventNameError(false);
     }
 
+    const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startTime.split(':')[0], startTime.split(':')[1]);
+    const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endTime.split(':')[0], endTime.split(':')[1]);
+
+    if (startDate >= endDate) {
+      setSnackbarMessage(langSet['StartTimeGreaterThanEndTime']);
+      setSnackbarOpen(true);
+      setStartTimeError(true);
+      setEndTimeError(true);
+      error = false;
+    } else {
+      setStartTimeError(false);
+      setEndTimeError(false);
+    }
+
     return error;
   };
 
-  const handleCreateClick = () => {
+  const handleCreateClick = async () => {
     if (validateFields()) {
-      onClose();
+      // startTime has format HH:MM, take only HH and MM and combine with date
+      // endTime has format HH:MM, take only HH and MM and combine with date
+      // date has Date format, take only day, month and year
+      // reminder has format N ..., send just N
+      const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startTime.split(':')[0], startTime.split(':')[1]);
+      const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endTime.split(':')[0], endTime.split(':')[1]);
+      const reminderTime = parseInt(reminder.split(' ')[0]);
+      // conver to format 2023-10-28T07:30:00
+      let startDateString = startDate.toISOString().split('.')[0];
+      let endDateString = endDate.toISOString().split('.')[0];
+      // quit 5 hours to get correct time
+      const newHourStart = parseInt(startDateString.split('T')[1].split(':')[0]) - 5;
+      const newHourEnd = parseInt(endDateString.split('T')[1].split(':')[0]) - 5;
+      startDateString = startDateString.split('T')[0] + 'T' + (newHourStart < 10  ? `0${newHourStart}` : `${newHourStart}`) + ':' + startDateString.split('T')[1].split(':')[1] + ':' + startDateString.split('T')[1].split(':')[2];
+      endDateString = endDateString.split('T')[0] + 'T' + (newHourEnd < 10  ? `0${newHourEnd}` : `${newHourEnd}`) + ':' + endDateString.split('T')[1].split(':')[1] + ':' + endDateString.split('T')[1].split(':')[2];
+
+      try {
+        // Datos para enviar en la petición POST
+        const eventData = {
+          name: eventName,
+          location: location,
+          link: link,
+          isPrivate: isPrivate,
+          alert: reminderTime,
+          startDate: startDateString,
+          endDate: endDateString,
+          color: '#1976d2'
+        };
+        console.log(JSON.stringify(eventData));
+  
+        // Opciones para la solicitud fetch
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Asegúrate de que el token esté disponible
+          },
+          body: JSON.stringify(eventData),
+        };
+  
+        // Realiza la llamada a la API
+        const response = await fetch(`http://localhost:3001/api/v1/users/${userId}/calendar`, requestOptions);
+  
+        // Verifica si la respuesta es exitosa
+        if (!response.ok) {
+          // print error message
+          const responseData = await response.json();
+          setSnackbarMessage(responseData);
+          throw new Error('Error en la solicitud POST');
+        }
+  
+        // Opcional: manejar la respuesta
+        const responseData = await response.json();
+        console.log(responseData);
+  
+        // Cierra el componente solo si la petición fue exitosa
+        onClose();
+
+        window.location.reload();
+
+      } catch (error) {
+        console.error('Hubo un error al realizar la petición:', error);
+      }
     }
   };
 
@@ -100,11 +176,11 @@ const CreateEventMenu = React.forwardRef(({ onClose }, ref) => {
       <style>
         {`
           #event-createmenu-starttime:before {
-            content: '${langSet['StartTime']}⠀⠀';
+            content: '${langSet['StartTime']}  ';
           }
 
           #event-createmenu-endtime:before {
-            content: '${langSet['EndTime']}⠀⠀';
+            content: '${langSet['EndTime']}  ';
           }
         `}
       </style>
