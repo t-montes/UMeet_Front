@@ -145,7 +145,7 @@ const defaultCalendar = [
 
 function App() {
   // this token was generated on purpose to test the app, it has no expiration date
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjowLCJwZXJtaXNzaW9ucyI6eyJncm91cHMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sInVzZXJzIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJjYWxlbmRhcnMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sImV2ZW50cyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0sImlhdCI6MTcwMTY0MDczNH0.tbvSjWDb87xNKM28Yov6n9SxY6zJXeETE_bBAWinraI';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjowLCJwZXJtaXNzaW9ucyI6eyJncm91cHMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sInVzZXJzIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJjYWxlbmRhcnMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sImV2ZW50cyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwic2V0dGluZ3MiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sIm5vdGlmaWNhdGlvbiI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0sImlhdCI6MTcwMTc0MjQxM30.lfTuthX7uO_k43vv_AYuw6Tv86ss2ib1QtnZLLKrTCk';
   // this userId is part of the MOCK data after loading the sql/data.sql file in the back-end DB
   const userId = '381cc76d-0c7d-41be-b2d5-0be3995005fd';
 
