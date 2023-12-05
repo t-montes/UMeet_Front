@@ -21,13 +21,13 @@ const mockLoadGroups = jest.fn();
 const mockGroups = [
   {
     colorFondo: "red",
-    textoCentral: "Group1",
+    name: "Group1",
     imagenesPerfil: ["img1.jpg"],
     colorTexto: "black"
   },
   {
     colorFondo: "blue",
-    textoCentral: "Group2",
+    name: "Group2",
     imagenesPerfil: ["img2.jpg"],
     colorTexto: "white"
   }
