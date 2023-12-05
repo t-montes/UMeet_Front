@@ -281,7 +281,8 @@ function App() {
 
   const loadGroups = (async () => {
     if (navigator.onLine) {
-      return await fetch('https://my.api.mockaroo.com/groups.json?key=13d161b0')
+      return await fetch('http://localhost:3001/api/v1/groups/',
+      { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
           if (response.ok)
             return response.json();
@@ -289,7 +290,7 @@ function App() {
             return defaultGroups;
         })
         .then(response => {
-          console.log("groups", response);
+          //console.log("groups", response);
           localStorage.setItem('groups', JSON.stringify(response));
           return response;
         });

@@ -21,6 +21,8 @@ const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const [groupNameError, setGroupNameError] = useState(false);
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjowLCJwZXJtaXNzaW9ucyI6eyJncm91cHMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sInVzZXJzIjpbInJlYWQiLCJ3cml0ZSIsImRlbGV0ZSJdLCJjYWxlbmRhcnMiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sImV2ZW50cyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXSwic2V0dGluZ3MiOlsicmVhZCIsIndyaXRlIiwiZGVsZXRlIl0sIm5vdGlmaWNhdGlvbiI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0sImlhdCI6MTcwMTc0MjQxM30.lfTuthX7uO_k43vv_AYuw6Tv86ss2ib1QtnZLLKrTCk';
+
 
   const validateFields = () => {
     if (!groupName) {
@@ -35,11 +37,48 @@ const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
     return true;
   };
 
-  const handleCreateClick = () => {
+  const handleCreateClick = async () => {
     if (validateFields()) {
-      onClose();
+      try {
+        // Datos para enviar en la petición POST
+        const groupData = {
+          name: groupName,
+          topic: groupName,
+        };
+  
+        // Opciones para la solicitud fetch
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Asegúrate de que el token esté disponible
+          },
+          body: JSON.stringify(groupData),
+        };
+  
+        // Realiza la llamada a la API
+        const response = await fetch('http://localhost:3001/api/v1/groups/', requestOptions);
+  
+        // Verifica si la respuesta es exitosa
+        if (!response.ok) {
+          throw new Error('Error en la solicitud POST');
+        }
+  
+        // Opcional: manejar la respuesta
+        const responseData = await response.json();
+        console.log(responseData);
+  
+        // Cierra el componente solo si la petición fue exitosa
+        onClose();
+
+        window.location.reload();
+
+      } catch (error) {
+        console.error('Hubo un error al realizar la petición:', error);
+      }
     }
   };
+  
 
   return (
     <Box
