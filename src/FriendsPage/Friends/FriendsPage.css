@@ -10,8 +10,11 @@
 }
 
 .FriendsPage_friend-image {
-  height: auto;
-  max-width: 300px;
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+  margin: 10px;
+  border: 1px solid var(--gray);
 }
 
 .FriendsPage_img1 {

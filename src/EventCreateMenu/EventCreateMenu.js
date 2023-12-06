@@ -1,23 +1,16 @@
-import React, { useState, useContext } from "react";
+import './EventCreateMenu.css';
+import React, { useState, useContext } from 'react';
 import {
-  Box,
-  TextField,
   Switch,
   IconButton,
-  Select,
-  MenuItem,
-  Button,
-  Paper,
-  FormControlLabel,
   useMediaQuery,
   Snackbar
-} from "@mui/material";
-import { Alarm } from "@mui/icons-material";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import { styled } from "@mui/system";
-import AppContext from "../AppContext";
-import CloseIcon from "@mui/icons-material/Close"; // Import Close Icon
+} from '@mui/material';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import { styled } from '@mui/system';
+import AppContext from '../AppContext';
+import CloseIcon from '@mui/icons-material/Close'; // Import Close Icon
 
 const CustomCalendar = styled(Calendar)`
   border: 1px solid #ccc;
@@ -33,39 +26,36 @@ const CustomCalendar = styled(Calendar)`
   }
 `;
 
-const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
+const CreateEventMenu = React.forwardRef(({ onClose }, ref) => {
   const ctx = useContext(AppContext);
-  const { langSet, lang } = ctx;
+  const { userId, token, langSet, lang } = ctx;
 
   const [date, setDate] = useState(new Date());
 
-  const isSmallScreen = useMediaQuery("(max-width:770px)");
-  const isLargeScreen = useMediaQuery("(max-width:1200px)");
+  const isSmallScreen = useMediaQuery('(max-width:992px)');
+  const isLargeScreen = useMediaQuery('(max-width:1050px)');
 
-  const [eventName, setEventName] = useState("");
-  const [location, setLocation] = useState("");
-  const [link, setLink] = useState("");
+  const [eventName, setEventName] = useState('');
+  const [location, setLocation] = useState('');
+  const [link, setLink] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
-  const [reminder, setReminder] = useState("30 " + langSet["MinutesBefore"]);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [periodStart, setPeriodStart] = useState("AM");
-  const [periodEnd, setPeriodEnd] = useState("AM");
+  const [reminder, setReminder] = useState('30 ' + langSet['MinutesBefore']);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [showNotifications, setShowNotifications] = useState(true);
 
   const [eventNameError, setEventNameError] = useState(false);
   const [startTimeError, setStartTimeError] = useState(false);
   const [endTimeError, setEndTimeError] = useState(false);
 
-
-
   const validateFields = () => {
     let error = true;
 
     if (!endTime) {
-      setSnackbarMessage("Please select an end time.");
+      setSnackbarMessage(langSet['PleaseSelectEndTime']);
       setSnackbarOpen(true);
       setEndTimeError(true);
       error = false;
@@ -74,7 +64,7 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
     }
 
     if (!startTime) {
-      setSnackbarMessage("Please select a start time.");
+      setSnackbarMessage(langSet['PleaseSelectStartTime']);
       setSnackbarOpen(true);
       setStartTimeError(true);
       error = false;
@@ -83,173 +73,279 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
     }
 
     if (!eventName) {
-      setSnackbarMessage("Please enter an event name.");
+      setSnackbarMessage(langSet['PleaseSelectEventName']);
       setSnackbarOpen(true);
       setEventNameError(true);
       error = false;
     } else {
       setEventNameError(false);
     }
-  
+
+    const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startTime.split(':')[0], startTime.split(':')[1]);
+    const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endTime.split(':')[0], endTime.split(':')[1]);
+
+    if (startDate >= endDate) {
+      setSnackbarMessage(langSet['StartTimeGreaterThanEndTime']);
+      setSnackbarOpen(true);
+      setStartTimeError(true);
+      setEndTimeError(true);
+      error = false;
+    } else {
+      setStartTimeError(false);
+      setEndTimeError(false);
+    }
+
     return error;
   };
 
-  const handleCreateClick = () => {
+  const handleCreateClick = async () => {
     if (validateFields()) {
-      onClose();
+      // startTime has format HH:MM, take only HH and MM and combine with date
+      // endTime has format HH:MM, take only HH and MM and combine with date
+      // date has Date format, take only day, month and year
+      // reminder has format N ..., send just N
+      const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startTime.split(':')[0], startTime.split(':')[1]);
+      const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endTime.split(':')[0], endTime.split(':')[1]);
+      const reminderTime = parseInt(reminder.split(' ')[0]);
+      // conver to format 2023-10-28T07:30:00
+      let startDateString = startDate.toISOString().split('.')[0];
+      let endDateString = endDate.toISOString().split('.')[0];
+      // quit 5 hours to get correct time
+      const newHourStart = parseInt(startDateString.split('T')[1].split(':')[0]) - 5;
+      const newHourEnd = parseInt(endDateString.split('T')[1].split(':')[0]) - 5;
+      startDateString = startDateString.split('T')[0] + 'T' + (newHourStart < 10  ? `0${newHourStart}` : `${newHourStart}`) + ':' + startDateString.split('T')[1].split(':')[1] + ':' + startDateString.split('T')[1].split(':')[2];
+      endDateString = endDateString.split('T')[0] + 'T' + (newHourEnd < 10  ? `0${newHourEnd}` : `${newHourEnd}`) + ':' + endDateString.split('T')[1].split(':')[1] + ':' + endDateString.split('T')[1].split(':')[2];
+
+      try {
+        // Datos para enviar en la petición POST
+        const eventData = {
+          name: eventName,
+          location: location,
+          link: link,
+          isPrivate: isPrivate,
+          alert: reminderTime,
+          startDate: startDateString,
+          endDate: endDateString,
+          color: '#1976d2'
+        };
+        console.log(JSON.stringify(eventData));
+  
+        // Opciones para la solicitud fetch
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Asegúrate de que el token esté disponible
+          },
+          body: JSON.stringify(eventData),
+        };
+  
+        // Realiza la llamada a la API
+        const response = await fetch(`http://localhost:3001/api/v1/users/${userId}/calendar`, requestOptions);
+  
+        // Verifica si la respuesta es exitosa
+        if (!response.ok) {
+          // print error message
+          const responseData = await response.json();
+          setSnackbarMessage(responseData);
+          throw new Error('Error en la solicitud POST');
+        }
+  
+        // Opcional: manejar la respuesta
+        const responseData = await response.json();
+        console.log(responseData);
+  
+        // Cierra el componente solo si la petición fue exitosa
+        onClose();
+
+        window.location.reload();
+
+      } catch (error) {
+        console.error('Hubo un error al realizar la petición:', error);
+      }
     }
   };
 
   return (
-    
-    <Box
-      sx={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        p: 2,
-        backgroundColor: "white",
-        outline: "none",
-        width: isLargeScreen ? "100%" : "auto",
+    <div
+      className="event-create-menu"
+      style={{
+        width: isSmallScreen ? 'auto' : '65%'
       }}
     >
+      <style>
+        {`
+          #event-createmenu-starttime:before {
+            content: '${langSet['StartTime']}  ';
+          }
 
-
-      <Paper
-        elevation={3}
-        sx={{
-          width: isLargeScreen ? "100%" : "1058px",
-          height: isLargeScreen ? "auto" : "600px",
-          p: 2,
-          backgroundColor: "#DBE9EE",
-          border: "1px solid black",
-          margin: "0 auto",
-          overflowY: isLargeScreen ? "auto" : "visible",
-        }}
+          #event-createmenu-endtime:before {
+            content: '${langSet['EndTime']}  ';
+          }
+        `}
+      </style>
+      <div
+        className={`event-create-menu-popup ${isLargeScreen ? 'large' : ''}`}
       >
-        <IconButton
+        <button
           onClick={onClose}
-          style={{ position: "absolute", top: "10px", right: "10px" }}
+          className="close-button createmenu-icon-button createmenu-ib-close"
         >
-          <CloseIcon />
-        </IconButton>
-        <h2>{langSet["CreateEvent"]}</h2>
-
-        <Box
-          sx={{
-            display: isSmallScreen ? "block" : "flex",
-            justifyContent: "space-between",
-            height: "100%",
+          <i className="fa fa-times"></i>
+        </button>
+        <h2>{langSet['CreateEvent']}</h2>
+        <div
+          style={{
+            display: isSmallScreen ? 'block' : 'flex',
+            justifyContent: 'space-between',
+            height: '100%'
           }}
         >
-          <Box display="flex" flexDirection="column" flex="1" pr={2}>
-            <TextField label={langSet["EventName"]} fullWidth margin="normal" value={eventName} onChange={(e) => {setEventName(e.target.value); setEventNameError(false);}} error={eventNameError}/>
-            <TextField label={langSet["Location"]} fullWidth margin="normal" value={location} onChange={(e) => setLocation(e.target.value)} />
-            <TextField label={langSet["Link"]} fullWidth margin="normal" value={link} onChange={(e) => setLink(e.target.value)} />
-
-            <Box
-              sx={{
-                display: isSmallScreen ? "none" : "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                mt: 2,
+          <div className="event-createmenu-inputs">
+            <input
+              type="text"
+              label={langSet['EventName']}
+              placeholder={langSet['EventName']}
+              value={eventName}
+              onChange={(e) => {
+                setEventName(e.target.value);
+                setEventNameError(false);
+              }}
+              className={eventNameError ? 'error' : ''}
+            />
+            <input
+              type="text"
+              label={langSet['Location']}
+              placeholder={langSet['Location']}
+              value={location}
+              onChange={(e) => {
+                setLocation(e.target.value);
+              }}
+            />
+            <input
+              type="text"
+              label={langSet['Link']}
+              placeholder={langSet['Link']}
+              value={link}
+              onChange={(e) => {
+                setLink(e.target.value);
+              }}
+            />
+            <div
+              style={{
+                display: isSmallScreen ? 'none' : 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '15%',
+                fontWeight: 'bold'
               }}
             >
-              <FormControlLabel
-                control={<Switch color="primary" value={isPrivate} onChange={(e) => setIsPrivate(e.target.value)}/>}
-                label={langSet["PrivateEvent"]}
+              <Switch
+                color="primary"
+                value={isPrivate}
+                onChange={(e) => setIsPrivate(!isPrivate)}
               />
-            </Box>
-
-            <Box
-              sx={{
-                display: isSmallScreen ? "none" : "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                mt: 2,
+              {langSet['PrivateEvent']}
+            </div>
+            <div
+              style={{
+                display: isSmallScreen ? 'none' : 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '5%',
+                fontWeight: 'bold'
               }}
             >
-              <IconButton color="primary">
-                <Alarm />
-              </IconButton>
-              <Select
-                variant="outlined"
-                value= {reminder}
-                onChange={(e) => setReminder(e.target.value)}
-                style={{ marginLeft: "8px" }}
+              <button
+                className="createmenu-icon-button createmenu-ib-bell"
+                style={{
+                  color: showNotifications ? '' : 'gray'
+                }}
+                onClick={() => setShowNotifications(!showNotifications)}
               >
-                <MenuItem value={"5 " + langSet["MinutesBefore"]}>
-                  5 {langSet["MinutesBefore"]}
-                </MenuItem>
-                <MenuItem value={"10 " + langSet["MinutesBefore"]}>
-                  10 {langSet["MinutesBefore"]}
-                </MenuItem>
-                <MenuItem value={"30 " + langSet["MinutesBefore"]}>
-                  30 {langSet["MinutesBefore"]}
-                </MenuItem>
-              </Select>
-            </Box>
-          </Box>
+                <i className="fa fa-bell"></i>
+              </button>
+              <select
+                value={reminder}
+                onChange={(e) => setReminder(e.target.value)}
+                style={{
+                  display: showNotifications ? 'block' : 'none',
+                  marginLeft: '10px',
+                  border: "1px solid var(--black)"
+                }}
+              >
+                <option value={'5 ' + langSet['MinutesBefore']}>
+                  5 {langSet['MinutesBefore']}
+                </option>
+                <option value={'10 ' + langSet['MinutesBefore']}>
+                  10 {langSet['MinutesBefore']}
+                </option>
+                <option value={'30 ' + langSet['MinutesBefore']}>
+                  30 {langSet['MinutesBefore']}
+                </option>
+              </select>
+            </div>
+          </div>
 
-          <Box flex="1" pl={1}>
+          <div style={{ flex: '1', paddingLeft: '8px' }}>
             <CustomCalendar onChange={setDate} value={date} locale={lang} />
 
-            <Box display="flex" mt={2} justifyContent="space-between">
-              <TextField
-                label={langSet["StartTime"]}
-                type="time"
-                InputLabelProps={{ shrink: true }}
-                sx={{ flex: "1", marginRight: "8px" }}
-                value={startTime}
-                onChange={(e) => {setStartTime(e.target.value); setStartTimeError(false);}} error={startTimeError}
-              />
-              <Select
-                variant="outlined"
-                value={periodStart}
-                onChange={(e) => setPeriodStart(e.target.value)}
-                style={{ flex: "1", marginRight: "8px" }}
-              >
-                <MenuItem value="AM">AM</MenuItem>
-                <MenuItem value="PM">PM</MenuItem>
-              </Select>
-            </Box>
-            <Box display="flex" mt={2} justifyContent="space-between">
-              <TextField
-                label={langSet["EndTime"]}
-                type="time"
-                InputLabelProps={{ shrink: true }}
-                sx={{ flex: "1", marginRight: "8px" }}
-                value={endTime}
-                onChange={(e) => {setEndTime(e.target.value); setEndTimeError(false);}} error={endTimeError}
-              />
-              <Select
-                variant="outlined"
-                value={periodEnd}
-                onChange={(e) => setPeriodEnd(e.target.value)}
-                style={{ flex: "1", marginRight: "8px" }}
-              >
-                <MenuItem value="AM">AM</MenuItem>
-                <MenuItem value="PM">PM</MenuItem>
-              </Select>
-            </Box>
-
-            <Button
-              onClick={handleCreateClick}
-              variant="contained"
-              color="primary"
+            <div
               style={{
-                marginTop: "16px",
-                width: "100%",
-                backgroundColor: "#C1FF72",
-                color: "black",
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
-              {langSet["Create"]}
-            </Button>
-          </Box>
-        </Box>
-      </Paper>
+              <input
+                id="event-createmenu-starttime"
+                type="time"
+                label={langSet['StartTime']}
+                style={{ 
+                  flex: '1', 
+                }}
+                value={startTime}
+                onChange={(e) => {
+                  setStartTime(e.target.value);
+                  setStartTimeError(false);
+                }}
+                className={startTimeError ? 'error' : ''}
+                step="300"
+              />
+              <div />
+              <input
+                id="event-createmenu-endtime"
+                type="time"
+                label={langSet['EndTime']}
+                style={{ 
+                  flex: '1', 
+                }}
+                value={endTime}
+                onChange={(e) => {
+                  setEndTime(e.target.value);
+                  setEndTimeError(false);
+                }}
+                className={endTimeError ? 'error' : ''}
+                step="300"
+              />
+            </div>
+            <button
+              onClick={handleCreateClick}
+              style={{
+                marginTop: '16px',
+                width: '100%',
+                backgroundColor: '#C1FF72',
+                color: 'black',
+                fontWeight: 'bold',
+                borderRadius: '7px'
+              }}
+            >
+              {langSet['Create']}
+            </button>
+          </div>
+        </div>
+      </div>
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
@@ -261,7 +357,7 @@ const CreateEventMenu = React.forwardRef(({onClose}, ref) => {
           </IconButton>
         }
       />
-    </Box>
+    </div>
   );
 });
 

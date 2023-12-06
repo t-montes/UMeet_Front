@@ -1,30 +1,15 @@
-import React, { useState } from 'react';
+// CheckBox.js
+import React from 'react';
 
-function CheckBox() {
-  const [state, setState] = useState({
-    isGoing: true,
-  });
-
-  const handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    setState({
-      ...state,
-      [name]: value
-    });
-  };
-
+function CheckBox({ checked, onChange }) {
   return (
     <form>
       <input
-        name="isGoing"
+        name="enableGrid"
         type="checkbox"
-        checked={state.isGoing}
-        onChange={handleInputChange}
+        checked={checked}
+        onChange={onChange}
       />
-      <br />
     </form>
   );
 }

@@ -13,7 +13,7 @@ import AppContext from "../AppContext";
 
 const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
   const ctx = useContext(AppContext);
-  const { langSet } = ctx;
+  const { token, langSet } = ctx;
 
   const [groupName, setGroupName] = useState("");
 
@@ -35,11 +35,48 @@ const GroupCreateMenu = React.forwardRef(({ onClose }, ref) => {
     return true;
   };
 
-  const handleCreateClick = () => {
+  const handleCreateClick = async () => {
     if (validateFields()) {
-      onClose();
+      try {
+        // Datos para enviar en la petición POST
+        const groupData = {
+          name: groupName,
+          topic: groupName,
+        };
+  
+        // Opciones para la solicitud fetch
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Asegúrate de que el token esté disponible
+          },
+          body: JSON.stringify(groupData),
+        };
+  
+        // Realiza la llamada a la API
+        const response = await fetch('http://localhost:3001/api/v1/groups/', requestOptions);
+  
+        // Verifica si la respuesta es exitosa
+        if (!response.ok) {
+          throw new Error('Error en la solicitud POST');
+        }
+  
+        // Opcional: manejar la respuesta
+        const responseData = await response.json();
+        console.log(responseData);
+  
+        // Cierra el componente solo si la petición fue exitosa
+        onClose();
+
+        window.location.reload();
+
+      } catch (error) {
+        console.error('Hubo un error al realizar la petición:', error);
+      }
     }
   };
+  
 
   return (
     <Box

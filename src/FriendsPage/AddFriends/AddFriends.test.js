@@ -6,11 +6,11 @@ import AppContext from "../../AppContext";
 jest.mock('../../AppContext');
 
 describe('AddFriendsPage', () => {
-  const mockLoadFriends = jest.fn();
+  const mockLoadNoFriends = jest.fn();
 
   // Mock context value
   const mockContextValue = {
-    loadFriends: mockLoadFriends,
+    loadNoFriends: mockLoadNoFriends,
     langSet: {
       "NoResults": "No Results Found",
       "Add": "Add",
@@ -28,7 +28,7 @@ describe('AddFriendsPage', () => {
   };
 
   it('should display no results message if no friends match search text', async () => {
-    mockLoadFriends.mockResolvedValue([{ name: "John", image: "john.jpg" }]);
+    mockLoadNoFriends.mockResolvedValue([{ name: "John", image: "john.jpg" }]);
 
     render(<AddFriendsPage />, { wrapper: TestWrapper });
 

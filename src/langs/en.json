@@ -34,7 +34,7 @@
     "TextSize": "Select Text Size",
     "TextColor": "Select Text Color",
 
-    "EventName": "Event Name *",
+    "EventName": "Event name *",
     "Location": "Location",
     "Link": "Link",
     "PrivateEvent": "Private Event",
@@ -55,8 +55,13 @@
     "EndHour": "End Hour",
     "SelectTextSize": "Select Text Size",
     "SelectTextColor": "Select Text Color",
+    "EnableGrid": "Enable Grid",
+    "StartTimeGreaterThanEndTime": "Start time must be greater than end time",
 
     "LoadMore": "Load More",
+    "PleaseSelectEndTime": "Please select an end time",
+    "PleaseSelectStartTime": "Please select a start time",
+    "PleaseSelectEventName": "Please select an event name",
 
     "NoResults": "No results found",
     "404": "404 - Page not found"

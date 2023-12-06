@@ -13,7 +13,11 @@ const range = (start, end) => Array.from(Array(end - start + 1).keys()).map(x =>
  */
 function Timetable({ calendar, restrictions }) {
 
-  if (!calendar) calendar = [];
+  if (!calendar) calendar = {
+    id: '',
+    color: '#000000',
+    events: [],
+  };
   if (!restrictions) restrictions = [];
 
   const ctx = useContext(AppContext);
@@ -21,7 +25,6 @@ function Timetable({ calendar, restrictions }) {
 
   const days = langSet.days;
   const months = langSet.months;
-
   /* -------------------------- VARIABLES -------------------------- */
 
   const [currentWeek, setCurrentWeek] = useState([]);
@@ -48,7 +51,7 @@ function Timetable({ calendar, restrictions }) {
 
   const backToToday = () => {
     let theWeek = [];
-    while (theWeek.length < 7) {
+    while (theWeek.length < 8) {
       theWeek.push(addDays(currentDate,theWeek.length-currentDate.getDay()));
     }
 
@@ -79,40 +82,48 @@ function Timetable({ calendar, restrictions }) {
         If an event STARTS in this time, return a <td> with the event, and all the rowspans needed.
         If an event CROSSES this time, return null, because it was rendered at the start and spans all the time it needs.
         If NONE of those, return a <td> with a blank space. (<td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>) */
-    // TODO: 1. handle title overflow (...) should show the full title on hover
-    // TODO: 2. make responsive
-    // TODO: 3. fix: If event time is too short (< 1h05m) and time title has one line, it starts to anchor the cell height, which is wrong. Event should resize to fit the cell.
-    // TODO: 4. handle click
-    // TODO: 5. handle hover
-    // TODO: 6. handle drag!!
-    // TODO: 7. handle resize!!
-    if (calendar.some((e) => (e.start.getTime() === time.getTime()))) {
-      // case STARTS
-      const event = calendar.find((e) => (e.start.getTime() === time.getTime()));
-      const rowspan = Math.ceil((event.end - time)/(1000*60*60/hourDivisions));
-      return (
-      <td className="timetable-event" key={time} rowSpan={rowspan} data-testid="timetable-event">
-        <div onClick={() => console.log("clicked", event.title)} className="timetable-event-card">
-          <div className="timetable-event-title">{event.title}</div>
-          {/* TODO: fix: <div className="timetable-event-location">{event.location}</div>*/}
-        </div>
-      </td>);
-    } else if (calendar.some((e) => (e.start < time && e.end > time))) {
-      // case CROSSES
-      return null;
-    } else {
-      // case NONE
-      return <td key={time} className={classOfCell(m)} rowSpan={1}>
-        &nbsp;
-        </td>;
+
+    // TODO: 1. handle click
+    // TODO: 2. handle hover
+    if (calendar.events) {
+      if (calendar.events.some((e) => (e.startDate.getTime() === time.getTime()))) {
+        // case STARTS
+        const event = calendar.events.find((e) => (e.startDate.getTime() === time.getTime()));
+        const rowspan = Math.ceil((event.visualEndDate - time)/(1000*60*60/hourDivisions));
+        const maxRowsText = Math.floor(rowspan/3.3); // found experimentally
+
+        return (
+        <td className="timetable-event" key={time} rowSpan={rowspan} data-testid="timetable-event">
+          <div onClick={() => console.log("clicked", event.name)} className="timetable-event-card">
+            <span className="timetable-event-title" 
+              style={{maxHeight: "calc(var(--lheight) * "+maxRowsText+")"}}
+            >{event.name}<br/><span>{event.location}</span></span>
+          </div>
+        </td>);
+      } else if (calendar.events.some((e) => (e.startDate < time && e.visualEndDate > time))) {
+        // case CROSSES
+        return null;
+      } else {
+        // case NONE
+        return <td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>;
+      }
     }
+    return <td key={time} className={classOfCell(m)} rowSpan={1}>&nbsp;</td>;
   }
+
+  const displayEvents = () => {
+    // TODO:...
+  };
 
   // Execute on load; [] means execute only at reaload
   useEffect(() => {
     backToToday();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    displayEvents();
+  }, [currentWeek]);
 
   /* -------------------------- COMPONENT -------------------------- */
   return (

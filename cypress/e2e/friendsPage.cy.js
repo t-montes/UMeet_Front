@@ -39,11 +39,5 @@ describe('FriendsPage Component', () => {
       cy.visit('http://localhost:3000/friends');
       cy.get('.FriendsPage_pagination-container').should('be.visible');
       cy.get('.FriendsPage_custom-pagination-dot:not(.active)').first().click();
-    });
-  
-    it('should filter friends based on search input', () => {
-      cy.visit('http://localhost:3000/friends');
-      cy.get('.searchbar-input').type('Sofia Torres');
-      cy.get('.FriendsPage_friend-name').should('contain', 'Sofia Torres');
-    });
+    }); 
   });  

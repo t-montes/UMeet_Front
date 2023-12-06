@@ -1,12 +1,22 @@
 import "./BannerLinking.css";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Timetable from "../Timetable/Timetable";
 import AppContext from "../AppContext";
 
 function BannerLinking() {
 
     const ctx = useContext(AppContext);
-    const { lang, langSet, user } = ctx;
+    const { loadCalendar, lang, langSet, user } = ctx;
+
+    const [calendar, setCalendar] = useState([]);
+
+    useEffect(() => {
+        loadCalendar().then((cal) => {
+            console.log("retrieved!", cal);
+          setCalendar(cal);
+        });
+    }, [loadCalendar]);
+    
 
     return (
         <div className="BannerLinking">
@@ -19,7 +29,7 @@ function BannerLinking() {
                 </button>
             </div>
             <div className="BannerLinking-background">
-                <Timetable/>
+                <Timetable calendar={calendar}/>
             </div>
         </div>
     );

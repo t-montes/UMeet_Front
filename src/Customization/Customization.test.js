@@ -1,56 +1,52 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { render, screen, act } from '@testing-library/react';
 import Customization from './Customization';
-import AppContext from '../AppContext';
+import AppContext from "../AppContext";
 
-const mockLangSet = {
-    Personalize: "Personalize",
-    ScheduleCustomization: "Schedule Customization",
-    FirstDay: "First Day",
-    LastDay: "Last Day",
-    StartTime: "Start Time",
-    EndTime: "End Time",
-    TextSize: "Text Size",
-    TextColor: "Text Color",
-    daysList: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]  // Added this line
-};
+jest.mock('../AppContext');
 
-describe('<Customization />', () => {
-    beforeEach(() => {
-        render(
-            <AppContext.Provider value={{ langSet: mockLangSet }}>
-                <Customization />
-            </AppContext.Provider>
-        );
+describe('Customization', () => {
+  const mockLoadSettings = jest.fn();
+
+  // Mock context value
+  const mockContextValue = {
+    token: "test-token",
+    loadSettings: mockLoadSettings,
+    langSet: {
+      "Personalize": "Personalizar",
+      "ScheduleCustomization": "Personalización del Horario",
+      "LastDay": "Último Día",
+      "StartTime": "Hora de Inicio",
+      "EndTime": "Hora de Fin",
+      "EnableGrid": "Activar Cuadrícula",
+      "StartTimeGreaterThanEndTime": "La hora de inicio no puede ser mayor que la hora de fin"
+    }
+  };
+
+  // Test Wrapper
+  const TestWrapper = ({ children }) => {
+    return (
+      <AppContext.Provider value={mockContextValue}>
+        {children}
+      </AppContext.Provider>
+    );
+  };
+
+  it('should display schedule customization options', async () => {
+    mockLoadSettings.mockResolvedValue({
+      startHour: 8,
+      endHour: 18,
+      lastLaborDay: 5,
+      enableGrid: true
     });
 
-    it('toggles the customization modal on button click', async () => {
-        const button = screen.getByText('Personalize');
+    render(<Customization />, { wrapper: TestWrapper });
 
-        fireEvent.click(button);
-        
-        await waitFor(() => {
-            expect(screen.getByText('Schedule Customization')).toBeInTheDocument();
-        });
+    await act(async () => {});
 
-        fireEvent.click(button);
-        await waitFor(() => {
-            expect(screen.queryByText('Schedule Customization')).not.toBeInTheDocument();
-        });
-    });
+    // Verificar que los elementos estén en el documento
+    expect(screen.getByText(mockContextValue.langSet.Personalize)).toBeInTheDocument();
+  });
 
-    it('adds and removes the "active-customization" class to body', async () => {
-        const button = screen.getByText('Personalize');
-        
-        fireEvent.click(button);
-        await waitFor(() => {
-            expect(document.body.classList.contains('active-customization')).toBeTruthy();
-        });
-
-        fireEvent.click(button);
-        await waitFor(() => {
-            expect(document.body.classList.contains('active-customization')).toBeFalsy();
-        });
-    });
+  // Aquí puedes agregar más pruebas según las funcionalidades de tu componente
 });

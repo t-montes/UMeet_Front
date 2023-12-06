@@ -34,7 +34,7 @@
     "TextSize": "Selecciona el tamaño del texto",
     "TextColor": "Selecciona el color del texto",
 
-    "EventName": "Nombre del Evento *",
+    "EventName": "Nombre del evento *",
     "Location": "Ubicación",
     "Link": "Enlace",
     "PrivateEvent": "Evento Privado",
@@ -55,8 +55,13 @@
     "EndHour": "Hora de Fin",
     "SelectTextSize": "Seleccionar Tamaño de Texto",
     "SelectTextColor": "Seleccionar Color del Texto",
+    "EnableGrid": "Habilitar Cuadrícula",
+    "StartTimeGreaterThanEndTime": "Hora inicio debe ser menor a Hora fin",
 
     "LoadMore": "Cargar más",
+    "PleaseSelectEndTime": "Por favor selecciona una hora final",
+    "PleaseSelectStartTime": "Por favor selecciona una hora inicial",
+    "PleaseSelectEventName": "Por favor ingresa un nombre para el evento",
 
     "NoResults": "No hay resultados",
     "404": "404 - Página no encontrada"

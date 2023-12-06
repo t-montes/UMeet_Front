@@ -77,9 +77,9 @@ const GroupsPage = () => {
               <div key={friendIndex} className="GroupsPage-group-container">
                 <GroupCard
                   key={friendIndex}
-                  colorFondo={card.colorFondo}
-                  textoCentral={card.textoCentral}
-                  imagenesPerfil={card.imagenesPerfil}
+                  colorFondo={'#' + Math.floor(Math.random() * 16777215).toString(16)}
+                  textoCentral={card.name}
+                  imagenesPerfil={['assets/icon1.png', 'assets/icon2.png', 'assets/icon3.png', 'assets/icon4.png', 'assets/icon5.png', 'assets/icon6.png', 'assets/icon7.png', 'assets/icon8.png', 'assets/icon9.png'].sort(() => 0.5 - Math.random()).slice(0, 3)}
                   colorTexto={card.colorTexto}
                 />
               </div>

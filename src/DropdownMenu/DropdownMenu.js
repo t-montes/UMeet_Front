@@ -1,26 +1,35 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./DropdownMenu.css";
 import AppContext from "../AppContext";
+import moment from "moment"; // Asegúrate de instalar 'moment' con npm o yarn
 
 function DropdownMenu() {
+  const { loadNotifications, langSet } = useContext(AppContext);
 
-  const { loadNotifications, langSet, lang } = useContext(AppContext);
-
-  function formatTimeAgo(time, unit) {
-    if (lang === 'es') {
-      return `Hace ${time} ${unit}`;
+  function formatTimeAgo(notificationDate) {
+    const now = moment();
+    const date = moment(notificationDate);
+    const duration = moment.duration(now.diff(date));
+    
+    if (langSet.lang === 'es') {
+      // Formato en español, ajustar según sea necesario
+      return duration.humanize() + ' atrás';
     } else {
-      return `${time} ${unit} ago`;
+      // Formato en inglés
+      return duration.humanize() + ' ago';
     }
   }
 
   function DropdownItem(props) {
     return (
-      //Cambiar el primer div por "a" cuando funcione lo demás de notificaciones
       <div className="dropdown_menu-item">
         <div className="dropdown_menu-item-content">
-          <div className={`dropdown_notification-text ${props.centered ? 'centered' : ''}`}>{props.children}</div>
-          <div className="dropdown_notification-time">{props.timeAgo}</div>
+          <div className={`dropdown_notification-text ${props.centered ? 'centered' : ''}`}>
+            {props.children}
+          </div>
+          <div className="dropdown_notification-time">
+            {props.timeAgo}
+          </div>
         </div>
       </div>
     );
@@ -49,11 +58,11 @@ function DropdownMenu() {
       <div className="dropdown_content">
         {notifications.slice(0, visibleNotifications).map((notification, index) => (
           <DropdownItem
-            key={index}
+            key={notification.id}
             centered
-            timeAgo={formatTimeAgo(parseInt(notification.time), notification.unit)}
+            timeAgo={formatTimeAgo(notification.date)}
           >
-            {notification.name}
+            {notification.text}
           </DropdownItem>
         ))}
       </div>

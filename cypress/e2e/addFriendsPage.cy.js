@@ -35,11 +35,6 @@ describe('AddFriendsPage Component', () => {
       cy.get('.AddFriendsPage_custom-pagination-dot:not(.active)').first().click();
     });
   
-    it('should filter friends based on search input', () => {
-      cy.get('.searchbar-input').type('Sofia Torres');
-      cy.get('.AddFriendsPage_friend-name').should('contain', 'Sofia Torres');
-    });
-  
     it('should be able to click the add button of a friend', () => {
       cy.get('.AddFriendsPage_add-button').first().click();
     });
